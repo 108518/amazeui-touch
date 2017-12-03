@@ -7,7 +7,7 @@ import {
   TabBar,
 } from 'amazeui-touch';
 
-const App = React.createClass({
+class App extends React.Component {
   render() {
     let {
       location,
@@ -46,6 +46,6 @@ const App = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default App;

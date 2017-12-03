@@ -11,14 +11,14 @@ import {
   List,
 } from 'amazeui-touch';
 
-const OffCanvasExample = React.createClass({
-  onDismiss(e) {
+class OffCanvasExample extends React.Component {
+  onDismiss = (e) => {
     // 从 OffCanvas 内部元素关闭 OffCanvas
     // 紧耦合，需要重构 OffCanvas
     this.refs.oct.close();
-  },
+  };
 
-  renderOC() {
+  renderOC = () => {
     return (
       <OffCanvas>
         <div>
@@ -51,7 +51,7 @@ const OffCanvasExample = React.createClass({
         </div>
       </OffCanvas>
     )
-  },
+  };
 
   render() {
     return (
@@ -109,6 +109,6 @@ const OffCanvasExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default OffCanvasExample;

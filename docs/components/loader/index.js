@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const LoaderDoc = React.createClass({
+class LoaderDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const LoaderDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default LoaderDoc;

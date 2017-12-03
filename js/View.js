@@ -1,12 +1,13 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_view.scss';
 
-const View = React.createClass({
+const View = createReactClass({
+  displayName: 'View',
   mixins: [ClassNameMixin],
 
   propTypes: {

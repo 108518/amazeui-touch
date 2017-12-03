@@ -16,26 +16,24 @@ function isNodeInTree(node, tree) {
   }
 
   return false;
-};
+}
 
 const sidebar = <Sidebar />;
 
-const ComponentDoc = React.createClass({
-  getInitialState() {
-    return {
-      sidebarActive: false,
-    };
-  },
+class ComponentDoc extends React.Component {
+  state = {
+    sidebarActive: false,
+  };
 
   componentDidMount() {
     document.addEventListener('click' , this._clickHandler);
-  },
+  }
 
   componentWillUnmount() {
     document.removeEventListener('click', this._clickHandler)
-  },
+  }
 
-  _clickHandler(e) {
+  _clickHandler = (e) => {
     const isFilter = e.target === document.querySelector('#doc-filter');
 
     if (isSM && !isFilter && !isNodeInTree(e.target, this.refs.sidebarToggle) &&
@@ -44,15 +42,15 @@ const ComponentDoc = React.createClass({
         sidebarActive: !this.state.sidebarActive,
       });
     }
-  },
+  };
 
-  sidebarToggle(e) {
+  sidebarToggle = (e) => {
     e && e.preventDefault();
 
     this.setState({
       sidebarActive: !this.state.sidebarActive,
     });
-  },
+  };
 
   render() {
     let {
@@ -63,11 +61,11 @@ const ComponentDoc = React.createClass({
     // Getting URL Parameters
     component = component || params.component;
 
-    const Doc = docs[component] || React.createClass({
-        render() {
-          return <h2>Not Found.</h2>;
-        }
-      });
+    const Doc = docs[component] || class extends React.Component {
+      render() {
+        return <h2>Not Found.</h2>;
+      }
+    };
 
     const activeClassName = this.state.sidebarActive ? ' active' : '';
 
@@ -89,6 +87,6 @@ const ComponentDoc = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default ComponentDoc;

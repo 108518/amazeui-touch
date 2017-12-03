@@ -2,16 +2,18 @@
  * @see https://github.com/negomi/react-burger-menu
  */
 
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import BackdropMixin from './mixins/BackdropMixin';
 
 import '../scss/components/_offcanvas.scss';
 
-const OffCanvas = React.createClass({
+const OffCanvas = createReactClass({
+  displayName: 'OffCanvas',
   mixins: [ClassNameMixin, BackdropMixin],
 
   propTypes: {
@@ -28,7 +30,7 @@ const OffCanvas = React.createClass({
   },
 
   handleBackdropClick(e) {
-    if (e && e.target === this.refs.backdrop) {
+    if (e && e.target === this.backdrop) {
       let {
         onDismiss,
       } = this.props;
@@ -66,7 +68,7 @@ const OffCanvas = React.createClass({
     );
 
     return this.renderBackdrop(offCanvas);
-  }
+  },
 });
 
 export default OffCanvas;

@@ -10,34 +10,32 @@ import {
   Icon,
 } from 'amazeui-touch';
 
-const ModalExample = React.createClass({
-  getInitialState() {
-    return {
-      isModalOpen: false,
-    };
-  },
+class ModalExample extends React.Component {
+  state = {
+    isModalOpen: false,
+  };
 
-  openModal() {
+  openModal = () => {
     this.setState({
       isModalOpen: true,
     })
-  },
+  };
 
-  closeModal() {
+  closeModal = () => {
     this.setState({
       isModalOpen: false,
     });
-  },
+  };
 
-  onOpen() {
+  onOpen = () => {
     console.log('modal open....');
-  },
+  };
 
-  onClosed() {
+  onClosed = () => {
     console.log('modal closed....');
-  },
+  };
 
-  handleAction(data) {
+  handleAction = (data) => {
     let role = this.getModalRole();
 
     // 确定和取消放在一起处理
@@ -59,11 +57,11 @@ const ModalExample = React.createClass({
       console.log('输入的数据是：', data);
       return true; // 点击确定时关闭 Modal
     }
-  },
+  };
 
-  getModalRole() {
+  getModalRole = () => {
     return this.props.modalProps.role;
-  },
+  };
 
   render() {
     return (
@@ -89,28 +87,26 @@ const ModalExample = React.createClass({
       </div>
     );
   }
-});
+}
 
-const LoginModal = React.createClass({
-  getInitialState() {
-    return {
-      isOpen: false,
-    };
-  },
+class LoginModal extends React.Component {
+  state = {
+    isOpen: false,
+  };
 
-  open() {
+  open = () => {
     this.setState({
       isOpen: true,
     })
-  },
+  };
 
-  close() {
+  close = () => {
     this.setState({
       isOpen: false,
     });
-  },
+  };
 
-  handleLogin(e) {
+  handleLogin = (e) => {
     let userName = this.refs.userName;
     let pwd = this.refs.pwd;
 
@@ -129,7 +125,7 @@ const LoginModal = React.createClass({
       console.info('Valid, do something else.');
       this.close();
     });
-  },
+  };
 
   render() {
     return (
@@ -188,9 +184,9 @@ const LoginModal = React.createClass({
       </Group>
     );
   }
-});
+}
 
-const ModalExamples = React.createClass({
+class ModalExamples extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -318,6 +314,6 @@ const ModalExamples = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default ModalExamples;

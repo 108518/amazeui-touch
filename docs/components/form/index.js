@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const FormDoc = React.createClass({
+class FormDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const FormDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default FormDoc;

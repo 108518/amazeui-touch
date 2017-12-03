@@ -1,12 +1,13 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_grid.scss';
 
-const Grid = React.createClass({
+const Grid = createReactClass({
+  displayName: 'Grid',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -66,7 +67,7 @@ const Grid = React.createClass({
         {this.props.children}
       </Component>
     );
-  }
+  },
 });
 
 export default Grid;

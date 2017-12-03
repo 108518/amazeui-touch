@@ -7,7 +7,7 @@ import {
   QRCode,
 } from '../utils';
 
-const Index = React.createClass({
+class Index extends React.Component {
   componentDidMount() {
     const {
       host,
@@ -17,7 +17,7 @@ const Index = React.createClass({
       width: 80,
       height: 80,
     });
-  },
+  }
 
   render() {
     const year = new Date().getFullYear();
@@ -126,6 +126,6 @@ const Index = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default Index;

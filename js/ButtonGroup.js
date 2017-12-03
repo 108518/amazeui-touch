@@ -1,13 +1,13 @@
-import React, {
-  cloneElement,
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React, { cloneElement } from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_button-group.scss';
 
-const ButtonGroup = React.createClass({
+const ButtonGroup = createReactClass({
+  displayName: 'ButtonGroup',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -56,7 +56,7 @@ const ButtonGroup = React.createClass({
         })}
       </div>
     );
-  }
+  },
 });
 
 export default ButtonGroup;

@@ -1,13 +1,14 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import {component} from './InternalPropTypes';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_icon.scss';
 
-const Icon = React.createClass({
+const Icon = createReactClass({
+  displayName: 'Icon',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -51,7 +52,7 @@ const Icon = React.createClass({
         {this.props.children}
       </Component>
     );
-  }
+  },
 });
 
 export default Icon;

@@ -2,9 +2,10 @@
  * @see https://github.com/react-bootstrap/react-bootstrap/blob/master/src/Carousel.js
  */
 
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+
+import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
@@ -14,7 +15,8 @@ import Touchable from './Touchable';
 
 import '../scss/components/_slider.scss';
 
-const Slider = React.createClass({
+const Slider = createReactClass({
+  displayName: 'Slider',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -328,10 +330,12 @@ const Slider = React.createClass({
         {this.renderPager()}
       </Touchable>
     );
-  }
+  },
 });
 
-const SliderItem = React.createClass({
+const SliderItem = createReactClass({
+  displayName: 'SliderItem',
+
   propTypes: {
     direction: PropTypes.oneOf(['prev', 'next']),
     onAnimateOutEnd: PropTypes.func,
@@ -369,21 +373,21 @@ const SliderItem = React.createClass({
     }
 
     if (this.props.active !== prevProps.active) {
-      setTimeout(this.startAnimation, 20);
+      this.timer = setTimeout(this.startAnimation, 20);
     }
   },
 
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  },
+
   handleAnimateOutEnd() {
-    if (this.props.onAnimateOutEnd && this.isMounted()) {
+    if (this.props.onAnimateOutEnd) {
       this.props.onAnimateOutEnd(this.props.index);
     }
   },
 
   startAnimation() {
-    if (!this.isMounted()) {
-      return;
-    }
-
     this.setState({
       direction: this.props.direction === 'prev' ?
         'right' : 'left'
@@ -415,7 +419,7 @@ const SliderItem = React.createClass({
         {this.props.children}
       </li>
     );
-  }
+  },
 });
 
 Slider.Item = SliderItem;

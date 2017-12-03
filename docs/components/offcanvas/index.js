@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const OffCanvasDoc = React.createClass({
+class OffCanvasDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const OffCanvasDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default OffCanvasDoc;

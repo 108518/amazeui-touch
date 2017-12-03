@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const TypographyDoc = React.createClass({
+class TypographyDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const TypographyDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default TypographyDoc;

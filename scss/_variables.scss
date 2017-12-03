@@ -276,7 +276,7 @@ $icon-fonts: (
     src: unquote(
         'url("#{$ratchicons-path}ratchicons.woff2") format("woff2"),
         url("#{$ratchicons-path}ratchicons.woff") format("woff"),
-        url("#{$ratchicons-path}ratchicons.ttf") format("truetype");'
+        url("#{$ratchicons-path}ratchicons.ttf") format("truetype")'
     )
   ),
 ) !default;

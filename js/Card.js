@@ -1,12 +1,13 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_card.scss';
 
-const Card = React.createClass({
+const Card = createReactClass({
+  displayName: 'Card',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -67,10 +68,11 @@ const Card = React.createClass({
         {this.renderItem(footer, 'footer')}
       </div>
     );
-  }
+  },
 });
 
-const CardChild = React.createClass({
+const CardChild = createReactClass({
+  displayName: 'CardChild',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -117,7 +119,7 @@ const CardChild = React.createClass({
         {this.props.children}
       </div>
     );
-  }
+  },
 });
 
 Card.Child = CardChild;

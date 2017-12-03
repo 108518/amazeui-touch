@@ -33,12 +33,10 @@ let pages = [
   'Typography',
 ];
 
-const Default = React.createClass({
-  getDefaultProps() {
-    return {
-      transition: 'rfr'
-    };
-  },
+class Default extends React.Component {
+  static defaultProps = {
+    transition: 'rfr'
+  };
 
   render() {
     let items = pages.map((item, i) => {
@@ -71,6 +69,6 @@ const Default = React.createClass({
       </View>
     )
   }
-});
+}
 
 export default Default;

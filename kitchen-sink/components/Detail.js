@@ -16,7 +16,7 @@ let {
   ...Components
 } = Pages;
 
-const Detail = React.createClass({
+class Detail extends React.Component {
   render() {
     let component = this.props.params.component;
 
@@ -45,6 +45,6 @@ const Detail = React.createClass({
       </View>
     );
   }
-});
+}
 
 export {Default, Detail};

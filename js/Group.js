@@ -1,12 +1,13 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_group.scss';
 
-let Group = React.createClass({
+let Group = createReactClass({
+  displayName: 'Group',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -63,7 +64,7 @@ let Group = React.createClass({
         {this.renderAddon('footer')}
       </Component>
     );
-  }
+  },
 });
 
 export default Group;

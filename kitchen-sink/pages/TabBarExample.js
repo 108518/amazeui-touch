@@ -8,14 +8,12 @@ import {
   amStyles,
 } from 'amazeui-touch';
 
-const TabBarDemo = React.createClass({
-  getInitialState() {
-    return {
-      selected: 'home'
-    };
-  },
+class TabBarDemo extends React.Component {
+  state = {
+    selected: 'home'
+  };
 
-  handleClick(key, e) {
+  handleClick = (key, e) => {
     e.preventDefault();
 
     this.setState({
@@ -23,7 +21,7 @@ const TabBarDemo = React.createClass({
     }, function() {
       console.log('选中了： %s', this.state.selected);
     });
-  },
+  };
 
   render() {
     return (
@@ -53,10 +51,10 @@ const TabBarDemo = React.createClass({
       </TabBar>
     )
   }
-});
+}
 
-const TabBarExample = React.createClass({
-  renderStyles(amStyle, index) {
+class TabBarExample extends React.Component {
+  renderStyles = (amStyle, index) => {
     return (
       <Group
         header={amStyle}
@@ -70,7 +68,7 @@ const TabBarExample = React.createClass({
         </TabBar>
       </Group>
     )
-  },
+  };
 
   render() {
     return (
@@ -130,6 +128,7 @@ const TabBarExample = React.createClass({
       </Container>
     );
   }
-});
+}
+
 // test
 export default TabBarExample;

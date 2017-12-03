@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const SliderDoc = React.createClass({
+class SliderDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const SliderDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default SliderDoc;

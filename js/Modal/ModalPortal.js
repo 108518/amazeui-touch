@@ -1,7 +1,6 @@
-import React, {
-  createClass,
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import createClass from 'create-react-class';
+import React from 'react';
 import ReactDOM, {
   unmountComponentAtNode,
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer,

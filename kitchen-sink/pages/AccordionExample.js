@@ -28,7 +28,7 @@ const albums = [
   }
 ];
 
-const AccordionExample = React.createClass({
+class AccordionExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -84,6 +84,6 @@ const AccordionExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default AccordionExample;

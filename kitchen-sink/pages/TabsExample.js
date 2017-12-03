@@ -29,20 +29,18 @@ const albums = [
   }
 ];
 
-const TabsExample = React.createClass({
-  getInitialState() {
-    return {
-      activeTab: 2,
-    };
-  },
+class TabsExample extends React.Component {
+  state = {
+    activeTab: 2,
+  };
 
-  handleAction(key) {
+  handleAction = (key) => {
     this.setState({
       activeTab: key
     });
-  },
+  };
 
-  changeTab(e) {
+  changeTab = (e) => {
     e.preventDefault();
 
     if (this.state.activeTab !== 1) {
@@ -52,7 +50,7 @@ const TabsExample = React.createClass({
     } else {
       console.warn('已经激活第二个 Tab 了!');
     }
-  },
+  };
 
   render() {
     return (
@@ -118,6 +116,6 @@ const TabsExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default TabsExample;

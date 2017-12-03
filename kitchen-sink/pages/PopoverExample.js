@@ -9,7 +9,7 @@ import {
   List,
 } from 'amazeui-touch';
 
-const PopoverExample = React.createClass({
+class PopoverExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -24,6 +24,6 @@ const PopoverExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default PopoverExample;

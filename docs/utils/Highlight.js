@@ -1,24 +1,21 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import Clipboard from 'clipboard';
 import Prism from './Prism';
 
-const Highlight = React.createClass({
-  propTypes: {
-    language: React.PropTypes.string,
-  },
+class Highlight extends React.Component {
+  static propTypes = {
+    language: PropTypes.string,
+  };
 
-  getInitialState() {
-    return {
-      copyStatus: null,
-    };
-  },
+  static defaultProps = {
+    language: 'jsx',
+  };
 
-  getDefaultProps() {
-    return {
-      language: 'jsx',
-    };
-  },
+  state = {
+    copyStatus: null,
+  };
 
   componentDidMount() {
     this._clipboard = new Clipboard('.code-copy', {
@@ -35,14 +32,14 @@ const Highlight = React.createClass({
     this._clipboard.on('error', (e) => {
       this.setCopyStatus('error');
     });
-  },
+  }
 
   componentWillUnmount() {
     this._clipboard && this._clipboard.destroy();
     this._clearTimeout();
-  },
+  }
 
-  setCopyStatus(status) {
+  setCopyStatus = (status) => {
     this.setState({
       copyStatus: status,
     });
@@ -52,26 +49,26 @@ const Highlight = React.createClass({
     this._timeout = setTimeout(() => {
       this._resetStatus();
     }, 3500);
-  },
+  };
 
-  _clearTimeout() {
+  _clearTimeout = () => {
     this._timeout && clearTimeout(this._timeout);
-  },
+  };
 
-  _resetStatus() {
+  _resetStatus = () => {
     this.setState({
       copyStatus: null,
     });
-  },
+  };
 
   // TODO: 显示一个 iframe 可能更优雅一些
-  _openDemo(url, e) {
+  _openDemo = (url, e) => {
     e.preventDefault();
     window.open(url, '',
       'width=320px, height=568px, centerscreen=yes');
-  },
+  };
 
-  renderCopyStatus() {
+  renderCopyStatus = () => {
     const status = this.state.copyStatus;
     const statusMap = {
       error: '拷贝失败',
@@ -86,9 +83,9 @@ const Highlight = React.createClass({
         {statusMap[status]}
       </div>
     ) : null;
-  },
+  };
 
-  renderDemoLink() {
+  renderDemoLink = () => {
     const {
       demo,
       } = this.props;
@@ -102,7 +99,7 @@ const Highlight = React.createClass({
         Demo
       </a>
     ) : null;
-  },
+  };
 
   render() {
     const {
@@ -133,6 +130,6 @@ const Highlight = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default Highlight;

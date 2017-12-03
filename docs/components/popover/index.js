@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const Popover = React.createClass({
+class Popover extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const Popover = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default Popover;

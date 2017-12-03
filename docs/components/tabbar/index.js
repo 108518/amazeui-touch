@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const ModalDoc = React.createClass({
+class ModalDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const ModalDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default ModalDoc;

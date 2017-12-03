@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const NavBarDoc = React.createClass({
+class NavBarDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const NavBarDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default NavBarDoc;

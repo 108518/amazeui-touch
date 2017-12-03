@@ -1,9 +1,10 @@
 import React from 'react';
+
 /*import {
   Group,
 } from 'amazeui-touch';*/
 
-const NotFound = React.createClass({
+class NotFound extends React.Component {
   render() {
     return (
       <Group
@@ -13,6 +14,6 @@ const NotFound = React.createClass({
       </Group>
     );
   }
-});
+}
 
 export default NotFound;

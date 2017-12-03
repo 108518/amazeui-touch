@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const NormalizeDoc = React.createClass({
+class NormalizeDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -17,6 +17,6 @@ const NormalizeDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default NormalizeDoc;

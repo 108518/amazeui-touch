@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const NotificationDoc = React.createClass({
+class NotificationDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const NotificationDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default NotificationDoc;

@@ -1,7 +1,6 @@
-import React, {
-  cloneElement,
-  PropTypes,
-} from 'react';
+import React, { cloneElement } from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import {
   findDOMNode,
 } from 'react-dom';
@@ -11,7 +10,8 @@ import CSSCore from './utils/CSSCore';
 import TransitionEvents from './utils/TransitionEvents';
 import createChainedFunction from './utils/createChainedFunction';
 
-const OffCanvasTrigger = React.createClass({
+const OffCanvasTrigger = createReactClass({
+  displayName: 'OffCanvasTrigger',
   mixins: [OverlayMixin, ClassNameMixin],
 
   propTypes: {
@@ -81,6 +81,9 @@ const OffCanvasTrigger = React.createClass({
       CSSCore.removeClass(container, this.getWithClassName());
       CSSCore.addClass(container, this.getClosingClassName());
     }
+
+    // 暂时取消动画
+    this.handleClosed();
   },
 
   handleClosed() {
@@ -143,6 +146,7 @@ const OffCanvasTrigger = React.createClass({
       isClosing,
     } = this.state;
 
+    /*
     if (isClosing) {
       let node = this.getOverlayDOMNode();
       if (node) {
@@ -160,6 +164,7 @@ const OffCanvasTrigger = React.createClass({
         this.handleClosed();
       }
     }
+    */
 
     return cloneElement(offCanvas, {
       placement: this.props.placement,
@@ -179,7 +184,7 @@ const OffCanvasTrigger = React.createClass({
     props.onClick = createChainedFunction(this.toggle, props.onClick);
 
     return cloneElement(child, props);
-  }
+  },
 });
 
 export default OffCanvasTrigger;

@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const BadgeDoc = React.createClass({
+class BadgeDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const BadgeDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default BadgeDoc;

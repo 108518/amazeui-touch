@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const IconDoc = React.createClass({
+class IconDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const IconDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default IconDoc;

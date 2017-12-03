@@ -1,6 +1,6 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import CollapseMixin from './mixins/CollapseMixin';
@@ -8,7 +8,8 @@ import Icon from './Icon';
 
 import '../scss/components/_accordion.scss';
 
-const Accordion = React.createClass({
+const Accordion = createReactClass({
+  displayName: 'Accordion',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -100,15 +101,16 @@ const Accordion = React.createClass({
         {this.renderItems()}
       </section>
     );
-  }
+  },
 });
 
-const AccordionItem = React.createClass({
+const AccordionItem = createReactClass({
+  displayName: 'AccordionItem',
   mixins: [ClassNameMixin, CollapseMixin],
 
   propTypes: {
-    title: React.PropTypes.node,
-    eventKey: React.PropTypes.any,
+    title: PropTypes.node,
+    eventKey: PropTypes.any,
   },
 
   handleClick: function(e) {
@@ -132,15 +134,15 @@ const AccordionItem = React.createClass({
   },
 
   getCollapsibleDimensionValue() {
-    return this.refs.panel.scrollHeight;
+    return this.panel.scrollHeight;
   },
 
   getCollapsibleDOMNode() {
-    if (!this.isMounted() || !this.refs || !this.refs.panel) {
+    if (!this.panel) {
       return null;
     }
 
-    return this.refs.panel;
+    return this.panel;
   },
 
   render() {
@@ -162,7 +164,7 @@ const AccordionItem = React.createClass({
         <dd
           className={cx(this.setClassNS('accordion-body'),
             this.getCollapsibleClassSet())}
-          ref="panel"
+          ref={(panel) => (this.panel = panel)}
         >
           <div
             className={this.setClassNS('accordion-content')}
@@ -172,7 +174,7 @@ const AccordionItem = React.createClass({
         </dd>
       </dl>
     );
-  }
+  },
 });
 
 Accordion.Item = AccordionItem;

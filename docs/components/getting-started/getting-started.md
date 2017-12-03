@@ -4,7 +4,7 @@
 
 ### 开发环境配置
 
-- 下载安装 [Node.js](https://nodejs.org/en/download/)（推荐使用 `4.x` LTS 最新正式版）
+- 下载安装 [Node.js](https://nodejs.org/en/download/)（推荐使用 `6.x` LTS 最新正式版）
 - 一些 npm 模块编译需要环境支持，Windows 用户会麻烦一些，具体配置说明参见：
   - [https://github.com/nodejs/node-gyp#installation](https://github.com/nodejs/node-gyp#installation)
   - [Setting up Node.js on Windows 10](https://blog.risingstack.com/node-js-windows-10-tutorial/)
@@ -17,7 +17,7 @@
 
 **相关项目**：
 
-- [React 官网](http://facebook.github.io/react/)（v0.14.0+）
+- [React 官网](https://reactjs.org/)（v16+）
 - [React Router](https://github.com/rackt/react-router/)（可选）
 - [Sass](http://sass-lang.com/)：Amaze UI Touch 样式使用 Sass 编写，如需深入二次开发，应当知道如何使用 Sass。
 
@@ -43,7 +43,7 @@
 ### JavaScript
 
 - ES5: Amaze UI Touch 基于 ES2015 编写，使用 Babel.js 转换为 ES5；
-- React.js: ~~0.1.x 兼容至 IE8~~ `15.x` 兼容至 IE9。
+- React.js: ~~0.1.x 兼容至 IE8~~ `16.x` 兼容至 IE9。
 
 ## 编写页面
 
@@ -138,16 +138,15 @@ externals: {
   'react': 'React',
   'react-dom': 'ReactDOM',
   'amazeui-touch': 'AMUITouch',
-  'react-addons-css-transition-group':
-    ['React', 'addons', 'CSSTransitionGroup']
+  'react-transition-group': 'ReactTransitionGroup'
 }
 // ...
 ```
 
-需要注意的是，Amaze UI Touch 使用了 React CSS Transition Group add-on，引入 React 时需使用包含 add-ons 的版本 `react-with-addons.min.js`。
+注意：Amaze UI Touch 使用了 ReactTransitionGroup，React 16+ 已经不在打包改组件，需要单独引入。
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-with-addons.min.js"></script>
+<script src="https://unpkg.com/react-transition-group/dist/react-transition-group.min.js"></script>
 ```
 
 ### 进阶使用

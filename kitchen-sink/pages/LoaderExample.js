@@ -6,20 +6,18 @@ import {
   Field,
 } from 'amazeui-touch';
 
-const LoaderExample = React.createClass({
-  getInitialState() {
-    return {
-      amStyle: '',
-      rounded: false,
-    };
-  },
+class LoaderExample extends React.Component {
+  state = {
+    amStyle: '',
+    rounded: false,
+  };
 
-  handleChange() {
+  handleChange = () => {
     this.setState({
       amStyle: this.refs.amStyle.getValue(),
       rounded: !!this.refs.amShape.getValue(),
     });
-  },
+  };
 
   render() {
     const {
@@ -71,6 +69,6 @@ const LoaderExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default LoaderExample;

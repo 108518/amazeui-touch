@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const GroupDoc = React.createClass({
+class GroupDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -14,6 +14,6 @@ const GroupDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default GroupDoc;

@@ -1,13 +1,14 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import Icon from './Icon';
 
 import '../scss/components/_list.scss';
 
-const List = React.createClass({
+const List = createReactClass({
+  displayName: 'List',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -41,10 +42,11 @@ const List = React.createClass({
       >
       </ul>
     );
-  }
+  },
 });
 
-const ListItem = React.createClass({
+const ListItem = createReactClass({
+  displayName: 'ListItem',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -201,7 +203,7 @@ const ListItem = React.createClass({
           (href || linkComponent) ? this.wrapLink(itemChildren) : itemChildren}
       </li>
     );
-  }
+  },
 });
 
 List.Item = ListItem;

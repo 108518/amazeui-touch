@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   findDOMNode,
@@ -8,12 +9,12 @@ import {
 /**
  * Overlay Mixin
  *
- * @desc `overlay` is something like Popover, OffCavans, etc.
+ * @desc `overlay` is something like Popover, OffCanvas, etc.
  */
 
 export default {
   propTypes: {
-    container: React.PropTypes.node
+    container: PropTypes.node
   },
 
   componentDidMount() {
@@ -68,11 +69,12 @@ export default {
   },
 
   getOverlayDOMNode() {
-    if (!this.isMounted()) {
+    /* if (!this.isMounted()) {
       throw new Error(
         `getOverlayDOMNode(): A component must be mounted to
         have a DOM node.`);
     }
+    */
 
     if (this._overlayInstance) {
       // 包含 backdrop 时通过 refer 返回 overlay DOM 节点

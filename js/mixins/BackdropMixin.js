@@ -14,9 +14,9 @@ export default {
         {children}
         <div
           onClick={onClick}
-          ref="backdrop"
+          ref={backdrop => (this.backdrop = backdrop)}
           className={cx(classSet)}
-        ></div>
+        />
       </span>
     );
   },

@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const GettingStarted = React.createClass({
+class GettingStarted extends React.Component {
   render() {
     return (
       <Doc>
@@ -14,6 +14,6 @@ const GettingStarted = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default GettingStarted;

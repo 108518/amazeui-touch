@@ -2,13 +2,12 @@
  * @see https://github.com/yuanyan/boron
  */
 
-import React, {
-  PropTypes,
-  createClass,
-} from 'react';
+import PropTypes from 'prop-types';
+import createClass from 'create-react-class';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import ClassNameMixin from '../mixins/ClassNameMixin';
 import TransitionEvents from '../utils/TransitionEvents';
 import Button from '../Button';
@@ -188,7 +187,7 @@ const Modal = createClass({
       <div
         className={cx(this.props.className, classSet)}
         key="modalActions"
-        ref="modal"
+        ref={(modal) => { this.modal = modal; }}
       >
         {this.props.children}
         <div className={this.prefixClass('actions-group')}>
@@ -219,7 +218,7 @@ const Modal = createClass({
         {...this.removeUnknownProp(props)}
         className={cx(className, classSet, this.setClassNS('popup'))}
         key="modalPopup"
-        ref="modal"
+        ref={(modal) => { this.modal = modal; }}
       >
         <div className={this.setClassNS('popup-inner')}>
           <div className={this.setClassNS('popup-header')}>
@@ -373,7 +372,7 @@ const Modal = createClass({
 
     // listen out animation end envent
     if (isClosing) {
-      let node = this.refs.modal;
+      let node = this.modal;
 
       if (node) {
         let closedHandler = (e) => {
@@ -423,7 +422,7 @@ const Modal = createClass({
         >
           <div
             className="modal-inner"
-            ref="modal"
+            ref={(modal) => { this.modal = modal; }}
           >
             <div
               className={this.prefixClass('dialog')}

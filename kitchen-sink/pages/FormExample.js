@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   Container,
@@ -37,11 +38,11 @@ function handleSwitch() {
 
 const mySwitch = <Switch onValueChange={handleSwitch} defaultChecked />;
 
-const FormExample = React.createClass({
-  handleSubmit(e) {
+class FormExample extends React.Component {
+  handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.refs.select.getValue());
-  },
+  };
 
   render() {
     return (
@@ -312,6 +313,6 @@ const FormExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default FormExample;

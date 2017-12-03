@@ -9,7 +9,7 @@ import {
 
 const icons = ['back', 'bars', 'caret', 'check', 'close', 'code', 'compose', 'download', 'edit', 'forward', 'gear', 'home', 'info', 'list', 'more-vertical', 'more', 'pages', 'pause', 'person', 'play', 'plus', 'refresh', 'search', 'share', 'sound', 'sound2', 'sound3', 'sound4', 'star-filled', 'star', 'stop', 'trash', 'up-nav', 'up', 'right-nav', 'right', 'down-nav', 'down', 'left-nav', 'left'];
 
-const IconExample = React.createClass({
+class IconExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -35,6 +35,6 @@ const IconExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default IconExample;

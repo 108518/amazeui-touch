@@ -7,26 +7,24 @@ import {
   Field,
 } from 'amazeui-touch';
 
-const NotificationExample = React.createClass({
-  getInitialState() {
-    return {
-      visible: false,
-      amStyle: '',
-    };
-  },
+class NotificationExample extends React.Component {
+  state = {
+    visible: false,
+    amStyle: '',
+  };
 
-  openNotification() {
+  openNotification = () => {
     this.setState({
       visible: true,
       amStyle: this.refs.barStyle.getValue()
     });
-  },
+  };
 
-  closeNotification() {
+  closeNotification = () => {
     this.setState({
       visible: false
     });
-  },
+  };
 
   render() {
     return (
@@ -87,6 +85,6 @@ const NotificationExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default NotificationExample;

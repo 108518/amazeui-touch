@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const ButtonDoc = React.createClass({
+class ButtonDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const ButtonDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default ButtonDoc;

@@ -1,13 +1,14 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import {component} from './InternalPropTypes';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_badge.scss';
 
-const Badge = React.createClass({
+const Badge = createReactClass({
+  displayName: 'Badge',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -49,7 +50,7 @@ const Badge = React.createClass({
         {this.props.children}
       </Component>
     );
-  }
+  },
 });
 
 export default Badge;

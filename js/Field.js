@@ -1,6 +1,6 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import Button from './Button';
@@ -8,7 +8,8 @@ import Icon from './Icon';
 
 import '../scss/components/_form.scss';
 
-const Field = React.createClass({
+const Field = createReactClass({
+  displayName: 'Field',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -227,7 +228,7 @@ const Field = React.createClass({
     }
 
     return this.renderFieldGroup(field);
-  }
+  },
 });
 
 export default Field;

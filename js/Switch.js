@@ -1,12 +1,13 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_switch.scss';
 
-const Switch = React.createClass({
+const Switch = createReactClass({
+  displayName: 'Switch',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -58,7 +59,7 @@ const Switch = React.createClass({
         <span className={this.prefixClass('label')} />
       </label>
     );
-  }
+  },
 });
 
 export default Switch;

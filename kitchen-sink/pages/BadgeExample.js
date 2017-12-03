@@ -15,7 +15,7 @@ const styles = [
   'dark',
 ];
 
-const BadgeExample = React.createClass({
+class BadgeExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -56,6 +56,6 @@ const BadgeExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default  BadgeExample;

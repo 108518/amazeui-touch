@@ -7,12 +7,10 @@ import {
   Group,
 } from 'amazeui-touch';
 
-const About = React.createClass({
-  getDefaultProps() {
-    return {
-      year: new Date().getFullYear(),
-    };
-  },
+class About extends React.Component {
+  static defaultProps = {
+    year: new Date().getFullYear(),
+  };
 
   render() {
     const {
@@ -56,6 +54,6 @@ const About = React.createClass({
       </Container>
     )
   }
-});
+}
 
 export default About;

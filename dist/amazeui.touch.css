@@ -1,6 +1,6 @@
-/** Amaze UI Touch v1.0.0 | by Amaze UI Team
-  * (c) 2016 AllMobilize, Inc., Licensed under MIT
-  * 2016-08-18T15:15:02+0800
+/** Amaze UI Touch v2.0.0-alpha.1 | by Amaze UI Team
+  * (c) 2017 AllMobilize, Inc., Licensed under MIT
+  * 2017-12-03T16:29:42+0800
   */
   /* Amaze UI Touch Base Styles */
 [class*="animation-"] {
@@ -53,7 +53,8 @@
   right: auto;
   z-index: 15;
   display: block;
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   background-color: transparent;
   border-top: 1px solid #d8d8d8;
   width: 100%;
@@ -75,7 +76,8 @@
   left: 0;
   z-index: 15;
   display: block;
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   background-color: transparent;
   border-bottom: 1px solid #d8d8d8;
   width: 100%;
@@ -97,7 +99,8 @@
   left: auto;
   z-index: 15;
   display: block;
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   background-color: transparent;
   border-right: 1px solid #d8d8d8;
   width: 1px;
@@ -237,7 +240,8 @@ abbr[title] {
   /* 1 */
   text-decoration: underline;
   /* 2 */
-  text-decoration: underline dotted;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
   /* 2 */
 }
 
@@ -352,7 +356,8 @@ figure {
  * 2. Show the overflow in Edge and IE.
  */
 hr {
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   /* 1 */
   height: 0;
   /* 1 */
@@ -462,7 +467,8 @@ fieldset {
  *    `fieldset` elements in all browsers.
  */
 legend {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   /* 1 */
   color: inherit;
   /* 2 */
@@ -493,7 +499,8 @@ textarea {
  */
 [type="checkbox"],
 [type="radio"] {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   /* 1 */
   padding: 0;
   /* 2 */
@@ -553,20 +560,22 @@ body {
 }
 
 html {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
 }
 
 * {
   outline: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-touch-callout: none;
-  background: -webkit-linear-gradient(top, transparent, transparent);
+  background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(transparent));
   background: linear-gradient(to bottom, transparent, transparent);
 }
 
@@ -1196,7 +1205,7 @@ hr {
 
 .container-fill > .container-fill {
   -webkit-box-flex: 1;
-      -ms-flex: 1 1 0;
+      -ms-flex: 1 1 0px;
           flex: 1 1 0;
   position: relative;
 }
@@ -1218,7 +1227,7 @@ hr {
 .container-column > .container-fill,
 .container-row > .container-fill {
   -webkit-box-flex: 1;
-      -ms-flex: 1 1 0;
+      -ms-flex: 1 1 0px;
           flex: 1 1 0;
   position: relative;
 }
@@ -1246,14 +1255,12 @@ hr {
 .container-align-end {
   -webkit-box-align: end;
       -ms-flex-align: end;
-              -ms-grid-row-align: flex-end;
           align-items: flex-end;
 }
 
 .container-align-center {
   -webkit-box-align: center;
       -ms-flex-align: center;
-              -ms-grid-row-align: center;
           align-items: center;
 }
 
@@ -1264,7 +1271,6 @@ hr {
 .container-align-start {
   -webkit-box-align: start;
       -ms-flex-align: start;
-              -ms-grid-row-align: flex-start;
           align-items: flex-start;
 }
 
@@ -2041,7 +2047,7 @@ hr {
   font-family: Ratchicons;
   font-weight: normal;
   font-style: normal;
-  src: url("fonts/ratchicons.woff2") format("woff2"), url("fonts/ratchicons.woff") format("woff"), url("fonts/ratchicons.ttf") format("truetype");;
+  src: url("fonts/ratchicons.woff2") format("woff2"), url("fonts/ratchicons.woff") format("woff"), url("fonts/ratchicons.ttf") format("truetype");
 }
 
 .icon {
@@ -2236,7 +2242,8 @@ textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   display: block;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   width: 100%;
   padding: 0.75rem 0.5rem;
   margin-bottom: 1rem;
@@ -2413,8 +2420,10 @@ textarea {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: row nowrap;
-      flex-flow: row nowrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
@@ -2562,7 +2571,8 @@ output {
 .card {
   margin: 0.625rem 0.9375rem;
   border-radius: 1px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   background: #fff;
   color: #333;
 }
@@ -2581,7 +2591,6 @@ output {
 .card-cover.card-header {
   -webkit-box-align: end;
       -ms-flex-align: end;
-              -ms-grid-row-align: flex-end;
           align-items: flex-end;
 }
 
@@ -3661,7 +3670,8 @@ output {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   -webkit-animation-duration: 0.4s;
           animation-duration: 0.4s;
   -webkit-animation-timing-function: ease-in-out;
@@ -3806,7 +3816,8 @@ output {
   background: #fff;
   color: #333333;
   border: 1px solid #ddd;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   -webkit-animation-duration: 0.3s;
           animation-duration: 0.3s;
   -webkit-animation-timing-function: ease-out;
@@ -4843,7 +4854,7 @@ output {
 .views {
   position: relative;
   -webkit-box-flex: 1;
-      -ms-flex: 1 1 0;
+      -ms-flex: 1 1 0px;
           flex: 1 1 0;
   width: 100%;
   height: 100%;
@@ -4871,7 +4882,7 @@ output {
 
 .view > .container {
   -webkit-box-flex: 1;
-      -ms-flex: 1 1 0;
+      -ms-flex: 1 1 0px;
           flex: 1 1 0;
 }
 

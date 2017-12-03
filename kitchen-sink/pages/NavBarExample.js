@@ -53,8 +53,8 @@ var withOffCanvas = {
   }],
 };
 
-const NavBarExample = React.createClass({
-  renderStyles(style, index) {
+class NavBarExample extends React.Component {
+  renderStyles = (style, index) => {
     return (
       <div key={index}>
         <NavBar
@@ -64,7 +64,7 @@ const NavBarExample = React.createClass({
         <br />
       </div>
     );
-  },
+  };
 
   render() {
     return (
@@ -112,6 +112,6 @@ const NavBarExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default NavBarExample;

@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const CardDoc = React.createClass({
+class CardDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const CardDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default CardDoc;

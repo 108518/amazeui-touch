@@ -1,13 +1,14 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import {component as componentPropType} from './InternalPropTypes';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_grid.scss';
 
-const Col = React.createClass({
+const Col = createReactClass({
+  displayName: 'Col',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -56,7 +57,7 @@ const Col = React.createClass({
         {this.props.children}
       </Component>
     );
-  }
+  },
 });
 
 export default Col;

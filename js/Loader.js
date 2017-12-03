@@ -1,12 +1,13 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_loader.scss';
 
-const Loader = React.createClass({
+const Loader = createReactClass({
+  displayName: 'Loader',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -45,7 +46,7 @@ const Loader = React.createClass({
         <div className={this.prefixClass('bounce3')} />
       </Component>
     )
-  }
+  },
 });
 
 export default Loader;

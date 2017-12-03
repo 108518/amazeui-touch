@@ -1,6 +1,6 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import Button from './Button';
@@ -8,7 +8,8 @@ import ButtonGroup from './ButtonGroup';
 
 import '../scss/components/_tabs.scss';
 
-const Tabs = React.createClass({
+const Tabs = createReactClass({
+  displayName: 'Tabs',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -184,10 +185,11 @@ const Tabs = React.createClass({
         {this.renderTabPanels()}
       </div>
     );
-  }
+  },
 });
 
-const TabsItem = React.createClass({
+const TabsItem = createReactClass({
+  displayName: 'TabsItem',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -235,7 +237,7 @@ const TabsItem = React.createClass({
         {children}
       </div>
     );
-  }
+  },
 });
 
 Tabs.Item = TabsItem;

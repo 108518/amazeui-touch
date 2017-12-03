@@ -9,15 +9,17 @@
  * @see https://github.com/madrobby/zepto/blob/master/src/touch.js
  */
 
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+
+import React from 'react';
+import createReactClass from 'create-react-class';
 import TouchableMixin from './mixins/TouchableMixin';
 import createChainedFunction from './utils/createChainedFunction';
 import supportTouch from './utils/isTouchSupported';
 import './utils/ucUIControl';
 
-const Touchable = React.createClass({
+const Touchable = createReactClass({
+  displayName: 'Touchable',
   mixins: [TouchableMixin],
 
   propTypes: {

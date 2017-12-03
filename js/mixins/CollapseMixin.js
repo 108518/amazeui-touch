@@ -3,13 +3,15 @@
  * https://github.com/react-bootstrap/react-bootstrap/blob/master/src/CollapsibleMixin.js
  */
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import TransitionEvents from '../utils/TransitionEvents';
 
 var CollapseMixin = {
   propTypes: {
-    defaultExpanded: React.PropTypes.bool,
-    expanded: React.PropTypes.bool
+    defaultExpanded: PropTypes.bool,
+    expanded: PropTypes.bool
   },
 
   getInitialState() {

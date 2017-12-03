@@ -1,13 +1,14 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import Icon from './Icon';
 
 import '../scss/components/_navbar.scss';
 
-const NavBar = React.createClass({
+const NavBar = createReactClass({
+  displayName: 'NavBar',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -173,7 +174,7 @@ const NavBar = React.createClass({
         {this.renderNav('right')}
       </header>
     );
-  }
+  },
 });
 
 export default NavBar;

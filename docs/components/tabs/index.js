@@ -6,7 +6,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const TabsDoc = React.createClass({
+class TabsDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -19,6 +19,6 @@ const TabsDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default TabsDoc;

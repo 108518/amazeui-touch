@@ -1,15 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-const Markdown = React.createClass({
-  propTypes: {
-    component: React.PropTypes.any
-  },
+class Markdown extends React.Component {
+  static propTypes = {
+    component: PropTypes.any
+  };
 
-  getDefaultProps() {
-    return {
-      component: 'div',
-    };
-  },
+  static defaultProps = {
+    component: 'div',
+  };
 
   render() {
     const {
@@ -27,9 +26,9 @@ const Markdown = React.createClass({
       />
     );
   }
-});
+}
 
-const Doc = React.createClass({
+class Doc extends React.Component {
   // do something here
   render() {
     return (
@@ -49,7 +48,7 @@ const Doc = React.createClass({
       </div>
     );
   }
-});
+}
 
 import Highlight from './Highlight';
 import Prism from './Prism';

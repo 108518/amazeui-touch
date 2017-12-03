@@ -1,13 +1,14 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import BackdropMixin from './mixins/BackdropMixin';
 
 import '../scss/components/_popover.scss';
 
-const Popover = React.createClass({
+const Popover = createReactClass({
+  displayName: 'Popover',
   mixins: [ClassNameMixin, BackdropMixin],
 
   propTypes: {
@@ -28,8 +29,8 @@ const Popover = React.createClass({
   },
 
   handleBackdropClick(e) {
-    if (e && e.target === this.refs.backdrop) {
-      let {
+    if (e && e.target === this.backdrop) {
+      const {
         onDismiss,
       } = this.props;
 
@@ -70,6 +71,7 @@ const Popover = React.createClass({
       <div
         {...props}
         style={style}
+        // ref={overlay => (this.overlay = overlay)}
         ref="overlay"
         className={cx(classSet, className)}
       >
@@ -86,7 +88,7 @@ const Popover = React.createClass({
     );
 
     return this.renderBackdrop(popover);
-  }
+  },
 });
 
 export default Popover;

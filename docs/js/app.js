@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -15,30 +16,28 @@ import Container from '../../js/Container';
 import ComponentDoc from './ComponentDoc';
 import Index from './Index';
 
-const Header = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
-  },
+class Header extends React.Component {
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
-  getInitialState() {
-    return {
-      navActive: false,
-    };
-  },
+  state = {
+    navActive: false,
+  };
 
-  onClick() {
+  onClick = () => {
     this.setState({
       navActive: !this.state.navActive,
     });
-  },
+  };
 
-  onMatchClick() {
+  onMatchClick = () => {
     if (global.matchMedia && global.matchMedia('(max-width: 640px)').matches) {
       this.onClick();
     }
-  },
+  };
 
-  renderLink(route, title) {
+  renderLink = (route, title) => {
     const pathName = `/${route}`;
 
     return (
@@ -51,7 +50,7 @@ const Header = React.createClass({
         </Link>
       </li>
     );
-  },
+  };
 
   render() {
     const navActive = this.state.navActive;
@@ -89,9 +88,9 @@ const Header = React.createClass({
       </header>
     );
   }
-});
+}
 
-const App = React.createClass({
+class App extends React.Component {
   render() {
     return (
       <Container direction="column" id="main-route">
@@ -102,17 +101,17 @@ const App = React.createClass({
       </Container>
     );
   }
-});
+}
 
-App.NotFound = React.createClass({
+App.NotFound = class extends React.Component {
   render() {
     return (
       <h2>Oops, 404 Not Found.</h2>
     );
   }
-});
+};
 
-App.Components = React.createClass({
+App.Components = class extends React.Component {
   render() {
     return (
       <Container fill direction="column">
@@ -120,13 +119,13 @@ App.Components = React.createClass({
       </Container>
     );
   }
-});
+};
 
-const GettingStarted = React.createClass({
+class GettingStarted extends React.Component {
   render() {
     return <ComponentDoc component="getting-started" />
   }
-});
+}
 
 const routes = (
   <Router history={hashHistory}>

@@ -9,7 +9,7 @@ import {
   Col
 } from 'amazeui-touch';
 
-const GridExample = React.createClass({
+class GridExample extends React.Component {
   render() {
     return (
       <Container
@@ -188,6 +188,6 @@ const GridExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default GridExample;

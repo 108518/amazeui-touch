@@ -101,7 +101,7 @@ const sliderThumbs = (
   </Slider>
 );
 
-const SliderExample = React.createClass({
+class SliderExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -128,6 +128,6 @@ const SliderExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default SliderExample;

@@ -1,14 +1,14 @@
-import React, {
-  cloneElement,
-  PropTypes,
-} from 'react';
+import React, { cloneElement } from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import TransitionEvents from './utils/TransitionEvents';
 import OverlayMixin from './mixins/OverlayMixin';
 import dom from './utils/domUtils';
 import createChainedFunction from './utils/createChainedFunction';
 
-const PopoverTrigger = React.createClass({
+const PopoverTrigger = createReactClass({
+  displayName: 'PopoverTrigger',
   mixins: [OverlayMixin],
 
   propTypes: {
@@ -63,9 +63,13 @@ const PopoverTrigger = React.createClass({
       return;
     }
 
+    // 暂时移除动画效果
+    /*
     this.setState({
       isClosing: true,
     });
+    */
+    this.handleClosed();
   },
 
   handleClosed() {
@@ -82,9 +86,11 @@ const PopoverTrigger = React.createClass({
   },
 
   updatePopoverPosition() {
+    /*
     if (!this.isMounted()) {
       return;
     }
+    */
 
     let position = this.calcPopoverPosition() || {};
 
@@ -224,8 +230,10 @@ const PopoverTrigger = React.createClass({
 
     if (isClosing) {
       let node = this.getOverlayDOMNode();
+      console.log(node);
       if (node) {
         let closedHandler = (e) => {
+          console.log(e.target,  '---->')
           if (e && e.target !== node) {
             return;
           }
@@ -260,7 +268,7 @@ const PopoverTrigger = React.createClass({
     props.onClick = createChainedFunction(this.toggle, props.onClick);
 
     return cloneElement(child, props);
-  }
+  },
 });
 
 export default PopoverTrigger;

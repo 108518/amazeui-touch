@@ -7,7 +7,7 @@ import {
   Highlight,
 } from '../../utils';
 
-const AccordionDoc = React.createClass({
+class AccordionDoc extends React.Component {
   render() {
     return (
       <Doc>
@@ -20,6 +20,6 @@ const AccordionDoc = React.createClass({
       </Doc>
     );
   }
-});
+}
 
 export default AccordionDoc;

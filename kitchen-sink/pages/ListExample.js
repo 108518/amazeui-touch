@@ -51,7 +51,7 @@ function handleSwitch(e) {
 
 const mySwitch = <Switch onValueChange={handleSwitch} />;
 
-const ListExample = React.createClass({
+class ListExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -244,6 +244,6 @@ const ListExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default ListExample;

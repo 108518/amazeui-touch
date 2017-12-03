@@ -1,10 +1,11 @@
 // @see https://github.com/JedWatson/react-container
 // @license MIT Copyright (c) 2015 Jed Watson
 
-import React, {
-  PropTypes,
-} from 'react';
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+import PropTypes from 'prop-types';
+
+import React from 'react';
+import createReactClass from 'create-react-class';
+import { CSSTransitionGroup}  from 'react-transition-group';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
@@ -64,7 +65,8 @@ function initScrollable(defaultPos) {
 
 const TRANSITION_TIMEOUT = 500;
 
-let Container = React.createClass({
+let Container = createReactClass({
+  displayName: 'Container',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -185,7 +187,7 @@ let Container = React.createClass({
         {children}
       </Component>
     );
-  }
+  },
 });
 
 Container.initScrollable = initScrollable;

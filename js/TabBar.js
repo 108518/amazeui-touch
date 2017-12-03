@@ -1,6 +1,6 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import Icon from './Icon';
@@ -9,7 +9,8 @@ import Badge from './Badge';
 import '../scss/components/_tabbar.scss';
 
 // TODO: 默认的选中处理
-let TabBar = React.createClass({
+let TabBar = createReactClass({
+  displayName: 'TabBar',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -66,14 +67,15 @@ let TabBar = React.createClass({
         })}
       </Component>
     );
-  }
+  },
 });
 
 // TODO:
 //   Icon 应该支持用户自定义：
 //   React-native 采用 require('path/to/icon') 的形式，
 //   这里可能需要再添加一个属性
-const TabBarItem = React.createClass({
+const TabBarItem = createReactClass({
+  displayName: 'TabBarItem',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -173,7 +175,7 @@ const TabBarItem = React.createClass({
         ]}
       </Component>
     );
-  }
+  },
 });
 
 TabBar.Item = TabBarItem;

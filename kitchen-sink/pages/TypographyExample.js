@@ -5,7 +5,7 @@ import {
   Group,
 } from 'amazeui-touch';
 
-const TypographyExample = React.createClass({
+class TypographyExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -82,6 +82,6 @@ const TypographyExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default TypographyExample;

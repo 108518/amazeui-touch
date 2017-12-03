@@ -1,11 +1,11 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM, {
   unmountComponentAtNode,
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
 } from 'react-dom';
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import {
@@ -24,7 +24,8 @@ import '../scss/components/_notification.scss';
 // be not smooth. It maybe a bug of React.
 const TRANSITION_TIMEOUT = 250;
 
-const Notification = React.createClass({
+const Notification = createReactClass({
+  displayName: 'Notification',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -102,19 +103,17 @@ const Notification = React.createClass({
         {notificationBar}
       </CSSTransitionGroup>
     ) : notificationBar;
-  }
+  },
 });
 
-const NotificationPortal = React.createClass({
-  propTypes: {
+class NotificationPortal extends React.Component {
+  static propTypes = {
     visible: PropTypes.bool.isRequired,
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      visible: false,
-    };
-  },
+  static defaultProps = {
+    visible: false,
+  };
 
   componentDidMount() {
     if (!this.isStatic()) {
@@ -123,36 +122,36 @@ const NotificationPortal = React.createClass({
       bodyElement.appendChild(this.node);
       this.renderNotification(this.props);
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (!this.isStatic()) {
       this.renderNotification(nextProps);
     }
-  },
+  }
 
   componentWillUnmount() {
     if (!this.isStatic()) {
       unmountComponentAtNode(this.node);
       bodyElement.removeChild(this.node);
     }
-  },
+  }
 
-  isStatic() {
+  isStatic = () => {
     return this.props.static;
-  },
+  };
 
-  renderNotification(props) {
+  renderNotification = (props) => {
     this.portal = renderSubtreeIntoContainer(
       this,
       <Notification {...props} />,
       this.node
     );
-  },
+  };
 
   render() {
     return this.isStatic() ? <Notification {...this.props} /> : null;
   }
-});
+}
 
 export default NotificationPortal;

@@ -9,7 +9,7 @@ import {
   Badge,
 } from 'amazeui-touch';
 
-const ButtonExample = React.createClass({
+class ButtonExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -176,6 +176,6 @@ const ButtonExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default ButtonExample;

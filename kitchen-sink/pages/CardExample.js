@@ -19,7 +19,7 @@ const footer = (
   </Card.Child>
 );
 
-const CardExample = React.createClass({
+class CardExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -65,6 +65,6 @@ const CardExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
 export default CardExample;

@@ -1,4 +1,5 @@
 import React from 'react';
+import createClass from 'create-react-class';
 import {
   Link,
 } from 'react-router';
@@ -112,7 +113,7 @@ const components = [
   },
 ];
 
-const Sidebar = React.createClass({
+const Sidebar = createClass({
   getInitialState() {
     return {
       filter: null

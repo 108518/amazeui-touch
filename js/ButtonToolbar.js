@@ -1,12 +1,13 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_button-group.scss';
 
-const ButtonToolbar = React.createClass({
+const ButtonToolbar = createReactClass({
+  displayName: 'ButtonToolbar',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -37,7 +38,7 @@ const ButtonToolbar = React.createClass({
         {children}
       </div>
     );
-  }
+  },
 });
 
 export default ButtonToolbar;

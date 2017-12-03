@@ -1,13 +1,14 @@
-import React, {
-  PropTypes,
-} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import cx from 'classnames';
 import {component} from './InternalPropTypes';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
 import '../scss/components/_button.scss';
 
-const Button = React.createClass({
+const Button = createReactClass({
+  displayName: 'Button',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -97,7 +98,7 @@ const Button = React.createClass({
     classSet[this.prefixClass('block')] = block;
 
     return this[renderType](cx(classSet, className));
-  }
+  },
 });
 
 export default Button;
