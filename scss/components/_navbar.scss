@@ -19,7 +19,7 @@
 
   @if $item-style {
     .#{$navbar-prefix}-nav-item {
-      color: darken(islight($background), 5%);
+      color: #fff;
     }
   }
 }
@@ -48,8 +48,8 @@
 // the title of the bar
 .#{$navbar-class-title} {
   margin: 0;
-  font-size: 100%;
-  font-weight: bold;
+  font-size: rem-calc(18);
+  font-weight: normal;
   color: inherit;
 }
 
@@ -79,14 +79,15 @@
   }
 }
 
-/*
+
 .#{$navbar-prefix}-nav-title {
+  font-size: $navbar-nav-title;
+
   & ~ .#{$navbar-prefix}-icon {
     font-size: inherit;
     line-height: normal;
   }
 }
-*/
 
 .#{$navbar-prefix}-icon-sibling-of-title {
   font-size: inherit;

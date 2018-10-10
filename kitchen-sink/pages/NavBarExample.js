@@ -1,77 +1,88 @@
-import React from 'react';
+import React from "react";
 import {
   Container,
   Group,
   NavBar,
   amStyles,
   OffCanvas,
-  OffCanvasTrigger,
-} from 'amazeui-touch';
+} from "amazeui-touch";
 
 const clickHandler = (item, e) => {
-  e.preventDefault();
+  // e.preventDefault();
   console.log(item);
 };
 
 const itemLeft = {
-  href: '#',
-  title: 'Left'
+  href: "http://baidu.com",
+  title: "返回"
 };
 
 const itemRight = {
-  href: '#',
-  title: 'Right'
+  href: "#",
+  title: "保存"
 };
 
 const dataAll = {
-  title: 'Navbar',
-  leftNav: [{...itemLeft, icon: 'left-nav'}],
-  rightNav: [{...itemRight, icon: 'right-nav'}],
-  onAction: clickHandler,
+  title: "日常报销",
+  leftNav: [{ ...itemLeft, icon: "left-nav" }],
+  rightNav: [{ ...itemRight, icon: "right-nav" }],
+  onAction: clickHandler
 };
 
 const dataLeft = {
-  title: 'Navbar',
-  leftNav: [{...itemLeft, icon: 'left-nav'}],
-  onAction: clickHandler,
+  title: "Navbar",
+  leftNav: [{ ...itemLeft, icon: "left-nav" }],
+  onAction: clickHandler
 };
 
 const dataRight = {
-  title: 'Navbar',
-  rightNav: [itemRight, itemRight],
-  onAction: clickHandler,
+  title: "Navbar",
+  rightNav: [itemRight],
+  onAction: clickHandler
 };
 
-var withOffCanvas = {
-  title: 'With OffCanvas',
-  rightNav: [{
-    icon: 'bars',
-    title: 'Menu',
-    component: OffCanvasTrigger,
-    isClone: true, // IMPORTANT
-    offCanvas: <OffCanvas><p>OffCanvas 内容</p></OffCanvas>,
-  }],
-};
+export default class extends React.Component {
 
-class NavBarExample extends React.Component {
+  state = {
+    isOpen: false
+  }
+
   renderStyles = (style, index) => {
     return (
       <div key={index}>
-        <NavBar
-          {...dataAll}
-          amStyle={style.toLowerCase()}
-        />
+        <NavBar {...dataAll} amStyle={style.toLowerCase()} />
         <br />
       </div>
     );
   };
 
+  handleOffCanvas = () => {
+    this.setState({
+      isOpen: true
+    })
+  }
+
+  closeOffCanvas = () => {
+    this.setState({
+      isOpen: false
+    })
+  }
+
   render() {
+    const withOffCanvas = {
+      title: "With OffCanvas",
+      rightNav: [
+        {
+          icon: "bars",
+          title: "Menu",
+        }
+      ],
+      onAction: this.handleOffCanvas
+    };
+
     return (
       <Container {...this.props}>
-        <Group
-          header="颜色样式"
-        >
+        <Group header="颜色样式">
           <NavBar {...dataAll} />
 
           <br />
@@ -79,39 +90,25 @@ class NavBarExample extends React.Component {
           {amStyles.map(this.renderStyles)}
         </Group>
 
-        <Group
-          header="图标"
-        >
-          <NavBar {...dataLeft} rightNav={[{icon: 'bars'}]} />
+        <Group header="图标">
+          <NavBar {...dataLeft} />
         </Group>
 
-        <Group
-          header="多链接"
-        >
-          <NavBar {...dataRight} />
+        <Group header="标题居左">
+          <NavBar {...dataRight} title="Title on Left" titleOnLeft />
         </Group>
 
-        <Group
-          header="标题居左"
-        >
-          <NavBar
-            {...dataRight}
-            title="Title on Left"
-            titleOnLeft
-          />
+        <Group header="With OffCanvas">
+          <NavBar {...withOffCanvas} amStyle="primary" />
         </Group>
-        
-        <Group
-          header="With OffCanvas"
+
+        <OffCanvas
+          isOpen={this.state.isOpen}
+          onDismiss={this.closeOffCanvas}
         >
-          <NavBar
-            {...withOffCanvas}
-            amStyle="primary"
-          />
-        </Group>
+          <p>OffCanvas 内容</p>
+        </OffCanvas>
       </Container>
     );
   }
 }
-
-export default NavBarExample;

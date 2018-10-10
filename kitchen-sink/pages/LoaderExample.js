@@ -1,42 +1,33 @@
-import React from 'react';
-import {
-  Container,
-  Group,
-  Loader,
-  Field,
-} from 'amazeui-touch';
+import React from "react";
+import { Container, Group, Loader, Field } from "amazeui-touch";
 
-class LoaderExample extends React.Component {
+export default class LoaderExample extends React.Component {
   state = {
-    amStyle: '',
-    rounded: false,
+    amStyle: "primary",
+    rounded: true
   };
 
   handleChange = () => {
     this.setState({
-      amStyle: this.refs.amStyle.getValue(),
-      rounded: !!this.refs.amShape.getValue(),
+      amStyle: this.amStyle.getValue(),
+      rounded: !!this.amShape.getValue()
     });
   };
 
   render() {
-    const {
-      amStyle,
-      } = this.state;
+    const { amStyle } = this.state;
     let style = {};
 
-    if (amStyle === 'white') {
+    if (amStyle === "white") {
       style = {
-        background: '#0e90d2',
-        display: 'block',
-      }
+        background: "#0e90d2",
+        display: "block"
+      };
     }
 
     return (
       <Container {...this.props}>
-        <Group
-          header="Loader 演示"
-        >
+        <Group header="Loader 演示">
           <div style={style}>
             <Loader {...this.state} />
           </div>
@@ -44,7 +35,9 @@ class LoaderExample extends React.Component {
           <Field
             type="select"
             label="颜色"
-            ref="amStyle"
+            ref={ref => {
+              this.amStyle = ref;
+            }}
             onChange={this.handleChange}
           >
             <option value="">default</option>
@@ -60,7 +53,9 @@ class LoaderExample extends React.Component {
             onChange={this.handleChange}
             type="select"
             label="形状"
-            ref="amShape"
+            ref={ref => {
+              this.amShape = ref;
+            }}
           >
             <option value="">default (square)</option>
             <option value="rounded">rounded</option>
@@ -70,5 +65,3 @@ class LoaderExample extends React.Component {
     );
   }
 }
-
-export default LoaderExample;

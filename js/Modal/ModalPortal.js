@@ -1,59 +1,51 @@
-import PropTypes from 'prop-types';
-import createClass from 'create-react-class';
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM, {
-  unmountComponentAtNode,
-  unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer,
+  createPortal,
 } from 'react-dom';
 import CSSCore from '../utils/CSSCore';
-import {
-  canUseDOM,
-} from '../utils/exenv';
 import bodyElement from '../utils/bodyElement';
 import Modal from './Modal';
 
 const bodyClassName = 'has-modal-open';
 
-const ModalPortal = createClass({
-  propTypes: {
+
+class ModalPortal extends React.Component {
+  static propTypes = {
     isOpen: PropTypes.bool.isRequired,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      isOpen: false,
-    };
-  },
+  static defaultProps = {
+    isOpen: false,
+  }
 
-  componentDidMount() {
+  constructor() {
+    super()
     this.node = document.createElement('div');
     this.node.className = '__modal-portal';
-    bodyElement.appendChild(this.node);
-    this.renderModal(this.props);
-  },
+  }
 
-  componentWillReceiveProps(nextProps) {
-    this.renderModal(nextProps);
-  },
+  componentDidMount() {
+    bodyElement.appendChild(this.node);
+  }
 
   componentWillUnmount() {
-    unmountComponentAtNode(this.node);
     bodyElement.removeChild(this.node);
     CSSCore.removeClass(bodyElement, bodyClassName);
-  },
-
-  renderModal(props) {
-    CSSCore[(props.isOpen ? 'add' : 'remove') + 'Class'](bodyElement, bodyClassName);
-    this.portal = renderSubtreeIntoContainer(
-      this,
-      <Modal {...props} />,
-      this.node
-    );
-  },
+  }
 
   render() {
-    return null;
+    const {
+      isOpen,
+      ...props
+    } = this.props;
+    CSSCore[(isOpen ? 'add' : 'remove') + 'Class'](bodyElement, bodyClassName);
+
+    return createPortal(
+      <Modal {...this.props} />,
+      this.node
+    );
   }
-});
+}
 
 export default ModalPortal;

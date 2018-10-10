@@ -1,28 +1,25 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_view.scss';
 
-const View = createReactClass({
-  displayName: 'View',
-  mixins: [ClassNameMixin],
+export default class View extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     component: PropTypes.node.isRequired,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'view',
       component: 'div',
-    };
-  },
+  }
 
   render() {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+
     const {
       component,
       className,
@@ -33,9 +30,8 @@ const View = createReactClass({
 
     return React.createElement(component, {
       ...props,
-      className: cx(className, this.getClassSet()),
+      className: cx(className, classSet),
     });
-  },
-});
+  }
+}
 
-export default View;

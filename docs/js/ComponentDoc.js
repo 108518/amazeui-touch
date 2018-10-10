@@ -16,14 +16,14 @@ function isNodeInTree(node, tree) {
   }
 
   return false;
-}
+};
 
 const sidebar = <Sidebar />;
 
 class ComponentDoc extends React.Component {
   state = {
-    sidebarActive: false,
-  };
+      sidebarActive: false,
+  }
 
   componentDidMount() {
     document.addEventListener('click' , this._clickHandler);
@@ -42,7 +42,7 @@ class ComponentDoc extends React.Component {
         sidebarActive: !this.state.sidebarActive,
       });
     }
-  };
+  }
 
   sidebarToggle = (e) => {
     e && e.preventDefault();
@@ -50,7 +50,7 @@ class ComponentDoc extends React.Component {
     this.setState({
       sidebarActive: !this.state.sidebarActive,
     });
-  };
+  }
 
   render() {
     let {
@@ -61,11 +61,7 @@ class ComponentDoc extends React.Component {
     // Getting URL Parameters
     component = component || params.component;
 
-    const Doc = docs[component] || class extends React.Component {
-      render() {
-        return <h2>Not Found.</h2>;
-      }
-    };
+    const Doc = docs[component] || (<h2>Not Found.</h2>)
 
     const activeClassName = this.state.sidebarActive ? ' active' : '';
 

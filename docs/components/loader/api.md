@@ -1,31 +1,42 @@
+---
+imports:
+  '{ Loader }': 'amazeui-touch'
+---
+
 # Loader
 
-加载图标，基于 SVG 实现（如果使用环境不支持 SVG……你懂得）。
+加载图标。用于指示加载或者等待过程，但需要控制其显示和消失的时机。
 
-## 组件
 
-### Loader
+## 默认
 
-`<Loader>` 组件。
+```demo
+<Loader />
+```
 
-#### Props
+## 直角设置
 
-##### `component`
+直角设置：
 
-> PropType: `node`
+```demo
+<Loader rounded={false} /> 
+```
 
-组件使用的元素，默认为 `div`。
+## 色彩设置
 
-##### `amStyle`
+色彩设置
 
-> PropType: `enum('primary', 'secondary', 'success', 'warning', 'alert', 'dark', 'white')`
+```demo
+<Loader amStyle="primary" /> 
+```
 
-颜色样式，默认为灰色。
+### &lt;Loader&gt;
 
-##### `rounded`
+| 名称                |  类型           | 默认值           | 含义           |
+| -------------      | ------------- | --------------- | --------------- |
+| `component`        | `node`        | `'div'`         |  组件使用的元素。   |
+| `amStyle`          | `string`      |                 |  颜色样式，默认为灰色。enum('primary', 'secondary', 'success', 'warning', 'alert', 'dark', 'white') |
+| `rounded`          | `bool`        | `true`         | 是否应用圆形样式，默认为方形。|
 
-> PropType: 'bool'
-
-是否应用圆形样式，默认为方形。
 
 ## 示例

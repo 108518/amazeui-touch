@@ -1,69 +1,58 @@
+---
+imports:
+  '{ Icon }': 'amazeui-touch'
+---
+
+
 # Icon
 
-图标组件，目前使用 [Ratchet](https://github.com/twbs/ratchet/tree/master/fonts) 的字体图标，包含 40 个常用图标。
+图标组件。
 
-## 组件
+## 说明
 
-### Icon
+图标库为 UED 部门根据项目中出现的 icon 总结而出。
 
-`<Icon>` 组件。
+命名规则参考：
 
-#### Props
+- 名称应该是具体的，不带感情色彩的。（即像什么就叫什么）
+- line 表示线条，简写为 `l`
+- square 表示直角，简写为 `s`
+- circle 表示圆角，简写为 `c`
+- up down left right 表示方向，不可简写
+- 修饰词统一作为后缀出现
 
-##### `component`
+示例：
 
-> PropType: `node`
+```md
+权重示例： 
+名称 > 方向 > 线条 > 直角/圆角
+arrow-right-l-s
 
-组件使用的元素，默认为 `span`。
-
-##### `name`
-
-> PropType: `enum('back', 'bars', 'caret', 'check', 'close', 'code', 'compose', 'download', 'edit', 'forward', 'gear', 'home', 'info', 'list', 'more-vertical', 'more', 'pages', 'pause', 'person', 'play', 'plus', 'refresh', 'search', 'share', 'sound', 'sound2', 'sound3', 'sound4', 'star-filled', 'star', 'stop', 'trash', 'up-nav', 'up', 'right-nav', 'right', 'down-nav', 'down', 'left-nav', 'left')`
-
-图标名称。
+名称示例：
+心形图标命为 heart 而不应该是 like 等带有感情色彩的词。
+```
 
 
-##### `href`
+## API
 
-> PropType: `string`
+| 名称                |  类型           | 默认值           | 含义           |
+| -------------      | ------------- | --------------- | --------------- |
+| `component`        | `node`        | `'span'`        | 组件使用的元素。   |
+| `href`             | `string`      |                 | 如果设置 `href` 属性将忽略 `component` 属性，渲染为 `<a>`。 |
+| `name`             | `string`      |                 | 图标名称。 可选图标名称参考下方。图标样式查看下方 `Demo`。 |
 
-如果设置 `href` 属性将忽略 `component` 属性，渲染为 `<a>`。
 
-## 图标字体定制
+```demo
+<Icon name="sunny" />
+<Icon name="sunny2" />
+<Icon name="sunny3" />
+<Icon name="sunny4" />
+```
 
-如果内置的图标不能满足需求，可以通过 [IconMoon](https://icomoon.io/app/#/select) 或 [阿里巴巴矢量图标库](http://iconfont.cn/) 等工具生成图标字体，替换内置图标。
 
-流程如下：
-
-1. 通过上述或其他工具生成图标字体文件；
-2. 获取 Amaze UI Touch 源码，修改 Sass 变量，重新编译 CSS。
-
-  为方便管理，AMT 提供了一个专门供用户定义变量的文件 `src/scss/_user.scss`。添加下面两个变量，覆盖内置图标样式。
-
-  ```sass
-    $icon-fonts: (
-      // font-family 中使用的字体名称
-      icomoon: (
-        weight: normal,
-        style: normal,
-        // 自定义字体的路径
-        src: unquote(
-            'url("icomoon.woff") format("woff"),
-            url("icomoon.ttf") format("truetype"),
-            url("icomoon.svg#icomoon") format("svg");'
-        )
-      ),
-      // 可以按照上面的格式继续添加其他字体
-    );
-
-    // 图标名称和 Unicode 编码映射
-    // 注意：图标名称不能重名
-    $icons: (
-      back: \e80a,
-      bars: \e80e,
-    );
-  ```
-
-  修改变量完成以后，执行 `npm run build` 编译，定制的 CSS 文件位于 `dist` 目录下。
+[1]: https://github.com/twbs/ratchet/tree/master/fonts
+[2]: http://fontawesome.io/icons/
+[3]: https://icomoon.io/app/#/select
+[4]: http://iconfont.cn/
 
 ## 示例

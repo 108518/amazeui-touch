@@ -10,8 +10,8 @@ import {
 
 class TabBarDemo extends React.Component {
   state = {
-    selected: 'home'
-  };
+      selected: 'home'
+  }
 
   handleClick = (key, e) => {
     e.preventDefault();
@@ -20,8 +20,8 @@ class TabBarDemo extends React.Component {
       selected: key
     }, function() {
       console.log('选中了： %s', this.state.selected);
-    });
-  };
+    })
+  }
 
   render() {
     return (
@@ -38,22 +38,22 @@ class TabBarDemo extends React.Component {
         <TabBar.Item
           selected={this.state.selected === 'gear'}
           eventKey="gear"
-          icon="gear"
+          icon="setting"
           title="设置"
         />
         <TabBar.Item
           selected={this.state.selected === 'info'}
           eventKey="info"
-          icon="info"
+          icon="message"
           badge={5}
           title="信息"
         />
       </TabBar>
     )
   }
-}
+ }
 
-class TabBarExample extends React.Component {
+export default class TabBarExample extends React.Component {
   renderStyles = (amStyle, index) => {
     return (
       <Group
@@ -63,12 +63,12 @@ class TabBarExample extends React.Component {
       >
         <TabBar amStyle={amStyle.toLowerCase()}>
           <TabBar.Item selected icon="home" title="首页" />
-          <TabBar.Item icon="gear" title="设置" />
-          <TabBar.Item icon="info" badge={5} title="信息" />
+          <TabBar.Item icon="setting" title="设置" />
+          <TabBar.Item icon="message" badge={5} title="信息" />
         </TabBar>
       </Group>
     )
-  };
+  }
 
   render() {
     return (
@@ -90,8 +90,8 @@ class TabBarExample extends React.Component {
         >
           <TabBar>
             <TabBar.Item selected icon="home" />
-            <TabBar.Item icon="gear" />
-            <TabBar.Item icon="info" />
+            <TabBar.Item icon="setting" />
+            <TabBar.Item icon="message" />
           </TabBar>
         </Group>
 
@@ -101,8 +101,8 @@ class TabBarExample extends React.Component {
         >
           <TabBar>
             <TabBar.Item selected icon="home" />
-            <TabBar.Item icon="gear" />
-            <TabBar.Item icon="info" badge={5} />
+            <TabBar.Item icon="setting" />
+            <TabBar.Item icon="message" badge={5} />
           </TabBar>
         </Group>
 
@@ -112,8 +112,8 @@ class TabBarExample extends React.Component {
         >
           <TabBar>
             <TabBar.Item selected icon="home" title="首页" />
-            <TabBar.Item icon="gear" title="设置" />
-            <TabBar.Item icon="info" badge={5} title="信息" />
+            <TabBar.Item icon="setting" title="设置" />
+            <TabBar.Item icon="message" badge={5} title="信息" />
           </TabBar>
         </Group>
 
@@ -128,7 +128,5 @@ class TabBarExample extends React.Component {
       </Container>
     );
   }
-}
+ }
 
-// test
-export default TabBarExample;

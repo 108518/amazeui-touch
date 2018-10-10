@@ -1,35 +1,30 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {component} from './InternalPropTypes';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_icon.scss';
 
-const Icon = createReactClass({
-  displayName: 'Icon',
-  mixins: [ClassNameMixin],
+export default class Icon extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
-    component: component,
+    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
     name: PropTypes.string.isRequired,
     href: PropTypes.string,
     // amStyle: PropTypes.string,
     // button: PropTypes.bool,
     // size: PropTypes.string,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'icon',
-      component: 'span'
-    };
-  },
+  static defaultProps = {
+    classPrefix: 'icon',
+    component: 'span'
+  }
 
   render() {
-    let classSet = this.getClassSet();
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+
     let {
       component: Component,
       className,
@@ -42,7 +37,7 @@ const Icon = createReactClass({
     Component = props.href ? 'a' : Component;
 
     // icon-[iconName]
-    classSet[this.prefixClass(name)] = true;
+    classSet[classNS.prefixClass(name)] = true;
 
     return (
       <Component
@@ -52,7 +47,5 @@ const Icon = createReactClass({
         {this.props.children}
       </Component>
     );
-  },
-});
-
-export default Icon;
+  }
+}

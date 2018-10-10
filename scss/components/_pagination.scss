@@ -1,0 +1,98 @@
+// Amaze UI Touch: Pagination
+// =============================================================================
+
+@import "../env";
+
+
+.#{$pagination-prefix} {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 8px;
+
+  ul {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: stretch;
+    border-radius: 100px;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    box-shadow:0 1px 2px 0 rgba(0,0,0,0.10);
+  }
+}
+
+.#{$pagination-prefix}-item {
+  a {
+    display: inline-block;
+    min-width: 2rem;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1;
+    vertical-align: center;
+    padding: 9px 10px;
+    color: #202020;
+  }
+}
+
+.#{$pagination-prefix}-nav {
+  display: flex;
+  border-radius: 100px;
+  background-color: #ffffff;
+  box-shadow:0 1px 2px 0 rgba(0,0,0,0.10);
+  overflow: hidden;
+
+  > a {
+    font-size: 14px;
+    line-height: 1;
+    color: #202020;
+    padding: 8px 13px;
+
+    &:active {
+      color: #fff;
+    }
+
+    & + a {
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 80%;
+        left: 0;
+        top: 50%;
+        background: rgba(0,0,0,0.07);
+        transform: translateY(-50%) scaleX(0.5);
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+
+
+.#{$pagination-prefix}-total {
+  text-align: center;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+
+// Modifiers: colors
+//    -----------------------------------------------------------------------------
+@each $color-key, $color in $am-colors {
+  .#{$pagination-prefix}-#{$color-key} {
+    .#{map_get($am-states, active)} {
+      background: $color;
+      a {
+        background: $color;
+        color: #ffffff;
+      }
+    }
+    .#{$pagination-prefix}-nav {
+      > a:active {
+        background: $color;
+      }
+    }
+  }
+}

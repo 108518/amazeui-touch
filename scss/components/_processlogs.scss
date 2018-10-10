@@ -1,0 +1,53 @@
+// Amaze UI Touch: ProcessLogs
+// =============================================================================
+
+@import "../env";
+
+.#{$process-logs-prefix}-logs-wrap {
+  position: relative;
+  margin-left: 14px;
+  padding-bottom: 20px;
+  border-left: 2px solid #5e666c;
+  >span{
+    display: block;
+    margin-left: 10px;
+    font-size: 14px;
+    line-height: 1;
+    color: #838a8f;
+    vertical-align: super;
+  }
+  &:last-child{
+    border-left-color: transparent;
+  }
+  &:before{
+    content: '';
+    display: block;
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #AFB5BA;
+    border: 2px solid #fff;
+  }
+  .amt-card{
+    box-shadow: none;
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+}
+
+.#{$process-logs-prefix}-content-title{
+  display: flex;
+  justify-content: space-between;
+  >div{
+    font-size:13px;
+    color:#838a8f;
+  }
+  span{
+    display: inline-block;
+    margin: 0 10px;
+  }
+}

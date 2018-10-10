@@ -23,7 +23,7 @@ class App extends React.Component {
         >
           {React.cloneElement(children, {key: location.pathname})}
         </Container>
-
+        {/*
         <TabBar
           amStyle="primary"
         >
@@ -43,6 +43,7 @@ class App extends React.Component {
             to="/about"
           />
         </TabBar>
+        */}
       </Container>
     );
   }

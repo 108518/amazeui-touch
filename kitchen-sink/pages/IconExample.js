@@ -1,40 +1,264 @@
-import React from 'react';
-import {
-  Container,
-  Grid,
-  Col,
-  Icon,
-  Group,
-} from 'amazeui-touch';
+import React from "react";
+import { Container, Grid, Col, Icon, Card, Group, Title } from "amazeui-touch";
 
-const icons = ['back', 'bars', 'caret', 'check', 'close', 'code', 'compose', 'download', 'edit', 'forward', 'gear', 'home', 'info', 'list', 'more-vertical', 'more', 'pages', 'pause', 'person', 'play', 'plus', 'refresh', 'search', 'share', 'sound', 'sound2', 'sound3', 'sound4', 'star-filled', 'star', 'stop', 'trash', 'up-nav', 'up', 'right-nav', 'right', 'down-nav', 'down', 'left-nav', 'left'];
+const amuiicons = {
+  weather: [
+    "thunder",
+    "rainy",
+    "sunny",
+    "sunny2",
+    "rainy2",
+    "sunny3",
+    "sunny4",
+    "moon",
+    "moon2",
+    "thunder-l",
+    "rainy-l",
+    "sunny-l",
+    "sunny2-l",
+    "rainy2-l",
+    "sunny4-l",
+    "sunny3-l",
+    "wind",
+    "moon-l",
+    "moon2-l",
+  ],
+  action: [
+    "elect-c",
+    "elect-l-c",
+    "minus-l",
+    "circle-minus",
+    "circle-minus-l",
+    "alarm",
+    "information-c",
+    "elect",
+    "elect-s",
+    "elect-l-s",
+    "square-l",
+    "square-minus-l",
+    "square-minus",
+    "information",
+    "cancel-c",
+    "mark",
+    "circle-add",
+    "circle-add-l",
+    "add-l",
+    "alarm-l",
+    "information-l-c",
+    "cancel-l-c",
+    "cancel",
+    "cancel-l-s",
+    "add-l-s",
+    "cancel-s",
+    "add-s",
+    "information-l",
+  ],
+  content: [
+    "call",
+    "call-l",
+    "clock-l",
+    "time-l",
+    "airplane",
+    "airplane-l",
+    "groups",
+    "groups-l",
+    "heart",
+    "star",
+    "home",
+    "more",
+    "chart",
+    "briefcase2",
+    "show",
+    "vidicon",
+    "store",
+    "shopping1",
+    "shopping2",
+    "shopping3",
+    "shopping4",
+    "remind",
+    "remind-x-l",
+    "camera",
+    "user",
+    "hot",
+    "page",
+    "loud",
+    "encircle",
+    "download",
+    "revocation",
+    "transfer",
+    "sent",
+    "folder",
+    "briefcase",
+    "password",
+    "password-close",
+    "user-list",
+    "talk",
+    "message",
+    "discussion",
+    "message-c",
+    "message-s",
+    "setting-square",
+    "setting",
+    "document-text",
+    "document",
+    "copy",
+    "paper",
+    "clipboard",
+    "write",
+    "dustbin",
+    "contact",
+    "organization-right",
+    "heart-l",
+    "star-l",
+    "home-l",
+    "more-l",
+    "chart-l",
+    "briefcase2-l",
+    "show-l",
+    "vidicon-l",
+    "store-l",
+    "shopping1-l",
+    "shopping2-l",
+    "shopping3-l",
+    "shopping4-l",
+    "remind-l",
+    "remind-x",
+    "camera-l",
+    "browser",
+    "mark-l",
+    "user-l",
+    "hot-l",
+    "page-l",
+    "contact-l",
+    "organization-right-l",
+    "application",
+    "application-l",
+    "phone",
+    "mail-o",
+    "sent-l",
+    "folder-l",
+    "briefcase-l",
+    "password-l",
+    "password-close-l",
+    "user-list-l",
+    "talk-l",
+    "message-l",
+    "discussion-l",
+    "message-c-l",
+    "message-s-l",
+    "mail",
+    "document-text-l",
+    "document-l",
+    "copy-l",
+    "paper-l",
+    "clipboard-l",
+    "write-l",
+    "company",
+    "shield",
+    "organization",
+    "organization-l",
+    "revocation-l",
+    "transfer-l",
+    "share",
+    "clip",
+    "link",
+    "refresh",
+    "refresh-both",
+    "serach",
+    "search-plus",
+    "browsers-outline",
+    "menu",
+    "search-decrease",
+    "navicon",
+    "setting-square-l",
+    "setting-l",
+    "setting2-l",
+  ],
+  arrow: [
+    "rank-down",
+    "rank-up",
+    "dustbin-l",
+    "down",
+    "up",
+    "right",
+    "left",
+    "arrows-up-down",
+    "arrows-left-right",
+    "arrows-alt-l",
+    "arrows-shrink-l",
+    "right-circle-l",
+    "up-circle-l",
+    "down-circle-l",
+    "left-arrows-c-l",
+    "right-arrows-c-l",
+    "up-arrows-c-l",
+    "down-arrows-c-l",
+    "arrows-shrink",
+    "arrows-alt",
+    "arrows-right",
+    "arrows-left",
+    "arrows-up",
+    "arrows-down",
+    "left-l-s",
+    "right-l-s",
+    "up-l-s",
+    "down-l-s",
+    "arrows-left-l-s",
+    "arrows-right-l-s",
+    "arrows-up-l-s",
+    "arrows-down-l-s",
+    "double-right",
+    "double-left",
+    "extrem-left",
+    "extrem-right",
+    "circle-right",
+    "circle-up",
+    "circle-down",
+    "left-arrows-c",
+    "right-arrows-c",
+    "up-arrows-c",
+    "down-arrows-c",
+    "square-left",
+    "square-right",
+    "arrows-up-s",
+    "arrows-down-s",
+    "arrows-left-s",
+    "arrows-right-s",
+    "pull-up",
+    "pull-down",
+  ]
+};
 
-class IconExample extends React.Component {
+
+export default class extends React.Component {
   render() {
+
     return (
       <Container {...this.props}>
-        <p className="padding">
-          下面的宫格基于 Grid 组件实现，具体代码参见 Icon 文档。
-        </p>
-        <Grid avg={4} bordered className="sk-icons text-center">
-          {
-            icons.map((icon, i) => {
-              return (
-                <Col key={i}>
-                  <Icon name={icon} key={i}></Icon>
-                  <div className="sk-icon-name text-truncate">
-                    {icon}
-                  </div>
-                </Col>
-              );
+        <h2 className="padding">
+          默认图标库
+        </h2>
+        {
+          Object.entries(amuiicons).map((iconsgroup, i) => {
+            return (
+              <div key={i}>
+                <Title>{iconsgroup[0]}</Title>
+                <Grid avg={4} bordered className="sk-icons text-center">
+                  {iconsgroup[1].map((icon, j) => {
+                    return (
+                      <Col key={`"${i}"-${j}`}>
+                        <Icon name={icon} />
+                        <small className="sk-icon-name text-truncate">{icon}</small>
+                      </Col>
+                    );
+                  })}
+                </Grid>
+              </div>
+              )
             })
-          }
-        </Grid>
-        <br />
+        }
         <br />
       </Container>
     );
   }
 }
-
-export default IconExample;

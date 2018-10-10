@@ -23,7 +23,7 @@
   justify-content: space-between;
   align-items: center;
   min-height: rem-calc(44);
-  padding: $card-margin;
+  padding: $card-padding;
 }
 
 
@@ -34,14 +34,73 @@
   margin: $card-margin;
   // fixes box-shadow
   // @see http://stackoverflow.com/questions/26407299/ios-8-box-shadow-on-iphone-6-plus
-  border-radius: 1px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  border-radius: $card-radius;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   @include card-style();
+  color: #666;
+}
+
+.#{$card-prefix}-noMargin {
+  margin: rem-calc(10) 0;
+  border-radius: 0;
+  .#{$card-prefix}-header {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .#{$card-prefix}-footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+.#{$card-prefix}.#{$card-prefix}-external {
+  margin-top: 0;
+  margin-bottom: rem-calc(20);
+  background: inherit;
+  box-shadow: none;
+  .#{$card-prefix}-header {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding: $card-padding 0;
+  }
+  .#{$card-prefix}-footer {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: $card-padding 0;
+  }
+  .#{$card-prefix}-body {
+    background: $card-background;
+    border-radius: $card-radius;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.#{$card-prefix}.#{$card-prefix}-noMargin.#{$card-prefix}.#{$card-prefix}-external {
+  .#{$card-prefix}-header {
+    padding: $card-padding;
+  }
+  .#{$card-prefix}-footer {
+    padding: $card-padding;
+  }
+  .#{$card-prefix}-body {
+    border-radius: 0;
+  }
+}
+
+.#{$card-prefix}.#{$card-prefix}-noline, .#{$card-prefix}.#{$card-prefix}-external {
+  .#{$card-prefix}-header {
+    border-bottom: 0;
+  }
+  .#{$card-prefix}-footer {
+    border-top: 0;
+  }
 }
 
 .#{$card-prefix}-header {
   @extend %card-section;
-  border-bottom: 1px solid $gray-lighter;
+  border-bottom: 1px solid #eee;
+  border-top-left-radius: $card-radius;
+  border-top-right-radius: $card-radius;
 }
 
 // header with cover
@@ -61,20 +120,45 @@
 }
 
 .#{$card-prefix}-title {
+  color: #313131;
+  font-weight: initial;
   font-size: rem-calc(16);
   margin: 0;
 }
 
+.#{$card-prefix}-title-noMargin {
+}
+
+.#{$card-prefix}-title-external {
+}
+
 .#{$card-prefix}-body {
-  padding: $card-padding;
-  line-height: 1.6;
+  padding: $card-padding
+}
+
+.#{$card-prefix}-body-noPadding {
+  padding: 0
 }
 
 .#{$card-prefix}-footer {
   @extend %card-section;
+  border-bottom-left-radius: $card-radius;
+  border-bottom-right-radius: $card-radius;
   border-top: 1px solid #eee;
-  font-size: $font-size-sm;
-  color: $gray-light;
+}
+
+.#{$card-prefix}-footer-more {
+  margin: -$card-padding rem-calc(11)-$card-padding;
+  flex: 1;
+  text-align: center;
+  font-size: rem-calc(14);
+  color: #666666;
+  border-radius: 3px;
+  user-select: none;
+  cursor: pointer;
+  &:active {
+    background-color: rgba(0,0,0,.02);
+  }
 }
 
 // TODO: mofidiers

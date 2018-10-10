@@ -1,52 +1,71 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
+import classNameSpace from './utils/className';
+
 import Button from './Button';
 import Icon from './Icon';
+import Switch from './Switch';
+import DefaultInput from './DefaultInput';
+import DefaultTextarea from './DefaultTextarea';
 
-import '../scss/components/_form.scss';
+export default class Field extends React.Component {
 
-const Field = createReactClass({
-  displayName: 'Field',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     type: PropTypes.string,
+    right: PropTypes.bool,
     label: PropTypes.node,
     btnBefore: PropTypes.node,
     btnAfter: PropTypes.node,
     labelBefore: PropTypes.node,
     labelAfter: PropTypes.node,
     containerClassName: PropTypes.string,
-  },
+    single: PropTypes.bool,
+    tip: PropTypes.string,
+    labelWidth: PropTypes.string,
+    underline: PropTypes.string,
+    labelStyle: PropTypes.string,
+    labelClassName: PropTypes.string,
+    disabled: PropTypes.bool,
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'field',
-      type: 'text'
-    };
-  },
+  static defaultProps = {
+    classPrefix: 'field',
+    type: 'text',
+    underline: 'full'
+  }
 
-  getFieldDOMNode() {
+  componentDidMount() {
+    // Reference: https://stackoverflow.com/questions/23757345/android-does-not-correctly-scroll-on-input-focus-if-not-body-element
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+    if (/Android/.test(navigator.appVersion)) {
+      window.addEventListener('resize', () => {
+        if (/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+           window.setTimeout(() => {
+              document.activeElement.scrollIntoViewIfNeeded();
+           }, 0);
+        }
+      })
+    }
+  }
+
+  getFieldDOMNode = () => {
     return this.refs.field;
-  },
+  }
 
-  getValue() {
+  getValue = () => {
     if (this.props.type === 'select' && this.props.multiple) {
       return this.getSelectedOptions();
     } else {
       return this.getFieldDOMNode().value;
     }
-  },
+  }
 
-  getChecked() {
+  getChecked = () => {
     return this.getFieldDOMNode().checked;
-  },
+  }
 
-  getSelectedOptions() {
+  getSelectedOptions = () => {
     let values = [];
     // see http://www.w3schools.com/jsref/coll_select_options.asp
     let options = this.getFieldDOMNode().options;
@@ -60,18 +79,18 @@ const Field = createReactClass({
     });
 
     return values;
-  },
+  }
 
-  isCheckboxOrRadio() {
+  isCheckboxOrRadio = () => {
     return this.props.type === 'radio' || this.props.type === 'checkbox';
-  },
+  }
 
-  isFile() {
+  isFile = () => {
     return this.props.type === 'file';
-  },
+  }
 
   // convert `value`/`defaultValue` to `checked`/`defaultChecked` when `type` is `radio`/checkbox``
-  convertValueToChecked() {
+  convertValueToChecked = () => {
     let checkedProps = {};
 
     if (this.isCheckboxOrRadio()) {
@@ -90,12 +109,12 @@ const Field = createReactClass({
     }
 
     return checkedProps;
-  },
+  }
 
-  renderField() {
+  renderField = () => {
     let field = null;
     let fieldClassName = this.isCheckboxOrRadio() || this.isFile() ?
-      '' : this.getClassSet();
+      '' : this.classNS.classNames;
     let classes = cx(this.props.className, fieldClassName);
     let commonProps = {
       ref: 'field',
@@ -110,10 +129,15 @@ const Field = createReactClass({
     delete assignedProps.classPrefix;
     delete assignedProps.containerClassName;
     delete assignedProps.label;
+    delete assignedProps.right;
     delete assignedProps.btnBefore;
     delete assignedProps.btnAfter;
     delete assignedProps.labelBefore;
     delete assignedProps.labelAfter;
+    delete assignedProps.single;
+    delete assignedProps.labelWidth;
+    delete assignedProps.tip;
+    delete assignedProps.underline;
 
     switch (this.props.type) {
       case 'select':
@@ -127,7 +151,7 @@ const Field = createReactClass({
         break;
       case 'textarea':
         field = (
-          <textarea
+          <DefaultTextarea
             {...assignedProps}
           />
         );
@@ -136,6 +160,7 @@ const Field = createReactClass({
       case 'reset':
         let {
           classPrefix,
+          underline,
           ...others
         } = this.props;
         field = (
@@ -147,9 +172,33 @@ const Field = createReactClass({
           />
         );
         break;
+      case 'file':
+        let {
+          className,
+          ...otherss
+        } = assignedProps;
+        field = (
+          <label className={this.prefixClass('file')}>
+            <span className={this.prefixClass('file-title')}>上传</span>
+            <input
+              {...otherss}
+              {...this.convertValueToChecked()}
+              className={this.prefixClass('file-input')}
+            />
+          </label>
+        );
+        break;
+      case 'switch':
+        field = (
+          <Switch {...assignedProps} />
+        );
+        break;
+      case 'custom':
+        field = this.props.children;
+        break;
       default:
         field = (
-          <input
+          <DefaultInput
             {...assignedProps}
             {...this.convertValueToChecked()}
           />
@@ -157,45 +206,77 @@ const Field = createReactClass({
     }
 
     return field;
-  },
+  }
 
-  renderContainer(children) {
+  renderContainer = (children) => {
     const {
       id,
       label,
+      labelWidth,
+      labelStyle,
+      labelClassName,
       containerClassName,
+      single,
+      tip,
+      underline,
+      disabled,
     } = this.props;
+
+    const containerClass = cx(
+      { [this.prefixClass('container')]: !single },
+      { [this.prefixClass('single')]: single },
+      { [this.prefixClass('disabled')]: disabled },
+      { [this.prefixClass(`underline-${underline}`)]: underline === 'part'},
+      containerClassName,
+    );
+
+    const labelClass = cx(
+      this.prefixClass('label'),
+      labelClassName,
+    );
+
+    const labelStyles = Object.assign({}, {
+      width: labelWidth,
+    }, labelStyle);
+
+    const wrapClass = cx(this.prefixClass('wrap'), {
+      [this.prefixClass('wrap-custom')]: this.props.type === 'custom',
+    });
+
     return label ? (
       <label
-        htmlFor={id}
-        className={cx(this.prefixClass('container'), containerClassName)}
+        className={containerClass}
         key="label"
       >
-        <span className={this.prefixClass('label')}>
-          {label}
-        </span>
-        {children}
+        <div
+          className={labelClass}
+          style={labelStyles}
+        >
+          <div>{label}</div>
+          {tip ? <span className={this.prefixClass('tip')}>{tip}</span> : null }
+        </div>
+        <div className={wrapClass}>{children}</div>
         {this.isCheckboxOrRadio() ? (
           <Icon
             className={this.prefixClass('icon')}
-            name="check"
+            name="elect"
           />
         ) : null}
       </label>
     ) : children;
-  },
+  }
 
-  renderFieldGroup(children) {
-    let groupPrefix = this.setClassNS('field-group');
-    let labelClassName = groupPrefix + '-label';
-    let {
+  renderFieldGroup = (children) => {
+    const groupPrefix = this.classNS.prefixClass('group');
+    const labelClassName = groupPrefix + '-label';
+    const {
       labelBefore,
       labelAfter,
       btnBefore,
       btnAfter,
       containerClassName,
     } = this.props;
-    let renderFiledLabel = (type) => {
+    const renderFiledLabel = (type) => {
       return this.props[type] ? (
         <span
           className={labelClassName}
@@ -218,17 +299,18 @@ const Field = createReactClass({
         {btnAfter}
       </div>
     ) : children;
-  },
+  }
 
   render() {
-    let field = this.renderField();
+    this.classNS = classNameSpace(this.props);
+    this.prefixClass = this.classNS.prefixClass;
+
+    const field = this.renderField();
 
     if (this.props.label) {
       return this.renderContainer(field);
     }
 
     return this.renderFieldGroup(field);
-  },
-});
-
-export default Field;
+  }
+};

@@ -1,14 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 class Markdown extends React.Component {
-  static propTypes = {
-    component: PropTypes.any
-  };
 
   static defaultProps = {
     component: 'div',
-  };
+  }
 
   render() {
     const {

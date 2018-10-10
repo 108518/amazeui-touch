@@ -1,15 +1,11 @@
 // @see https://github.com/JedWatson/react-container
 // @license MIT Copyright (c) 2015 Jed Watson
 
-import PropTypes from 'prop-types';
-
 import React from 'react';
-import createReactClass from 'create-react-class';
-import { CSSTransitionGroup}  from 'react-transition-group';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_container.scss';
+
 
 function hasChildrenWithVerticalFill(children) {
   let result = false;
@@ -65,11 +61,9 @@ function initScrollable(defaultPos) {
 
 const TRANSITION_TIMEOUT = 500;
 
-let Container = createReactClass({
-  displayName: 'Container',
-  mixins: [ClassNameMixin],
+class Container extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
     component: PropTypes.node,
     align: PropTypes.oneOf(['end', 'center', 'start']),
@@ -85,28 +79,30 @@ let Container = createReactClass({
       PropTypes.object
     ]),
     transition: PropTypes.string,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'container',
-      component: 'div',
-    };
-  },
+  static defaultProps = {
+    classPrefix: 'container',
+    component: 'div',
+  }
 
   componentDidMount() {
     if (this.props.scrollable && this.props.scrollable.mount) {
       this.props.scrollable.mount(this);
     }
-  },
+  }
 
   componentWillUnmount() {
     if (this.props.scrollable && this.props.scrollable.unmount) {
       this.props.scrollable.unmount(this);
     }
-  },
+  }
 
   render() {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
     let {
       className,
       component: Component,
@@ -119,23 +115,17 @@ let Container = createReactClass({
       transition,
       ...props
     } = this.props;
-    let classSet = this.getClassSet();
 
     delete props.classPrefix;
 
     // As view transition container
     if (transition) {
       return (
-        <CSSTransitionGroup
-          component="div"
-          className={cx(this.setClassNS('views'), className)}
-          transitionName={this.setClassNS(`view-transition-${transition}`)}
-          transitionEnterTimeout={TRANSITION_TIMEOUT}
-          transitionLeaveTimeout={TRANSITION_TIMEOUT}
+        <div
           {...props}
         >
           {children}
-        </CSSTransitionGroup>
+        </div>
       );
     }
 
@@ -187,8 +177,8 @@ let Container = createReactClass({
         {children}
       </Component>
     );
-  },
-});
+  }
+}
 
 Container.initScrollable = initScrollable;
 

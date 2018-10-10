@@ -15,6 +15,7 @@
   top: 50%;
   width: $modal-width;
   text-align: center;
+  border-radius: 3px;
   transform: translate3d(-50%, -50%, 0);
 
   &:focus {
@@ -24,6 +25,7 @@
 
 .#{$modal-prefix}-inner {
   position: relative;
+  border-radius: inherit;
   background: $modal-background;
   backface-visibility: hidden;
   perspective: 1000px;
@@ -32,6 +34,10 @@
   .#{$modal-prefix}-out & {
     animation-name: amt-modal-out;
   }
+}
+
+.#{$modal-prefix}-dialog {
+  border-radius: inherit;
 }
 
 @keyframes amt-modal-in {
@@ -69,6 +75,7 @@
   position: absolute;
   right: rem-calc(5);
   top: rem-calc(5);
+  font-size: 0.8em;
   color: rgba($gray-light, .5);
   cursor: pointer;
 
@@ -160,11 +167,13 @@
 
 .#{$modal-prefix}-actions {
   position: fixed;
+  top: auto;
   left: 0;
   bottom: 0;
   z-index: $z-index-modal;
   width: 100%;
   text-align: center;
+  transform: none;
 
   @extend %modal-translate;
 
@@ -181,7 +190,7 @@
 }
 
 .#{$modal-prefix}-actions-group {
-  margin: rem-calc(10);
+  margin: rem-calc(8) rem-calc(4);
 }
 
 .#{$modal-prefix}-actions-header {
@@ -209,6 +218,7 @@
   z-index: $z-index-modal;
   background: #fff;
   overflow: hidden;
+  transform: none;
 
   @extend %modal-translate;
 }
@@ -254,6 +264,52 @@
   color: $gray;
 }
 
+// Modal Page
+// -----------------------------------------------------------------------------
+.#{$modal-prefix}-page {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f4f4f4;
+  backface-visibility: hidden;
+  z-index: 1010;
+  transform: none;
+  text-align: left;
+
+  .#{$navbar-prefix}-left {
+    text-align: left;
+  }
+
+  .#{$modal-prefix}-page-main {
+    overflow: auto;
+  }
+
+  &.#{$modal-prefix}-transition-appear {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  &.#{$modal-prefix}-transition-appear-active {
+    transform: translate3d(0, 0, 0);
+    transition: transform $modal-duration ease-in-out;
+  }
+
+  &.#{$modal-prefix}-out {
+    animation: amt-modal-page-transition-out $modal-duration ease-out;
+  }
+
+  @keyframes amt-modal-page-transition-out {
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+}
+
+
 
 // Modal backdrop
 // -----------------------------------------------------------------------------
@@ -276,4 +332,8 @@
   &#{$this-selector}-out {
     animation-name: amt-fade-out;
   }
+}
+
+.has-modal-open {
+  overflow: hidden;
 }

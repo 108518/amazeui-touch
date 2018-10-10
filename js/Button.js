@@ -1,49 +1,56 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {component} from './InternalPropTypes';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_button.scss';
 
-const Button = createReactClass({
-  displayName: 'Button',
-  mixins: [ClassNameMixin],
+export default class extends React.Component {
 
-  propTypes: {
+  static defaultProps = {
+    classPrefix: 'btn',
+  }
+
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
-    component: component,
+    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
     href: PropTypes.string,
     target: PropTypes.string,
     amStyle: PropTypes.string,
     amSize: PropTypes.string,
     hollow: PropTypes.bool,
+    rounded: PropTypes.bool,
+    square: PropTypes.bool,
     block: PropTypes.bool,
     active: PropTypes.bool,
     disabled: PropTypes.bool,
-    // radius: PropTypes.bool,
-    // rounded: PropTypes.bool,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'btn',
-    };
-  },
-
-  removeUnknownProp(props) {
+  removeUnknownProp = (props) => {
+    // For performance, just delete
     delete props.classPrefix;
     delete props.amStyle;
     delete props.amSize;
+    delete props.square;
+    delete props.rounded;
     delete props.hollow;
     delete props.block;
     delete props.active;
 
     return props;
-  },
+  }
 
-  renderAnchor(classes) {
+  // iOS active pesudo-class
+  iOSTouchStart = () => {
+    if (/CPU.+Mac OS X/.test(navigator.userAgent)) {
+      return {
+        onTouchStart: () => {}
+      }
+    } else {
+      return {}
+    }
+  }
+
+  renderAnchor= (classes) => {
     let {
       href,
       component: Component,
@@ -56,6 +63,7 @@ const Button = createReactClass({
 
     return (
       <Component
+        {...this.iOSTouchStart()}
         {...this.removeUnknownProp(props)}
         href={href}
         className={classes}
@@ -64,9 +72,9 @@ const Button = createReactClass({
         {children}
       </Component>
     );
-  },
+  }
 
-  renderButton(classes) {
+  renderButton = (classes) => {
     let {
       component: Component,
       children,
@@ -76,29 +84,32 @@ const Button = createReactClass({
 
     return (
       <Component
+        {...this.iOSTouchStart()}
         {...this.removeUnknownProp(props)}
         className={classes}
       >
         {children}
       </Component>
     );
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet();
-    let {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+
+    const {
       href,
       target,
       block,
       className,
     } = this.props;
-    let renderType = href || target ? 'renderAnchor' : 'renderButton';
+
+    const renderType = href || target ? 'renderAnchor' : 'renderButton';
 
     // block button
-    classSet[this.prefixClass('block')] = block;
+    classSet[classNS.prefixClass('block')] = block;
 
     return this[renderType](cx(classSet, className));
-  },
-});
+  }
+}
 
-export default Button;

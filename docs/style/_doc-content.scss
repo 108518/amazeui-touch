@@ -24,51 +24,15 @@
   margin-left: auto;
   margin-right: auto;
   padding: 25px 15px;
-  max-width: 770px;
+  max-width: 1000px;
 
   @media (min-width: 641px) {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
   @media (min-width: 1025px) {
     padding-top: 45px;
-  }
-
-  // header counter
-  counter-reset: header2;
-
-  h2 {
-    counter-increment: header2;
-    counter-reset: header3;
-  }
-
-  h2:before {
-    content: counter(header2) ". ";
-  }
-
-  h3 {
-    counter-increment: header3;
-    counter-reset: header4;
-  }
-
-  h3:before {
-    content: counter(header2) "." counter(header3) " "
-  }
-
-  h4 {
-    counter-increment: header4;
-  }
-
-  h4:before {
-    content: counter(header2) "." counter(header3) "." counter(header4) " "
-  }
-
-  h2:before,
-  h3:before,
-  h4:before {
-    color: #999 !important;
-    font-weight: 400
   }
 
   h1 tt,
@@ -86,10 +50,13 @@
     font-size: inherit;
   }
 
-  h1,
+  h1 {
+    padding-bottom: .4em;
+    border-bottom: 1px solid #eee;
+  }
+
   h2 {
     padding-bottom: .3em;
-    border-bottom: 1px solid #eee;
   }
 
   h1 {
@@ -97,14 +64,14 @@
   }
 
   h2 {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 
   h3 {
-    font-size: 1.25em;
+    font-size: 1.2em;
   }
   h4 {
-    font-size: 1.15em;
+    font-size: 1.1em;
   }
   h5 {
     font-size: 1em;
@@ -115,10 +82,110 @@
   }
 
   blockquote {
-    border-left: 4px solid #dddddd;
+    border-left: 4px solid #dcf3ff;
     padding: 0 15px;
-    color: #777777;
+    color: #358ccb;
   }
+
+  table {
+    padding: 0;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+  tbody {
+    font-size: 14px;
+    line-height: 24px;
+    color: #444444;
+  }
+  table tr {
+    border-bottom: 1px solid #eeeeee;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+  }
+  table tr th {
+    font-weight: bold;
+    border-right: 1px solid #eeeeee;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+    white-space: nowrap;
+  }
+  table tr td {
+    border-right: 1px solid #eeeeee;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+  }
+  table tr th:first-child,
+  table tr td:first-child {
+    margin-top: 0;
+  }
+  table tr th:last-child,
+  table tr td:last-child {
+    margin-bottom: 0;
+    border-right: none;
+  }
+  thead tr th:nth-child(1), thead tr th:nth-child(2) {
+    width: 20%;
+  }
+  tbody tr td:nth-child(1), thead tr td:nth-child(3) {
+    white-space: nowrap;
+  }
+  thead tr {
+    background-color: #f8f8f8;
+  }
+
+  blockquote code {
+    white-space: normal;
+  }
+
+  code {
+    background: transparent;
+    font-family: Consolas, 'MicroSoft YaHei',Monaco, 'Andale Mono', 'Ubuntu Mono', monospace ;
+  }
+
+  em {
+    font-size: small;
+    color: #666666;
+  }
+
+  div > h1 + p {
+    margin-bottom: 3rem;
+  }
+
+  pre {
+    border: none;
+    border-radius: 2px;
+    background-color: #272822;
+  }
+
+  button[data-clipboard-text] {
+    border: 0;
+  }
+
+  // for demo
+  .#{$col-prefix} {
+    line-height: 40px;
+    color: #fff;
+    margin-bottom: 5px;
+
+    &:nth-child(2n) {
+      background: #218BF5;
+    }
+    &:nth-child(2n+1) {
+      background: #3bb4f2;
+    }
+  }
+
+  .#{$item-prefix}-title {
+    font-size: rem-calc(15)
+  }
+
+  .amt-table table {
+    margin: 0
+  }
+
 }
 
 .doc-version {
@@ -126,55 +193,13 @@
   font-variant: small-caps;
 }
 
-/* doc content */
-blockquote code {
-  white-space: normal;
-}
-
-/*
-
-table {
-  padding: 0;
-}
-table tr {
-  border-top: 1px solid #cccccc;
-  background-color: white;
-  margin: 0;
-  padding: 0;
-}
-table tr:nth-child(2n) {
-  background-color: #f8f8f8;
-}
-table tr th {
-  font-weight: bold;
-  border: 1px solid #cccccc;
-  text-align: left;
-  margin: 0;
-  padding: 6px 13px;
-}
-table tr td {
-  border: 1px solid #cccccc;
-  text-align: left;
-  margin: 0;
-  padding: 6px 13px;
-}
-table tr th:first-child,
-table tr td:first-child {
-  margin-top: 0;
-}
-table tr th:last-child,
-table tr td:last-child {
-  margin-bottom: 0;
-}
-*/
-
 .doc-highlight {
   position: relative;
 }
 
 .code-actions {
   position: absolute;
-  top: 1px;
+  top: 0;
   right: 0;
   display: flex;
   background: #f8f8f8;
@@ -195,24 +220,19 @@ table tr td:last-child {
     display: block;
     padding: 3px 15px;
     color: #777;
-
-    &:hover,
-    &:active {
-      background: $global-primary;
-      color: #fff;
-    }
   }
 }
 
 // copy status
 .code-status {
-  $success-bg: darken($global-success, 8);
+  $success-bg: #272822;
 
   position: absolute;
   top: 0;
   right: 0;
-  padding: 3px 10px;
-  font-size: 13px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-size: 12px;
   background: $success-bg;
   color: #fff;
   transform: translateY(-120%);
@@ -220,9 +240,9 @@ table tr td:last-child {
   &:after {
     position: absolute;
     bottom: 0;
-    left: 50%;
+    right: 12px;
     content: "";
-    border: 6px solid $success-bg;
+    border: 4px solid $success-bg;
     border-color: $success-bg transparent transparent transparent;
     transform: translate(-50%, 100%);
   }

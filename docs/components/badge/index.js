@@ -2,15 +2,16 @@ const fs = require('fs');
 import React from 'react';
 import {
   Doc,
-  Markdown,
   Highlight,
 } from '../../utils';
 
-class BadgeDoc extends React.Component {
+import Api from './api'
+
+export default class extends React.Component {
   render() {
     return (
       <Doc>
-        <Markdown>{require('./api.md')}</Markdown>
+        <Api />
         <Highlight
           demo="badge"
         >
@@ -21,4 +22,4 @@ class BadgeDoc extends React.Component {
   }
 }
 
-export default BadgeDoc;
+

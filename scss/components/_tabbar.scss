@@ -46,7 +46,7 @@
 
   @include tabbar-style();
   @include tabbar-link-color();
-  @extend %retina-line-top-before;
+  // @extend %retina-line-top-before;
 }
 
 .#{$tabbar-prefix}-item {

@@ -2,18 +2,18 @@ const fs = require('fs');
 import React from 'react';
 import {
   Doc,
-  Markdown,
-  Highlight,
 } from '../../utils';
 
-class GettingStarted extends React.Component {
+import GettingStarted from './getting-started.md'
+
+export default class extends React.Component {
   render() {
     return (
       <Doc>
-        <Markdown>{require('./getting-started.md')}</Markdown>
+        <GettingStarted />
       </Doc>
     );
   }
 }
 
-export default GettingStarted;
+

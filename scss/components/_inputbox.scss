@@ -1,0 +1,96 @@
+// Amaze UI Touch: InputBox
+// =============================================================================
+
+@import "../env";
+
+
+.#{$inputbox-prefix} {
+
+  .#{$field-prefix}-container {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    border-bottom: $inputbox-border-width solid $inputbox-border-color;
+    margin: 0;
+    background: $inputbox-background;
+  }
+
+  .#{$card-prefix} &:last-child {
+    .#{$field-prefix}-container {
+      border: none;
+    }
+  }
+
+  .#{$field-prefix}-label {
+    display: block;
+    width: 35%;
+  }
+
+  .#{$field-prefix} {
+    text-align: right;
+    padding: 0.9375rem 0;
+    border: none;
+    margin: 0;
+  }
+
+    // type="file"
+  .#{$field-prefix}-file {
+    display: flex;
+    width: 75%;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    flex: 1;
+    padding: $inputbox-padding;
+    margin: 0;
+
+    .#{$field-prefix}-file-input {
+      width: 0;
+      height: 0;
+      flex: 0;
+    }
+    .#{$field-prefix}-file-title {
+      color: $global-primary;
+    }
+  }
+
+}
+
+.#{$inputbox-prefix}-textarea {
+
+  .#{$field-prefix}-container {
+    display: block;
+
+    .#{$field-prefix}-label {
+      padding: rem-calc(20) 0 rem-calc(10);
+    }
+
+    .#{$field-prefix} {
+      font-size: 15px; // 使用 rem 单位，如0.9rem，<=1 都不生效
+      text-align: left;
+      padding: rem-calc(10) rem-calc(15);
+      border: 1px solid $inputbox-border-color;
+      margin-bottom: rem-calc(20);
+    }
+  }
+}
+
+
+.#{$inputbox-prefix}-text-left .#{$field-prefix}{
+  text-align:left
+}
+
+
+.#{$inputbox-prefix} {
+  &.#{$inputbox-prefix}-no-border {
+    .#{$field-prefix}-container {
+      border: none;
+    }
+  }
+
+  &.#{$inputbox-prefix}-no-padding {
+    .#{$field-prefix} {
+      padding: 0;
+    }
+  }
+}

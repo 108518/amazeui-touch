@@ -2,7 +2,7 @@
 
 基于 React.js 的移动端 Web UI 组件库。
 
-[![NPM version](https://img.shields.io/npm/v/amazeui-touch.svg?style=flat-square)](https://www.npmjs.com/package/amazeui-touch)
+[![NPM version](https://img.shields.io/npm/v/amazeui-touch.svg?style=flat-square)](https://www.npmjs.com/package/amazeui-touch2)
 [![Build Status](https://img.shields.io/travis/amazeui/amazeui-touch.svg?style=flat-square)](https://travis-ci.org/amazeui/amazeui-touch)
 [![Dependency Status](https://img.shields.io/david/amazeui/amazeui-touch.svg?style=flat-square)](https://david-dm.org/amazeui/amazeui-touch)
 [![devDependency Status](https://img.shields.io/david/dev/amazeui/amazeui-touch.svg?style=flat-square)](https://david-dm.org/amazeui/amazeui-touch#info=devDependencies)
@@ -129,7 +129,21 @@ npm run build
 
 ### [反馈建议](https://github.com/amazeui/amazeui-touch/issues)
 
+## git提交注意事项;
 
+### commit message:
+* `fix` : 修改bug
+* `feature` : 新功能
+* `doc` : 文档改变
+* `style` : 代码格式
+* `refactor` : 对已有功能重构
+* `perf` : 性能优化
+* `test` : 增加测试
+* `comments` : 注释
+
+### commit standard:
+* 一次只能提交一个功能/一个bug等,不允许多个一次提交
+* 新功能必须单独开一个feature,完成并测试通过后才允许合并到dev分支
 
 ## License
 

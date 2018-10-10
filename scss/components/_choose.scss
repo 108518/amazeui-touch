@@ -1,0 +1,36 @@
+// Amaze UI Touch: Choose
+// =============================================================================
+
+@import "../env";
+
+// Mixins
+// -----------------------------------------------------------------------------
+$choose-gap: rem-calc(10);
+
+
+// Output
+// -----------------------------------------------------------------------------
+
+.#{$choose-prefix} {
+  overflow: hidden;
+}
+
+ul.#{$choose-prefix}-list {
+  list-style: none;
+  font-size: 0;
+  padding-top: $choose-gap;
+  padding-left: $choose-gap;
+  padding-right: $choose-gap;
+  margin: - $choose-gap;
+}
+
+li.#{$choose-prefix}-item {
+  display: inline-block;
+  margin-bottom: $choose-gap;
+  > .#{$button-prefix} {
+    margin-right: 0;
+  }
+  &:not(:last-child) {
+    margin-right: $choose-gap;
+  }
+}

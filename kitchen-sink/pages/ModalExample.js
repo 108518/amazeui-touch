@@ -8,32 +8,33 @@ import {
   Field,
   List,
   Icon,
+  NavBar,
 } from 'amazeui-touch';
 
-class ModalExample extends React.Component {
+ class ModalExample extends React.Component {
   state = {
-    isModalOpen: false,
-  };
+      isModalOpen: false,
+  }
 
   openModal = () => {
     this.setState({
       isModalOpen: true,
     })
-  };
+  }
 
-  closeModal = () => {
+  closeModal= () => {
     this.setState({
       isModalOpen: false,
     });
-  };
+  }
 
-  onOpen = () => {
+  onOpen= () => {
     console.log('modal open....');
-  };
+  }
 
   onClosed = () => {
     console.log('modal closed....');
-  };
+  }
 
   handleAction = (data) => {
     let role = this.getModalRole();
@@ -57,11 +58,11 @@ class ModalExample extends React.Component {
       console.log('输入的数据是：', data);
       return true; // 点击确定时关闭 Modal
     }
-  };
+  }
 
   getModalRole = () => {
     return this.props.modalProps.role;
-  };
+  }
 
   render() {
     return (
@@ -80,31 +81,88 @@ class ModalExample extends React.Component {
           onClosed={this.onClosed}
           onAction={this.handleAction}
           {...this.props.modalProps}
-          closeViaBackdrop={true}
         >
           {this.getModalRole() !== 'loading' && this.props.children}
         </Modal>
       </div>
     );
   }
-}
+ }
 
-class LoginModal extends React.Component {
+class PageExample extends React.Component {
+  state = {
+    isModalOpen: false,
+  }
+
+  openModal = () => {
+    this.setState({
+      isModalOpen: true,
+    })
+  }
+
+  closeModal = (state) => {
+    console.log('state', state);
+
+    this.setState({
+      isModalOpen: false,
+    });
+  }
+
+  render() {
+
+    const itemLeft = {
+      title: '',
+      onClick: () => this.closeModal('close-1'),
+    };
+
+    const itemRight = {
+      title: '确定',
+      onClick: () => this.closeModal('confirm-2'),
+    };
+
+    const dataAll = {
+      title: 'header',
+      leftNav: [{...itemLeft, icon: 'left-nav'}],
+      rightNav: [{...itemRight}],
+    };
+
+    return (
+      <div>
+        <Button
+          amStyle='primary'
+          onClick={this.openModal}
+        >
+          Page Modal
+        </Button>
+        <Modal
+          ref="modal"
+          role="page"
+          header={<NavBar {...dataAll} amStyle="primary" />}
+          isOpen={this.state.isModalOpen}
+        >
+          Einstein's first paper[139] submitted in 1900 to Annalen der Physik was on capillary attraction. It was published in 1901 with the title "Folgerungen aus den Capillaritätserscheinungen", which translates as "Conclusions from the capillarity phenomena". Two papers he published in 1902–1903 (thermodynamics) attempted to interpret atomic phenomena from a statistical point of view. These papers were the foundation for the 1905 paper on Brownian motion, which showed that Brownian movement can be construed as firm evidence that molecules exist. His research in 1903 and 1904 was mainly concerned with the effect of finite atomic size on diffusion phenomena.[139]
+        </Modal>
+      </div>
+    );
+  }
+ }
+
+ class LoginModal extends React.Component {
   state = {
     isOpen: false,
-  };
+  }
 
   open = () => {
     this.setState({
       isOpen: true,
     })
-  };
+  }
 
   close = () => {
     this.setState({
       isOpen: false,
     });
-  };
+  }
 
   handleLogin = (e) => {
     let userName = this.refs.userName;
@@ -125,7 +183,7 @@ class LoginModal extends React.Component {
       console.info('Valid, do something else.');
       this.close();
     });
-  };
+  }
 
   render() {
     return (
@@ -147,7 +205,7 @@ class LoginModal extends React.Component {
             className="margin-v-sm"
           >
             <List.Item
-              media={<Icon name="person" />}
+              media={<Icon name="user-l" />}
               nested="input"
             >
               <Field
@@ -156,7 +214,7 @@ class LoginModal extends React.Component {
               />
             </List.Item>
             <List.Item
-              media={<Icon name="info" />}
+              media={<Icon name="password" />}
               nested="input"
             >
               <Field
@@ -184,9 +242,10 @@ class LoginModal extends React.Component {
       </Group>
     );
   }
-}
+ }
 
-class ModalExamples extends React.Component {
+
+ export default class extends React.Component {
   render() {
     return (
       <Container {...this.props}>
@@ -311,9 +370,15 @@ class ModalExamples extends React.Component {
         </Group>
 
         <LoginModal />
+
+        <Group
+          header="Page"
+        >
+          <PageExample />
+        </Group>
       </Container>
     );
   }
-}
+ }
 
-export default ModalExamples;
+

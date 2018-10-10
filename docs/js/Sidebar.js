@@ -1,5 +1,4 @@
 import React from 'react';
-import createClass from 'create-react-class';
 import {
   Link,
 } from 'react-router';
@@ -30,40 +29,24 @@ const components = [
       {
         name: 'Grid',
         title: '网格'
-      },
-      {
-        name: 'Container',
-        title: '容器'
       }
     ]
   },
   {
-    category: 'Components',
-    title: '常用组件',
+    category: 'Basic',
+    title: '基础组件',
     components: [
-      {
-        name: 'Accordion',
-        title: '手风琴'
-      },
-      {
-        name: 'Badge',
-        title: '小徽章'
-      },
       {
         name: 'Button',
         title: '按钮'
       },
       {
-        name: 'Card',
-        title: '卡片'
+        name: 'ButtonGroup',
+        title: '按钮组'
       },
       {
-        name: 'Form',
-        title: '表单'
-      },
-      {
-        name: 'Group',
-        title: '分组'
+        name: 'Field',
+        title: '输入框'
       },
       {
         name: 'Icon',
@@ -74,60 +57,183 @@ const components = [
         title: '列表'
       },
       {
-        name: 'Loader',
-        title: '加载图标'
+        name: 'Card',
+        title: '卡片'
       },
       {
-        name: 'Modal',
-        title: '模态窗'
+        name: 'Switch_',
+        title: '开关'
+      },
+      {
+        name: 'Badge',
+        title: '小徽章'
+      },
+      {
+        name: 'Choose',
+        title: '按钮选择组'
+      },
+      {
+        name: 'Select',
+        title: '弹出列表选择组'
       },
       {
         name: 'NavBar',
         title: '导航条'
       },
       {
-        name: 'Notification',
-        title: '通知'
+        name: 'Title',
+        title: '标题'
+      },
+      {
+        name: 'Divide',
+        title: '分割线'
+      },
+      // {
+      //   name: 'InputGroup',
+      //   title: '输入框组'
+      // },
+      // {
+      //   name: 'InputBox',
+      //   title: '基础输入框'
+      // },
+      // {
+      //   name: 'Info',
+      //   title: '条信息'
+      // },
+
+      {
+        name: 'TabBar',
+        title: '工具栏'
+      },
+      {
+        name: 'Loader',
+        title: '加载动画'
+      },
+      {
+        name: 'Table',
+        title: '表格'
+      },
+      {
+        name: 'Pagination',
+        title: '分页'
+      },
+    ]
+  },
+  {
+    category: 'Container',
+    title: '容器组件',
+    components: [
+      {
+        name: 'Accordion',
+        title: '手风琴'
+      },
+      {
+        name: 'Tabs',
+        title: '选项卡'
+      },
+      {
+        name: 'Group',
+        title: '分组'
+      },
+      {
+        name: 'CollapseCard',
+        title: '折叠卡片'
+      },
+      {
+        name: 'Slider',
+        title: '轮播'
+      },
+    ]
+  },
+  {
+    category: 'Behavior',
+    title: '交互组件',
+    components: [
+      {
+        name: 'Modal',
+        title: '模态窗'
+      },
+      {
+        name: 'Popover',
+        title: '气泡框'
       },
       {
         name: 'OffCanvas',
         title: '侧边栏'
       },
       {
-        name: 'Popover',
-        title: '弹出层'
+        name: 'Notification',
+        title: '通知'
       },
       {
-        name: 'Slider',
-        title: '轮播'
+        name: 'ButtonAction',
+        title: '按钮弹层'
       },
       {
-        name: 'TabBar',
-        title: '工具栏'
-      },
-      {
-        name: 'Tabs',
-        title: '选项卡'
+        name: 'Tree',
+        title: '树选择'
       },
     ]
   },
+  {
+    category: 'Template',
+    title: '模板组件',
+    components: [
+      {
+        name: 'ButtonBubble',
+        title: '按钮气泡'
+      },
+      {
+        name: 'ButtonContainer',
+        title: '按钮容器'
+      },
+      {
+        name: 'SelectableButton',
+        title: '可选按钮'
+      },
+      {
+        name: 'TodoItemTypeOne',
+        title: '待办列表一'
+      },
+      {
+        name: 'TodoItemTypeTwo',
+        title: '待办列表二'
+      },
+      {
+        name: 'ProcessLogs',
+        title: '进程日志'
+      }
+    ]
+  },
+  {
+    category: 'Template',
+    title: '组合示例',
+    components: [
+      {
+        name: 'FormCombinationExample',
+        tilte: '表单组合示例'
+      }
+    ]
+  }
 ];
 
-const Sidebar = createClass({
-  getInitialState() {
-    return {
+class Sidebar extends React.Component {
+  state = {
       filter: null
-    };
-  },
+  }
 
-  applyFilter() {
+  applyFilter = () => {
     this.setState({
       filter: this.refs.filter.value,
     });
-  },
+  }
 
-  renderNav() {
+  renderNav = () => {
     let cNav = [
+      (
+      <li key="start" className="nav-header">
+          开始使用
+      </li>),
       (
       <li key="gettingStarted">
         <Link
@@ -144,6 +250,16 @@ const Sidebar = createClass({
             to="/docs/advanced"
           >
             进阶使用
+          </Link>
+        </li>
+      ),
+      (
+        <li key="changelog">
+          <Link
+            activeClassName="active"
+            to="/docs/changelog"
+          >
+            变更日志*
           </Link>
         </li>
       )
@@ -172,6 +288,7 @@ const Sidebar = createClass({
         let filter = this.state.filter;
         filter = typeof filter === 'string' ?
           filter.toLowerCase() : null;
+        const router = name.toLowerCase();
 
         if (!filter ||
           (name.toLowerCase().indexOf(filter) > -1) ||
@@ -181,7 +298,7 @@ const Sidebar = createClass({
             <li key={`c${i}-item${index}`}>
               <Link
                 activeClassName="active"
-                to={`/docs/${name.toLowerCase()}`}
+                to={`/docs/${router}`}
               >
                 {title} <span className="en">{name}</span>
               </Link>
@@ -197,7 +314,7 @@ const Sidebar = createClass({
         {cNav}
       </ul>
     );
-  },
+  }
 
   render() {
     return (
@@ -211,7 +328,6 @@ const Sidebar = createClass({
             id="doc-filter"
             placeholder="查找组件" />
         </p>
-        <hr className="am-margin-vertical-sm" />
         <nav
           role="navigation"
         >
@@ -220,6 +336,6 @@ const Sidebar = createClass({
       </div>
     );
   }
-});
+}
 
 export default Sidebar;

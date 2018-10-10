@@ -5,12 +5,13 @@ import {
   Markdown,
   Highlight,
 } from '../../utils';
+import Api from './api'
 
-class TabsDoc extends React.Component {
+export default class extends React.Component {
   render() {
     return (
       <Doc>
-        <Markdown>{require('./api.md')}</Markdown>
+        <Api />
         <Highlight
           demo="tabs"
         >
@@ -21,4 +22,4 @@ class TabsDoc extends React.Component {
   }
 }
 
-export default TabsDoc;
+

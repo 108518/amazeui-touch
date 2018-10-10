@@ -1,110 +1,149 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';
+import cx from "classnames";
+import classNameSpace from "./utils/className";
 
-import '../scss/components/_card.scss';
 
-const Card = createReactClass({
-  displayName: 'Card',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+class Card extends React.Component {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
-    title: PropTypes.string,
+    bodyClassName: PropTypes.string,
+    bodyStyle: PropTypes.object,
     header: PropTypes.node,
     footer: PropTypes.node,
-  },
+    noMargin: PropTypes.bool,
+    noPadding: PropTypes.bool,
+    external: PropTypes.bool,
+    noLine: PropTypes.bool
+  };
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'card',
-    };
-  },
+  static defaultProps = {
+    classPrefix: "card",
+    noMargin: false,
+    noPadding: false,
+    external: false,
+    noLine: false
+  };
 
-  renderItem(element, role) {
+  renderItem = (element, role) => {
     if (!element) {
       return null;
     }
 
-    return (element.type && element.type === Card.Child) ?
-      element : <Card.Child role={role}>{element}</Card.Child>;
-  },
+    return element.type && element.type === Card.Child ? (
+      element
+    ) : (
+      <Card.Child role={role}>{element}</Card.Child>
+    );
+  };
 
-  renderTitle(title) {
-    return (
-      <h2 className={this.prefixClass('title')}>
+  renderHeader = header => {
+    return this.renderItem(header, "header");
+  };
+
+  renderFooter = footer => {
+    return this.renderItem(footer, "footer");
+  };
+
+  renderTitle = (title, noMargin, external) => {
+    return this.renderItem(
+      <h2
+        className={cx(
+          this.prefixClass("title"),
+          noMargin && this.prefixClass("title-noMargin"),
+          external && this.prefixClass("title-external")
+        )}
+      >
         {title}
       </h2>
     );
-  },
+  };
+
+  renderTitleOrHeader = (header, noMargin, external) => {
+    return typeof header == "string"
+      ? this.renderTitle(header, noMargin, external)
+      : this.renderHeader(header);
+  };
 
   render() {
-    let classSet = this.getClassSet();
-    let {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
+    const {
       children,
       className,
-      title,
       header,
       footer,
+      noMargin,
+      noPadding,
+      external,
+      noLine,
+      bodyStyle,
+      bodyClassName,
       ...props
     } = this.props;
 
     delete props.classPrefix;
 
+    const bodyCls = cx(bodyClassName, this.prefixClass("body"), {
+      [this.prefixClass("body-noPadding")]: noPadding,
+    })
+
+    classSet[this.prefixClass("external")] = external
+    classSet[this.prefixClass("noMargin")] = noMargin
+    classSet[this.prefixClass("noline")] = noLine
+
     return (
       <div
         {...props}
-        className={cx(classSet, className)}
+        className={cx(
+          classSet,
+          className,
+        )}
       >
-        {title ?
-          this.renderItem(this.renderTitle(title)) : this.renderItem(header)}
+        {this.renderTitleOrHeader(header, noMargin, external)}
 
-        <div className={this.prefixClass('body')}>
-          {children}
-        </div>
+        <div
+          className={bodyCls}
+          style={bodyStyle}
+        >{children}</div>
 
-        {this.renderItem(footer, 'footer')}
+        {this.renderFooter(footer)}
       </div>
     );
-  },
-});
+  }
+}
 
-const CardChild = createReactClass({
-  displayName: 'CardChild',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+class CardChild extends React.Component {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
-    role: PropTypes.oneOf(['header', 'footer']),
-    cover: PropTypes.string,
-  },
+    role: PropTypes.oneOf(["header", "footer"]),
+    cover: PropTypes.string
+  };
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'card',
-      role: 'header'
-    };
-  },
+  static defaultProps = {
+    classPrefix: "card",
+    role: "header"
+  };
 
   render() {
-    let {
-      role,
-      className,
-      cover,
-      ...props
-    } = this.props;
+    const classNS = classNameSpace(this.props);
+    this.prefixClass = classNS.prefixClass;
+
+    const { role, className, cover, ...props } = this.props;
+
     let classSet = {
       [this.prefixClass(role)]: true,
-      [this.prefixClass('cover')]: cover,
+      [this.prefixClass("cover")]: cover
     };
+
     let style = null;
 
     if (cover) {
       style = {
-        backgroundImage: 'url(' + cover + ')',
-      }
+        backgroundImage: "url(" + cover + ")"
+      };
     }
 
     delete props.classPrefix;
@@ -119,8 +158,8 @@ const CardChild = createReactClass({
         {this.props.children}
       </div>
     );
-  },
-});
+  }
+}
 
 Card.Child = CardChild;
 

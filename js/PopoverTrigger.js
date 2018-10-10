@@ -1,96 +1,129 @@
-import React, { cloneElement } from 'react';
+import React, { cloneElement } from "react";
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
-import ReactDOM from 'react-dom';
-import TransitionEvents from './utils/TransitionEvents';
-import OverlayMixin from './mixins/OverlayMixin';
-import dom from './utils/domUtils';
-import createChainedFunction from './utils/createChainedFunction';
+import {
+  findDOMNode,
+  createPortal,
+  unmountComponentAtNode,
+  unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
+} from "react-dom";
+import TransitionEvents from "./utils/TransitionEvents";
+import dom from "./utils/domUtils";
+import createChainedFunction from "./utils/createChainedFunction";
+import bodyElement from "./utils/bodyElement";
 
-const PopoverTrigger = createReactClass({
-  displayName: 'PopoverTrigger',
-  mixins: [OverlayMixin],
 
-  propTypes: {
-    defaultPopoverActive: PropTypes.bool,
+class PopoverTrigger extends React.Component {
+  static propTypes = {
+    container: PropTypes.node,
+    defaultActive: PropTypes.bool,
     popover: PropTypes.node.isRequired,
     onOpen: PropTypes.func,
-    onClosed: PropTypes.func,
-  },
+    onClosed: PropTypes.func
+  };
 
-  getDefaultProps() {
-    return {
-      onOpen: () => {
-      },
-      onClosed: () => {
-      },
-    };
-  },
+  static defaultProps = {
+    onOpen: () => {},
+    onClosed: () => {}
+  };
 
-  getInitialState() {
-    return {
-      popoverActive: this.props.defaultPopoverActive == null ?
-        false : this.props.defaultPopoverActive,
+  constructor(props) {
+    super(props);
+    this.state = {
+      popoverActive:
+        this.props.defaultActive == null
+          ? false
+          : this.props.defaultActive,
       isClosing: false,
       popoverLeft: null,
       popoverTop: null,
-      placement: null,
+      placement: null
     };
-  },
+
+    this.createPortal();
+  }
 
   componentDidMount() {
-    if (this.props.defaultPopoverActive) {
-      this.updatePopoverPosition();
-    }
-  },
+    this.getContainerDOMNode().appendChild(this.node);
 
-  open() {
+    if (this.props.defaultActive) {
+      // Making sure DOM is appended.
+      setTimeout(() => {
+        this.updatePopoverPosition();
+      }, 0)
+    }
+  }
+
+  // Remove Overlay related DOM node
+  componentWillUnmount() {
+    if (this.node) {
+      this.getContainerDOMNode().removeChild(this.node);
+      this.node = null;
+    }
+  }
+
+  // Create Overlay wrapper
+  createPortal = () => {
+    this.node = document.createElement("div");
+    this.node.className = "__overlay-portal";
+  };
+
+  getOverlayDOMNode = () => {
+    if (this.overlayInstanceDom) {
+      // Use ref to get real DOM NODE
+      return findDOMNode(
+        (this.overlayInstanceDom.refs && this.overlayInstanceDom.refs.overlay) ||
+          this.overlayInstanceDom
+      );
+    }
+
+    return null;
+  };
+
+  getContainerDOMNode = () => {
+    return findDOMNode(this.props.container) || bodyElement;
+  };
+
+  open = () => {
     if (this.state.popoverActive) {
       return;
     }
 
-    this.setState({
-      popoverActive: true,
-      isClosing: false,
-    }, function() {
-      this.updatePopoverPosition();
-      this.props.onOpen();
-    });
-  },
+    this.setState(
+      {
+        popoverActive: true,
+        isClosing: false
+      },
+      function() {
+        this.updatePopoverPosition();
+        this.props.onOpen();
+      }
+    );
+  };
 
-  close() {
+  close = () => {
     if (!this.state.popoverActive) {
       return;
     }
 
-    // 暂时移除动画效果
-    /*
     this.setState({
-      isClosing: true,
+      isClosing: true
     });
-    */
-    this.handleClosed();
-  },
+  };
 
-  handleClosed() {
+  handleClosed = () => {
     this.setState({
       popoverActive: false,
-      isClosing: false,
+      isClosing: false
     });
 
     this.props.onClosed();
-  },
+  };
 
-  toggle() {
+  toggle = () => {
     this.state.popoverActive ? this.close() : this.open();
-  },
+  };
 
-  updatePopoverPosition() {
-    /*
-    if (!this.isMounted()) {
-      return;
-    }
-    */
+  updatePopoverPosition = () => {
 
     let position = this.calcPopoverPosition() || {};
 
@@ -100,11 +133,11 @@ const PopoverTrigger = createReactClass({
       angleLeft: position.angleLeft,
       angleTop: position.angleTop,
       anglePosition: position.anglePosition,
-      placement: position.placement,
+      placement: position.placement
     });
-  },
+  };
 
-  calcPopoverPosition() {
+  calcPopoverPosition = () => {
     let targetOffset = this.getTriggerOffset();
     let popoverNode = this.getOverlayDOMNode();
 
@@ -114,10 +147,7 @@ const PopoverTrigger = createReactClass({
 
     let popoverHeight = popoverNode.offsetHeight;
     let popoverWidth = popoverNode.offsetWidth;
-    let {
-      height: targetHeight,
-      width: targetWidth,
-    } = targetOffset;
+    let { height: targetHeight, width: targetWidth } = targetOffset;
     let windowHeight = window.innerHeight;
     let windowWidth = window.innerWidth;
     let anglePosition, angleLeft, angleTop;
@@ -125,21 +155,24 @@ const PopoverTrigger = createReactClass({
     let popoverTop = 0;
     let popoverLeft = 0;
     let diff = 0;
-    let popoverPosition = 'top';
+    let popoverPosition = "top";
     let popoverTotalHeight = popoverHeight + popoverAngleSize;
 
     // Popover Horizontal position
     // Popover 高度小于 trigger 顶部偏移
-    if ((popoverTotalHeight) < targetOffset.top) {
+    if (popoverTotalHeight < targetOffset.top) {
       // On top: trigger 顶部偏移 - Popover 高度
       popoverTop = targetOffset.top - popoverHeight - popoverAngleSize;
-    } else if ((popoverTotalHeight) < windowHeight - targetOffset.top - targetHeight) {
+    } else if (
+      popoverTotalHeight <
+      windowHeight - targetOffset.top - targetHeight
+    ) {
       // On bottom: Popover 高度小于 trigger 下方空白位置
-      popoverPosition = 'bottom';
+      popoverPosition = "bottom";
       popoverTop = targetOffset.top + targetHeight + popoverAngleSize;
     } else {
       // On middle: Popover 位于 trigger 的水平位置
-      popoverPosition = 'horizontal';
+      popoverPosition = "horizontal";
       popoverTop = targetHeight / 2 + targetOffset.top - popoverHeight / 2;
       diff = popoverTop;
 
@@ -153,7 +186,7 @@ const PopoverTrigger = createReactClass({
     }
 
     // Popover Horizontal Position
-    if (popoverPosition === 'top' || popoverPosition === 'bottom') {
+    if (popoverPosition === "top" || popoverPosition === "bottom") {
       popoverLeft = targetWidth / 2 + targetOffset.left - popoverWidth / 2;
       diff = popoverLeft;
 
@@ -166,15 +199,17 @@ const PopoverTrigger = createReactClass({
       }
 
       diff = diff - popoverLeft;
-      angleLeft = (popoverWidth / 2 - popoverAngleSize + diff);
-      angleLeft = Math.max(Math.min(angleLeft,
-        popoverWidth - popoverAngleSize * 2 - 6), 6);
-      anglePosition = (popoverPosition === 'top') ? 'bottom' : 'top';
-    } else if (popoverPosition === 'horizontal') {
+      angleLeft = popoverWidth / 2 - popoverAngleSize + diff;
+      angleLeft = Math.max(
+        Math.min(angleLeft, popoverWidth - popoverAngleSize * 2 - 6),
+        6
+      );
+      anglePosition = popoverPosition === "top" ? "bottom" : "top";
+    } else if (popoverPosition === "horizontal") {
       popoverLeft = targetOffset.left - popoverWidth - popoverAngleSize;
-      anglePosition = 'right';
+      anglePosition = "right";
 
-      if (popoverLeft < 5 || (popoverLeft + popoverWidth > windowWidth)) {
+      if (popoverLeft < 5 || popoverLeft + popoverWidth > windowWidth) {
         if (popoverLeft < 5) {
           popoverLeft = targetOffset.left + targetWidth + popoverAngleSize;
         }
@@ -183,10 +218,13 @@ const PopoverTrigger = createReactClass({
           popoverLeft = windowWidth - popoverWidth - 5;
         }
 
-        anglePosition = 'left';
+        anglePosition = "left";
       }
-      angleTop = (popoverHeight / 2 - popoverAngleSize + diff);
-      angleTop = Math.max(Math.min(angleTop, popoverHeight - popoverAngleSize * 2 - 6), 6);
+      angleTop = popoverHeight / 2 - popoverAngleSize + diff;
+      angleTop = Math.max(
+        Math.min(angleTop, popoverHeight - popoverAngleSize * 2 - 6),
+        6
+      );
     }
 
     return {
@@ -195,26 +233,37 @@ const PopoverTrigger = createReactClass({
       placement: popoverPosition,
       angleLeft: angleLeft,
       angleTop: angleTop,
-      anglePosition,
+      anglePosition
     };
-  },
+  };
 
-  getTriggerOffset() {
-    let node = ReactDOM.findDOMNode(this);
+  getTriggerOffset = () => {
+    let node = findDOMNode(this.triggerInstance);
     let container = this.getContainerDOMNode();
-    let offset = container.tagName === 'BODY' ?
-      dom.offset(node) : dom.position(node, container);
+    let offset =
+      container.tagName === "BODY"
+        ? dom.offset(node)
+        : dom.position(node, container);
 
     return Object.assign({}, offset, {
       height: node.offsetHeight,
       width: node.offsetWidth
     });
-  },
+  };
 
-  // used by Mixin
+  handleAnimationEnd = () => {
+    const {
+      isClosing
+    } = this.state;
+
+    if (isClosing) {
+      this.handleClosed()
+    }
+  }
+
   renderOverlay() {
     if (!this.state.popoverActive) {
-      return <span />;
+      return null;
     }
 
     let popover = this.props.popover;
@@ -225,28 +274,11 @@ const PopoverTrigger = createReactClass({
       anglePosition,
       angleLeft,
       angleTop,
-      placement,
+      placement
     } = this.state;
 
-    if (isClosing) {
-      let node = this.getOverlayDOMNode();
-      console.log(node);
-      if (node) {
-        let closedHandler = (e) => {
-          console.log(e.target,  '---->')
-          if (e && e.target !== node) {
-            return;
-          }
-
-          TransitionEvents.off(node, closedHandler);
-          this.handleClosed();
-        };
-
-        TransitionEvents.on(node, closedHandler);
-      }
-    }
-
-    return cloneElement(popover, {
+    return createPortal(cloneElement(popover, {
+      ref: (ref) => {this.overlayInstanceDom = ref},
       positionLeft,
       positionTop,
       angleLeft,
@@ -255,20 +287,29 @@ const PopoverTrigger = createReactClass({
       placement,
       isClosing,
       onDismiss: this.close,
-    });
-  },
+      onAnimationEnd: this.handleAnimationEnd,
+    }), this.node);
+  }
 
   render() {
     let child = React.Children.only(this.props.children);
     let props = {
-      onClick: createChainedFunction(child.props.onClick,
-        this.props.onClick),
+      onClick: createChainedFunction(child.props.onClick, this.props.onClick)
     };
 
     props.onClick = createChainedFunction(this.toggle, props.onClick);
 
-    return cloneElement(child, props);
-  },
-});
+    return (
+      <div>
+        { cloneElement(child, {
+          ...props,
+          ref: (ref) => {this.triggerInstance = ref}
+          })
+        }
+        { this.renderOverlay() }
+      </div>
+    )
+  }
+}
 
 export default PopoverTrigger;

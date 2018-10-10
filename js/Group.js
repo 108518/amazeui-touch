@@ -1,46 +1,43 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_group.scss';
 
-let Group = createReactClass({
-  displayName: 'Group',
-  mixins: [ClassNameMixin],
+export default class Group extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     component: PropTypes.node.isRequired,
     header: PropTypes.node,
     footer: PropTypes.node,
     noPadded: PropTypes.bool,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'group',
       component: 'div'
-    };
-  },
+  }
 
-  renderAddon(role) {
+  renderAddon = (role) => {
     role = role || 'header';
     return this.props[role] ?
       React.createElement(role, {
         className: this.prefixClass(role)
       }, this.props[role]) : null;
-  },
+  }
 
   render() {
-    let {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
+    const {
       component: Component,
       className,
+      bodyClass,
       noPadded,
       ...props,
     } = this.props;
-    let classSet = this.getClassSet();
 
     delete props.classPrefix;
     delete props.header;
@@ -58,13 +55,11 @@ let Group = createReactClass({
         className={cx(className, classSet)}
       >
         {this.renderAddon('header')}
-        <div className={cx(bodyClasses)}>
+        <div className={cx(bodyClasses, bodyClass)}>
           {this.props.children}
         </div>
         {this.renderAddon('footer')}
       </Component>
     );
-  },
-});
-
-export default Group;
+  }
+}

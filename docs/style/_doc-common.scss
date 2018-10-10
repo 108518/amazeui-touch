@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  font-family: "Monospaced Number", "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei Light", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 #root {
@@ -54,28 +55,73 @@ body {
 
 // Header bar
 .amt-header {
-  z-index: 100;
+  display: flex;
+  height: 66px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 0;
+  z-index: 99;
+  box-shadow: 0px 2px 5px #f0f0f0;
 
-  .am-topbar-brand {
-    position: relative;
-    margin-right: 20px;
-    z-index: 10;
-    .am-badge {
-      position: absolute;
-      top: 5px;
-      right: 0;
-      z-index: 20
-    }
+  .amt-logo {
+    height: 100%;
+    margin: 0;
   }
 
-  .am-text-ir {
+  .amt-logo-link {
     display: block;
     margin-right: 10px;
-    height: 50px;
+    font-size: 0px;
     width: 160px;
-    background: url(http://s.amazeui.org/assets/2.x/i/ui/logo.png) no-repeat left center;
+    height: 100%;
+    background: url(https://t2.amazeui.org/imgs/logo.png) no-repeat center;
     background-size: 125px 24px;
+  }
+
+  .amt-nav {
+    display: flex;
+    height: 100%;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    margin-right: 60px;
+    list-style: none;
+
+    @media screen and (max-width: 640px){
+      display: none;
+    }
+
+    li {
+      height: 100%;
+      margin-left: 30px;
+    }
+
+    a {
+      position: relative;
+      display: inline-block;
+      line-height: 66px;
+      vertical-align: middle;
+      color: #333;
+      font-weight: bold;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #0a76e2;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+      }
+
+      &:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+    }
   }
 
   .am-topbar-toggle {
@@ -95,3 +141,31 @@ body {
     }
   }
 }
+
+
+// fix style override
+.amt-sidebar {
+  background-color: #fff !important;
+}
+.am-input-sm {
+  font-size: 0.8rem !important;
+}
+
+.am-margin-top {
+  margin-top: 1rem !important;
+}
+
+.am-form-field.am-input-sm {
+  padding: 0.5rem;
+  border-radius: 2px;
+}
+.am-margin-horizontal-sm {
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+}
+@media only screen and (min-width: 641px) {
+  .am-topbar-nav>li>a {
+    line-height: 66px;
+  }
+}
+

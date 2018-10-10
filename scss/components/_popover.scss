@@ -16,8 +16,7 @@
   margin: 0;
   background: $popover-background;
   color:$popover-color;
-  border: 1px solid $popover-border;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+  border-radius: 3px;
   animation-duration: $popover-duration;
   animation-timing-function: ease-out;
   animation-name: amt-slide-top-fixed;
@@ -39,6 +38,7 @@
   z-index: 110;
   background: $popover-background;
   padding: 8px;
+  border-radius: 3px;
 }
 
 .#{$popover-prefix}-angle {

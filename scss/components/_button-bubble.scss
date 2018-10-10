@@ -1,0 +1,34 @@
+// Amaze UI Touch: Button Container
+// =============================================================================
+
+@import "../env";
+
+// Output
+// -----------------------------------------------------------------------------
+.#{$button-bubble-prefix} {
+  position: relative;
+  padding: rem-calc(10) rem-calc(15);
+  margin: rem-calc(5) rem-calc(10);
+  border-radius: 3px;
+  background: $white;
+  .#{$button-group-prefix} {
+    margin: 0;
+  }
+  .#{$button-group-prefix} {
+    margin-bottom: rem-calc(10);
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.#{$button-bubble-prefix}-triangle {
+  position: absolute;
+  bottom: rem-calc(-4);
+  right: rem-calc(5);
+  width: 0;
+  height: 0;
+  border-top: rem-calc(6) solid $white;
+  border-right: rem-calc(6) solid transparent;
+  border-left: rem-calc(6) solid transparent;
+}

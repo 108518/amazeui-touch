@@ -1,20 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import ReactDOM, {
-  unmountComponentAtNode,
-  unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
+  createPortal,
 } from 'react-dom';
-import { CSSTransitionGroup } from 'react-transition-group';
 import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
-import {
-  canUseDOM,
-} from './utils/exenv';
+import classNameSpace from './utils/className';
 import bodyElement from './utils/bodyElement';
 import Icon from './Icon';
-
-import '../scss/components/_notification.scss';
 
 // @see https://facebook.github.io/react/blog/2015/09/10/react-v0.14-rc1.html
 // To improve reliability, CSSTransitionGroup will no longer listen to
@@ -24,11 +16,9 @@ import '../scss/components/_notification.scss';
 // be not smooth. It maybe a bug of React.
 const TRANSITION_TIMEOUT = 250;
 
-const Notification = createReactClass({
-  displayName: 'Notification',
-  mixins: [ClassNameMixin],
+class Notification extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     title: PropTypes.string,
     amStyle: PropTypes.string,
@@ -36,30 +26,31 @@ const Notification = createReactClass({
     animated: PropTypes.bool,
     visible: PropTypes.bool,
     onDismiss: PropTypes.func,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'notification',
       closeBtn: true,
       onDismiss: () => {
       },
-    };
-  },
+  }
 
-  renderCloseBtn() {
+  renderCloseBtn = () => {
     return this.props.closeBtn ? (
       <Icon
         className={this.prefixClass('icon')}
-        name="close"
+        name="cancel"
         onClick={this.props.onDismiss}
       />
     ) : null;
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet();
-    let {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
+    const {
       title,
       className,
       animated,
@@ -94,63 +85,57 @@ const Notification = createReactClass({
     ) : null;
 
     return animated ? (
-      <CSSTransitionGroup
-        component="div"
-        transitionName="notification"
-        transitionEnterTimeout={TRANSITION_TIMEOUT}
-        transitionLeaveTimeout={TRANSITION_TIMEOUT}
-      >
+      <div>
         {notificationBar}
-      </CSSTransitionGroup>
+      </div>
     ) : notificationBar;
-  },
-});
+  }
+}
 
 class NotificationPortal extends React.Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
-  };
+  }
 
-  static defaultProps = {
+  static efaultProps = {
     visible: false,
-  };
+  }
 
-  componentDidMount() {
-    if (!this.isStatic()) {
+  constructor(props) {
+    super(props)
+    if (!this.isStatic) {
       this.node = document.createElement('div');
       this.node.className = '__notification-portal';
-      bodyElement.appendChild(this.node);
-      this.renderNotification(this.props);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.isStatic()) {
-      this.renderNotification(nextProps);
+  componentDidMount() {
+    if (!this.isStatic) {
+      bodyElement.appendChild(this.node);
     }
   }
 
   componentWillUnmount() {
-    if (!this.isStatic()) {
-      unmountComponentAtNode(this.node);
+    if (!this.isStatic) {
       bodyElement.removeChild(this.node);
     }
   }
 
-  isStatic = () => {
+  get isStatic(){
     return this.props.static;
-  };
+  }
 
-  renderNotification = (props) => {
-    this.portal = renderSubtreeIntoContainer(
-      this,
-      <Notification {...props} />,
+  renderNotification = () => {
+    return createPortal(
+      <Notification {...this.props} />,
       this.node
     );
-  };
+  }
 
   render() {
-    return this.isStatic() ? <Notification {...this.props} /> : null;
+    return this.isStatic ?
+      <Notification {...this.props} /> :
+      this.renderNotification();
   }
 }
 

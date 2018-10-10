@@ -28,10 +28,14 @@
     color: $background;
 
     // hover/focus style is not needed for touch devices
-    &:active,
+    &:active:not(.#{$button-prefix}-selectable),
     &.#{map_get($am-states, active)} {
-      background: $background;
+      background-color: $background;
+      border-color: $background;
       color: islight($background);
+    }
+    &:active.#{$button-prefix}-selectable {
+      background: transparent;
     }
   } @else { // with background
     @if $color == auto {
@@ -46,7 +50,6 @@
       border-color: scale-color($background, $lightness: -15%);
     }
 
-    &:hover,
     &:active,
     &.#{map_get($am-states, active)} {
       @if $background-active == auto {
@@ -74,7 +77,9 @@
   cursor: pointer;
   -webkit-appearance: none;
   -webkit-font-smoothing: antialiased;
-  transition: .25s ease-out;
+  -webkit-select: none;
+  user-select: none;
+  transition: .15s ease-out;
   vertical-align: middle;
 
   padding: $button-padding;
@@ -146,7 +151,7 @@
   }
 }
 
-// M odifiers: radius
+// Modifiers: radius
 // -----------------------------------------------------------------------------
 @each $radius-key, $radius in $am-radius {
   .#{$button-prefix}-#{$radius-key} {

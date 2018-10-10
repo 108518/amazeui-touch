@@ -126,7 +126,7 @@
     }
   }
 
-  .active {
+  .#{map_get($am-states, active)} {
     background: $slider-indicator-active-bg;
   }
 }

@@ -1,47 +1,45 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_switch.scss';
+export default class Switch extends React.Component {
 
-const Switch = createReactClass({
-  displayName: 'Switch',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     name: PropTypes.string,
+    shape: PropTypes.string,
     amStyle: PropTypes.string,
     disabled: PropTypes.bool,
-    value: PropTypes.bool,
+    checked: PropTypes.bool,
+    defaultChecked: PropTypes.bool,
     onValueChange: PropTypes.func,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'switch',
-      onValueChange: () => {},
-    };
-  },
+  static defaultProps = {
+    classPrefix: 'switch',
+    onValueChange: () => {},
+  }
 
-  getValue() {
-    return this.refs.field.checked;
-  },
+  getValue = () => this.field.checked
 
   render() {
-    let classSet = this.getClassSet();
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
     const {
       name,
+      shape,
       className,
       onValueChange,
-      value,
+      checked,
+      defaultChecked,
       disabled,
       ...props
     } = this.props;
 
     delete props.classPrefix;
+    delete props.amStyle;
 
     return (
       <label
@@ -52,14 +50,14 @@ const Switch = createReactClass({
           onChange={onValueChange.bind(this)}
           name={name}
           type="checkbox"
-          ref="field"
-          defaultChecked={value}
+          ref={input => { this.field = input; }}
+          checked={checked}
+          defaultChecked={defaultChecked}
           disabled={disabled}
         />
-        <span className={this.prefixClass('label')} />
+        <span className={this.prefixClass(shape ? shape : 'label')} />
       </label>
     );
-  },
-});
+  }
+}
 
-export default Switch;

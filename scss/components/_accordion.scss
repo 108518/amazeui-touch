@@ -10,11 +10,10 @@
   border-top: $accordion-border;
   background: $accordion-background;
 
+  @extend %card-nested-component;
+
   .#{$card-prefix}-body & {
-    @extend %card-nested-component;
-
     border-top: none;
-
     .#{$accordion-prefix}-item:last-child {
       border-bottom: none;
     }
@@ -28,7 +27,7 @@
   // active
   &.#{map_get($am-states, active)} {
     .#{$accordion-prefix}-icon {
-      transform: rotate(90deg);
+      transform: rotate(180deg);
     }
   }
 }
@@ -53,7 +52,7 @@
 
   .#{$accordion-prefix}-icon {
     @include fixes-flexbox-for-android;
-    font-size: rem-calc(20);
+    font-size: rem-calc(16);
     color: rgba($gray-light, .45);
     transform: rotate(0deg);
     transition: transform .3s;
@@ -62,6 +61,7 @@
 
 // 规避 Collapase 处理不当的问题
 .#{$accordion-prefix}-body {
+  will-change: height;
   margin: 0 !important;
   padding: 0 !important;
   border: none !important;

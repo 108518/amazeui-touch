@@ -1,5 +1,6 @@
-export const NAMESPACE = null; // 'am'
+// for classname
+export const NAMESPACE = 'amt'; // 'am'
 export const CLASSNAMES = {
-  disabled: 'disabled',
-  active: 'active',
+  disabled: 'amt-disabled',
+  active: 'amt-active',
 };

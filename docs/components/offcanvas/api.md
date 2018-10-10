@@ -1,69 +1,45 @@
+---
+imports:
+  'Basic': './basic'
+  'Push': './push'
+---
+
 # OffCanvas
 
-OffCanvas 组件，侧边栏组件。
+侧边栏组件。
 
-## 组件
-
-### OffCanvas
-
-`<OffCanvas>` 组件，放置侧边栏内容。
-
-#### Props
-
-`<OffCanvas>` 属性通过触发器 `<OffCanvasTrigger>` 传递，暂无需要设置的属性。
-
-### OffCanvasTrigger
-
-`<OffCanvasTrigger>` 组件，侧边栏触发器。
-
-##### `offCanvas`
-
-> PropType: `node`
-
-要触发的侧边栏，`OffCanvas` 组件实例，**必需**。
-
-##### `placement`
-
-> PropType: `enum('left', 'right')`
-
-侧边栏位置，默认为 `left`。
-
-##### `animation`
-
-> PropType: `enum('slide', 'push')`
-
-动画效果，默认为 `slide`。
-
-##### `pageContainer`
-
-> PropType: `node`
-
-使用 `push` 动画效果时，侧边栏「推」的容器（一般为 SPA 的容器），可以传递容器 `id` 或者 容器 React 组件实例。
-
-##### `onOpen`
-
-> PropType: `func`
-
-侧边栏打开时的回调函数。
-
-##### `onClosed`
-
-> PropType: `func`
-
-侧边栏关闭以后的回调函数。
+**OffCanvas 为受控组件，开发者通过设置 `isOpen` 的值控制是否打开侧边栏。**
 
 
-#### 方法
+```run
+<Basic />
+<Push />
+```
 
-调用方式见示例代码。
 
-##### `.open()`
+## &lt;OffCanvas&gt;
 
-打开侧边栏。
 
-##### `.close()`
+| 名称                |  类型           | 默认值           | 含义           |
+| -------------      | ------------- | --------------- | --------------- |
+| `isOpen`           | `bool`        |  `false`        | 侧边栏是否打开     |
+| `onDimiss`         | `func`        |                 | 点击遮罩层时触发此函数， 若需要通过遮罩层关闭侧边栏，就必须设置此回调函数来关闭。 |
+| `placement`        | `left`        |                 | 侧边栏位置。 `enum('left', 'right')` |
+| `animation`        | `slide`       |                 | 动画效果。   `enum('slide', 'push')` |
+| `pageContainer`    |  `node`       |                 | 使用 `push` 动画效果时，侧边栏「推」的容器（一般为 SPA 的容器），可以传递容器 `id` 或者 容器 React 组件实例。 |
+| `onOpen`           |   `func`      |                 | 侧边栏打开时的回调函数。 |
+| `onClosed`         |   `func`      |                 | 侧边栏关闭以后的回调函数。 |
+| `style`            |   `obj`       |                 | 侧边栏容器样式        |
+| `className`        |   `string`    |              | 侧边栏容器类名        |
 
-关闭侧边栏。
+## 方法
+
+### OffCanvas 的实例
+
+| 名称                |  描述           |
+| -------------      | ------------- | 
+| `.open()`          | 打开侧边栏。    |
+| `.close()`         | 关闭侧边栏。    |
 
 
 ## 示例

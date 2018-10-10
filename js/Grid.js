@@ -1,16 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
+import classNameSpace from "./utils/className";
 
-import '../scss/components/_grid.scss';
 
-const Grid = createReactClass({
-  displayName: 'Grid',
-  mixins: [ClassNameMixin],
+export default class Grid extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     component: PropTypes.node.isRequired,
     collapse: PropTypes.bool,
@@ -18,18 +13,19 @@ const Grid = createReactClass({
     align: PropTypes.oneOf(['right', 'center', 'between', 'around']),
     wrap: PropTypes.oneOf(['wrap', 'wrap-reverse']),
     bordered: PropTypes.bool,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'g',
       component: 'div',
-    };
-  },
+  }
 
-  render: function() {
-    let classSet = this.getClassSet();
-    let {
+  render() {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
+    const {
       component: Component,
       className,
       collapse,
@@ -67,7 +63,5 @@ const Grid = createReactClass({
         {this.props.children}
       </Component>
     );
-  },
-});
-
-export default Grid;
+  }
+}

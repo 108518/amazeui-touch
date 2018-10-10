@@ -1,17 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
-import BackdropMixin from './mixins/BackdropMixin';
+import classNameSpace, {setClassNS} from './utils/className';
 
-import '../scss/components/_popover.scss';
 
-const Popover = createReactClass({
-  displayName: 'Popover',
-  mixins: [ClassNameMixin, BackdropMixin],
+export default class Popover extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
     placement: PropTypes.oneOf(['top', 'bottom', 'horizontal']),
     positionLeft: PropTypes.number,
@@ -20,27 +15,48 @@ const Popover = createReactClass({
     angleTop: PropTypes.number,
     anglePosition: PropTypes.string,
     onDismiss: PropTypes.func,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'popover',
+  static defaultProps = {
+    classPrefix: 'popover',
+  }
+
+  renderBackdrop = (children) => {
+    let onClick = this.handleBackdropClick || null;
+    let classSet = {
+      [this.setClassNS('modal-backdrop')]: true,
+      [this.setClassNS('modal-backdrop-out')]: this.props.isClosing,
     };
-  },
 
-  handleBackdropClick(e) {
-    if (e && e.target === this.backdrop) {
-      const {
+    return (
+      <span>
+        {children}
+        <div
+          onClick={onClick}
+          ref="backdrop"
+          className={cx(classSet)}
+        ></div>
+      </span>
+    );
+  }
+
+  handleBackdropClick = (e) => {
+    if (e && e.target === this.refs.backdrop) {
+      let {
         onDismiss,
       } = this.props;
 
       onDismiss && onDismiss();
     }
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet();
-    let {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+    this.setClassNS = setClassNS;
+
+    const {
       className,
       children,
       positionLeft,
@@ -52,11 +68,11 @@ const Popover = createReactClass({
       placement,
       ...props
     } = this.props;
-    let style = {
+    const style = {
       left: positionLeft,
       top: positionTop,
     };
-    let angleStyle = {
+    const angleStyle = {
       left: angleLeft,
       top: angleTop,
     };
@@ -71,7 +87,6 @@ const Popover = createReactClass({
       <div
         {...props}
         style={style}
-        // ref={overlay => (this.overlay = overlay)}
         ref="overlay"
         className={cx(classSet, className)}
       >
@@ -88,7 +103,5 @@ const Popover = createReactClass({
     );
 
     return this.renderBackdrop(popover);
-  },
-});
-
-export default Popover;
+  }
+}

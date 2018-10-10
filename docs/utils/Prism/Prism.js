@@ -370,7 +370,7 @@ var Prism = (function(){
     };
 
     if (env.type == 'comment') {
-      env.attributes['spellcheck'] = 'true';
+      env.attributes['spellCheck'] = 'true';
     }
 
     if (o.alias) {

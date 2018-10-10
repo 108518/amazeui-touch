@@ -2,15 +2,16 @@ const fs = require('fs');
 import React from 'react';
 import {
   Doc,
-  Markdown,
   Highlight,
 } from '../../utils';
 
-class TypographyDoc extends React.Component {
+import Api from './api.md';
+
+export default class extends React.Component {
   render() {
     return (
       <Doc>
-        <Markdown>{require('./api.md')}</Markdown>
+        <Api />
         <Highlight
           demo="typography"
         >
@@ -21,4 +22,4 @@ class TypographyDoc extends React.Component {
   }
 }
 
-export default TypographyDoc;
+

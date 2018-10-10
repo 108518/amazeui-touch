@@ -5,12 +5,13 @@ import {
   Markdown,
   Highlight,
 } from '../../utils';
+import Api from './api'
 
-class ModalDoc extends React.Component {
+export default class extends React.Component {
   render() {
     return (
       <Doc>
-        <Markdown>{require('./api.md')}</Markdown>
+        <Api />
         <Highlight
           demo="modal"
         >
@@ -21,4 +22,4 @@ class ModalDoc extends React.Component {
   }
 }
 
-export default ModalDoc;
+

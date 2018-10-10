@@ -6,11 +6,13 @@ import {
   Highlight,
 } from '../../utils';
 
-class CardDoc extends React.Component {
+import Api from './api'
+
+export default class extends React.Component {
   render() {
     return (
       <Doc>
-        <Markdown>{require('./api.md')}</Markdown>
+        <Api />
         <Highlight
           demo="card"
         >
@@ -21,4 +23,4 @@ class CardDoc extends React.Component {
   }
 }
 
-export default CardDoc;
+

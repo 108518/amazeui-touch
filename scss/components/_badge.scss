@@ -35,20 +35,60 @@
   $fontsize: $badge-fontsize,
   $padding: $badge-padding
 ) {
-  line-height: 1;
+  // display: inline-block;
+  display: inline-flex;
+  align-items: center;
   white-space: nowrap;
-  display: inline-block;
+  height: 18px;
+  line-height: 1;
+  vertical-align: center;
   cursor: default;
-  min-width: 1.5rem;
+  min-width: 1.2em;
+  z-index: 19;
+  font-size: 12px !important;
 
   @include badge-layout($fontsize, $padding);
   @include badge-style($background, $color, $radius);
 }
 
-
+// output
+// ---------------------------------------------------
 .#{$badge-prefix} {
   @include badge();
+
+  &.#{$badge-prefix}-point {
+    min-width: unset;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    line-height: 12px;
+  }
 }
+
+.#{$badge-prefix}-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  margin-right: 1em;
+
+  .#{$badge-prefix} {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%,-50%);
+  }
+
+  // optimize for different inner Component
+  .#{$button-prefix} {
+    margin: 0;
+  }
+
+  // NOTE: remove children margin. It need to be optimized.
+  > div {
+    margin: 0;
+  }
+}
+
 
 // modifiers: colors
 // -----------------------------------------------------------------------------

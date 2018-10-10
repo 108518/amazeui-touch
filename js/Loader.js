@@ -1,31 +1,28 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_loader.scss';
+export default class Loader extends React.Component {
 
-const Loader = createReactClass({
-  displayName: 'Loader',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
     component: PropTypes.node,
     amStyle: PropTypes.string,
     rounded: PropTypes.bool,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'loader',
       component: 'div',
-    };
-  },
+      rounded: true,
+  }
 
   render() {
-    let classSet = this.getClassSet();
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
     const {
       className,
       component: Component,
@@ -46,7 +43,5 @@ const Loader = createReactClass({
         <div className={this.prefixClass('bounce3')} />
       </Component>
     )
-  },
-});
-
-export default Loader;
+  }
+}

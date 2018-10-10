@@ -1,10 +1,18 @@
-// Amaze UI Touch: Form
+// Amaze UI Touch: Form && Field
 // =============================================================================
 
 @import "../env";
 
-// Mixins
+// Mixins & inherit
 // -----------------------------------------------------------------------------
+%paddings {
+  padding-top: get-side($form-padding, top);
+  padding-bottom: get-side($form-padding, bottom);
+}
+
+// Variables
+// -----------------------------------------------------------------------------
+$field-container-label-color: #666;
 
 
 // Output
@@ -13,17 +21,15 @@
 #{$text-field-selectors} {
   $padding-top: get-side($form-padding, top);
   $padding-bottom: get-side($form-padding, bottom);
-  // $height: ($form-fontsize * 1.4) + $padding-top + $padding-bottom;
-
   @include no-appearance;
+
   display: block;
   box-sizing: border-box;
   width: 100%;
-  // height: $height;
-  padding: $form-padding;
-  margin-bottom: $global-padding;
+  line-height: $form-label-single-line-height;
+  padding: $text-field-padding;
   border: 1px solid $text-field-border;
-  border-radius: 0;
+  margin-bottom: 0;
   outline: 0;
   background: $text-field-background;
   color: $text-field-color;
@@ -44,6 +50,16 @@
     background: $text-field-background-focus;
     color: $text-field-color-focus;
   }
+
+  &::-moz-placeholder {
+    color: $text-field-color-placeholder;
+  }
+  &::-webkit-input-placeholder {
+    color:$text-field-color-placeholder;
+  }
+  &:-ms-input-placeholder {
+    color:$text-field-color-placeholder;
+  }
 }
 
 input[type="date"],
@@ -55,25 +71,138 @@ input[type="datetime-local"] {
   height: $height;
 }
 
-// Labels
-label {
-  display: block;
-  font-size: $form-label-fontsize;
-  margin-bottom: $form-label-margin;
-  color: $form-label-color;
 
-  > input,
-  > select,
-  > textarea {
-    margin-top: $form-label-margin;
+// field Labels
+.#{$field-prefix}-container {
+  display: flex;
+  flex-direction: column;
+  font-size: $form-label-fontsize;
+  line-height: $form-label-line-height;
+  color: $form-label-color;
+  border-bottom: 1px solid $text-field-border;
+  margin-left: $field-margin-left;
+  background: #fff;
+  @extend %paddings;
+
+  .#{$field-prefix}-label {
+    display: flex;
+    flex-direction: row;
+    color: $field-container-label-color;
+    font-size: $form-label-fontsize;
+    line-height: $form-label-line-height;
+
+    .#{$field-prefix}-tip {
+      font-size: $field-tip-fontsize;
+      color: $field-tip-color;
+    }
   }
 
-  .#{$field-prefix}-icon {
-    display: none;
+  input {
+    padding: 0;
+    border: 0;
+  }
+  select {
+    margin: 0;
+    border: 0;
+  }
+  textarea {
+    padding: 0;
+    border: 0;
   }
 }
 
-// Disabled state
+
+// one single line show
+.#{$field-prefix}-single {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border-bottom: 1px solid $text-field-border;
+  margin-left: $field-margin-left;
+  background: #fff;
+
+  .#{$field-prefix}-label {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 4em;
+    font-size: $form-label-fontsize;
+    line-height: $form-label-single-line-height;
+    @extend %paddings;
+    margin-right: 1rem;
+  }
+
+  .#{$field-prefix}-wrap {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .#{$field-prefix}-wrap-custom {
+    padding-top: get-side($form-padding, top);
+    padding-bottom: get-side($form-padding, top);
+    overflow: hidden;
+
+    .#{$tree-prefix}-wrap {
+      padding: 0;
+      border: none;
+    }
+  }
+
+  .#{$field-prefix} {
+    margin: 0 !important;
+  }
+
+  // tip
+  .#{$field-prefix}-tip {
+    font-size: $field-tip-single-fontsize;
+    color: $field-tip-color;
+  }
+
+  input,input[type="range"] {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    padding-top: get-side($form-padding, top);
+    border: 0;
+  }
+
+  select {
+    height: 100%;
+  }
+
+  textarea {
+    height: auto;
+    min-height: 5rem;
+    padding-left: 0;
+    padding-right: 0;
+    @extend %paddings;
+    border: 0;
+  }
+
+  .#{$switch-prefix} {
+    align-self: flex-end;
+    padding-top: get-side($form-padding, top) - rem-calc(3); // 3 is magic number
+    margin-right: $field-margin-left !important;
+  }
+}
+
+.#{$field-prefix}-underline-part {
+  border-bottom: 0;
+
+  .#{$field-prefix}-wrap {
+    border-bottom: 1px solid $text-field-border;
+  }
+}
+
+
+// Disabled state for field
+.#{$field-prefix}-disabled {
+  color: $text-field-disabled;
+  cursor: $text-field-cursor-disabled;
+}
+
+// Disabled state for native input
 input,
 textarea {
   &.#{map_get($am-states, disabled)},
@@ -81,10 +210,11 @@ textarea {
   &[readonly],
   fieldset[disabled] & {
     cursor: $text-field-cursor-disabled;
+    color: $text-field-disabled;
+    pointer-events: none;
 
-    &,
-    &:hover {
-      background-color: $text-field-background-disabled;
+    &:focus {
+      color: $text-field-disabled;
     }
   }
 }
@@ -176,7 +306,9 @@ select {
 textarea {
   height: auto;
   width: 100%;
-  min-height: 5rem;
+  font-size: $form-fontsize;
+  font-family: inherit;
+  color: $text-field-color;
   resize: vertical;
 }
 
@@ -185,14 +317,26 @@ textarea {
 .#{$field-group-prefix} {
   display: flex;
   flex-flow: row nowrap;
-  align-items: stretch;
-  margin-bottom: $global-padding;
+  align-items: center;
+  border-bottom: 1px solid $text-field-border;
+
+  &:last-child {
+    margin-bottom: $global-margin;
+  }
 
   // Stretch input
-  > input,
   > select {
     flex: 1;
     margin: 0;
+  }
+
+  > input {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    padding-top: get-side($form-padding, top);
+    padding-bottom: get-side($form-padding, top);
+    border: 0;
   }
 
   // Shrink label/buttons
@@ -201,10 +345,9 @@ textarea {
     display: flex;
     align-items: center;
     flex: 0 0 auto;
-    margin: 0;
     padding-top: 0;
     padding-bottom: 0;
-    border-radius: 0;
+    margin: 0;
 
     &:first-child {
       border-right: 0;
@@ -216,17 +359,21 @@ textarea {
   }
 
   > .#{$button-prefix} {
-    border-color: $field-group-border;
+    font-size: rem-calc(12);
+    padding: rem-calc(10);
   }
 }
 
 // Field group label style
 .#{$field-group-prefix}-label {
-  padding-left: get-side($form-padding, left);
-  padding-right: get-side($form-padding, left);
-  border: 1px solid $field-group-border;
-  background: $field-group-background;
+  font-size: $form-label-fontsize;
+  padding-left: 0;
+  padding-right: $field-group-padding;
   color: $field-group-color;
+
+  .#{$icon-prefix} {
+    font-size: $form-icon-fontsize;
+  }
 }
 
 @import "form-range";

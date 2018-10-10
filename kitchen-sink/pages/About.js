@@ -7,10 +7,10 @@ import {
   Group,
 } from 'amazeui-touch';
 
-class About extends React.Component {
+ export default class extends React.Component {
   static defaultProps = {
-    year: new Date().getFullYear(),
-  };
+      year: new Date().getFullYear(),
+  }
 
   render() {
     const {
@@ -21,20 +21,10 @@ class About extends React.Component {
     return (
       <Container {...props}>
         <Group
-          header="关于 Amaze UI Touch"
+          header="关于"
           footer={`ver ${__VERSION__}`}
         >
-          <p>Amaze UI Touch 是基于 React.js 的移动端 Web 组件库。</p>
-        </Group>
-        <Group
-          header="开发人员"
-        >
-          <ul>
-            <li><a href="https://github.com/minwe" target="_blank">@minwe</a>
-            </li>
-            <li><a href="https://github.com/huangzhipeng" target="_blank">@huangzhipeng</a>
-            </li>
-          </ul>
+          <p>Amaze UI for Studio 是基于 React.js 的移动端 Web 组件库。</p>
         </Group>
         <Group
           header="鸣谢"
@@ -55,5 +45,3 @@ class About extends React.Component {
     )
   }
 }
-
-export default About;

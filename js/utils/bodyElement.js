@@ -1,9 +1,11 @@
-import {
-  canUseDOM,
-} from './exenv';
+const isStudio = window.studioEditing;
+let bodyElement = document.body;
 
-let bodyElement = canUseDOM ? document.body : {
-  appendChild: () => {}
-};
+if (isStudio) {
+  const isEngine = document.getElementById("engine_browser");
+  if (isEngine && isEngine.contentWindow.document.body) {
+    bodyElement = isEngine.contentWindow.document.body
+  }
+}
 
 export default bodyElement;

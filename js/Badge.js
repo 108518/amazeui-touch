@@ -1,38 +1,54 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import {component} from './InternalPropTypes';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';
+import cx from "classnames";
+import classNameSpace from "./utils/className";
+import Icon from './Icon';
 
-import '../scss/components/_badge.scss';
-
-const Badge = createReactClass({
-  displayName: 'Badge',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+export default class Badge extends React.Component {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
-    component: component,
+    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
     href: PropTypes.string,
     amStyle: PropTypes.string,
     // radius: PropTypes.bool,
     rounded: PropTypes.bool,
-  },
+    icon: PropTypes.string,
+    text: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'badge',
-      component: 'span'
-    };
-  },
+  static defaultProps = {
+    classPrefix: "badge",
+    component: "span"
+  }
 
-  render() {
-    let classSet = this.getClassSet();
+  renderWrap = () => {
+    const {
+      wrapClassName,
+      children
+    } = this.props;
+    const wrapCls = cx(
+      this.prefixClass('wrap'),
+      wrapClassName
+    )
+
+    return (
+      <div className={wrapCls}>
+        {children}
+        {
+          this.renderBadge()
+        }
+      </div>
+    )
+  }
+
+  renderBadge() {
     let {
       component: Component,
       className,
       href,
+      icon,
+      text,
+      children,
       ...props
     } = this.props;
 
@@ -40,17 +56,37 @@ const Badge = createReactClass({
     delete props.amStyle;
     delete props.rounded;
 
-    Component = href ? 'a' : Component;
+    Component = href ? "a" : Component;
 
-    return (
-      <Component
-        {...props}
-        className={cx(classSet, className)}
-      >
-        {this.props.children}
-      </Component>
-    );
-  },
-});
+    const pointCls = this.prefixClass('point')
 
-export default Badge;
+    if (icon || text !== undefined) {
+      return (
+        <Component {...props} className={cx(this.classSet, className)}>
+          {text !== undefined ? text: <Icon name={icon} /> }
+        </Component>
+      );
+    } else {
+      return (
+        <span {...props} className={cx(pointCls, this.classSet, className)} />
+      )
+    }
+  }
+
+  renderPoint = () => {
+
+  }
+
+  render() {
+    const {
+      children
+    } = this.props;
+
+    const classNS = classNameSpace(this.props);
+    this.classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
+
+    return children ? this.renderWrap() : this.renderBadge()
+  }
+}

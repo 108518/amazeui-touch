@@ -1,0 +1,72 @@
+@mixin padding() {
+  padding:  8px 12px;
+}
+
+.#{$table-prefix} {
+  max-width: 100%;
+  overflow-x: auto;
+  vertical-align: middle;
+  background-color: #FFF;
+
+  table {
+    width: 100%;
+    font-size: 14px;
+    table-layout: fixed;
+  }
+
+
+  tr {
+    display: table-row;
+    vertical-align: inherit;
+    // border-color: inherit;
+    // border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    @include padding();
+    display: table-cell;
+    vertical-align: inherit;
+    white-space:nowrap;
+  }
+
+  td {
+    @include padding();
+    display: table-cell;
+    vertical-align: inherit;
+    white-space:nowrap;
+
+    &:active {
+      color: #fff;
+      background: #84d9ff;
+    }
+  }
+
+}
+
+.#{$table-prefix}-body {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.#{$table-prefix}-text-algin-center {
+  text-align: center;
+}
+.#{$table-prefix}-text-algin-left {
+  text-align: left;
+}
+.#{$table-prefix}-text-algin-right {
+  text-align: right;
+}
+
+.#{$table-prefix}-opr-icon{
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  line-height: 44px;
+  box-shadow:0 2px 4px 0 rgba(0,0,0,0.20);
+  border-radius:50%;
+  background: #fff;
+}

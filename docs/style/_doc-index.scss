@@ -1,11 +1,14 @@
 .amt-banner {
-  background-repeat: repeat-x;
-  background-image: linear-gradient(-135deg, lighten($banner-bg, 10), darken($banner-bg, 15));
-  background-color: $banner-bg;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 
   .am-container {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    z-index: 99;
   }
 
   @media #{$bp-md-up} and (max-height: 805px) {
@@ -13,10 +16,15 @@
   }
 }
 
+.amt-container {
+  z-index: 100;
+  overflow: auto;
+}
+
 .amt-sk {
   display: none;
-  width: 340px;
-  padding: 50px 10px;
+  width: 320px;
+  padding: 20px 5px 10px;
   margin: 50px 50px 50px 0;
   border-radius: 10px;
   background: rgba(0, 0, 0, .2);
@@ -36,6 +44,31 @@
   }
 }
 
+.amt-mask-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70%;
+  background: #36D1DC;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #0a76e2, #3bb4f2);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #0a76e2, #3bb4f2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  // border-bottom-left-radius: 999px 36px;
+  border-bottom-right-radius: 333px 66px;
+
+  @media screen and (max-width: 996px) {
+    height: 100%;
+    border-bottom-right-radius: 0;
+  }
+}
+
+
+.am-btn-toolbar .amt-btn {
+  color: #fff;
+  background: none;
+  border: 1px solid #fff;
+}
+
 .amt-intro {
   flex: 1;
   padding-top: 50px;
@@ -47,12 +80,12 @@
   }
 
   h1 {
-    font-size: 36px;
+    font-size: 28px;
     margin-bottom: 10px;
   }
 
   h2 {
-    font-size: 20px;
+    font-size: 18px;
     margin-top: 0;
     margin-bottom: 1rem;
   }
@@ -66,16 +99,21 @@
     margin-bottom: 80px;
 
     h1 {
-      font-size: 48px;
+      font-size: 26px;
     }
 
     h2 {
-      font-size: 24px;
+      font-size: 20px;
     }
 
     .sk-link {
       display: none;
     }
+  }
+
+  @media (max-width: 640px) {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
@@ -134,9 +172,10 @@
 
 // footer
 .amt-footer {
-  padding: 30px 0 15px;
+  width: 100%;
+  padding: 15px 0 15px 10px;
   font-size: 1.4rem;
-  background-color: #555;
+  background-color: #333;
   color: #999;
 
   a {
@@ -155,7 +194,7 @@
     width: 92px;
     height: 30px;
     text-indent: -9999px;
-    background: url("#{$assets}assets/2.x/i/ui/am-logo.png") no-repeat left center;
+    background: url("http://www.yunshipei.com/assets/images/logo.png") no-repeat left center;
     background-size: 92px 30px;
   }
 }
@@ -188,6 +227,10 @@
   @media (min-width: 641px) {
     text-align: right;
   }
+}
+
+.amt-tip {
+  color: #fff;
 }
 
 .ks-qrcode {

@@ -1,28 +1,17 @@
-import React from 'react';
-import Link from 'react-router/lib/Link';
-import {
-  Container,
-  Group,
-  Button,
-  ButtonGroup,
-  Icon,
-  Badge,
-} from 'amazeui-touch';
+import React from "react";
+import Link from "react-router/lib/Link";
+import { Container, Group, Button, Icon } from "amazeui-touch";
 
-class ButtonExample extends React.Component {
+export default class extends React.Component {
   render() {
     return (
       <Container {...this.props}>
         <h2>基本样式</h2>
-        <Group
-          header="默认样式"
-        >
-          <Button>Default</Button>
+        <Group header="默认样式">
+          <Button>按钮</Button>
         </Group>
 
-        <Group
-          header="颜色样式"
-        >
+        <Group header="颜色样式">
           <Button amStyle="primary">Primary</Button>
           <Button amStyle="secondary">Secondary</Button>
           <Button amStyle="success">Success</Button>
@@ -31,145 +20,71 @@ class ButtonExample extends React.Component {
           <Button amStyle="dark">Dark</Button>
         </Group>
 
-        <Group
-          header="块级显示"
-        >
-          <Button block>Default Block</Button>
-          <Button
-            amStyle="primary"
-            block
-            component={Link}
-            to="/"
-          >
-            Primary Block
+        <Group header="跳转链接">
+          <Button amStyle="primary" component={Link} to="/">
+            返回
           </Button>
         </Group>
 
-        <Group
-          header="按钮大小"
-        >
-          <Button amSize="xs">Default xs</Button>
-          <Button amSize="sm">Default sm</Button>
-          <Button>Default</Button>
-          <Button amSize="lg">Default lg</Button>
-          <Button amSize="xl">Default xl</Button>
+        <Group header="块级显示">
+          <Button block>按钮</Button>
         </Group>
 
-        <Group
-          header="按钮状态"
-        >
-          <h4>disabled</h4>
-          <Button amStyle="primary" disabled>Primary</Button>
-
-          <h4>active</h4>
-          <Button amStyle="primary" active>Primary</Button>
+        <Group header="按钮大小">
+          <Button amSize="xs">按钮 (xs)</Button>
+          <Button amSize="sm">按钮 (sm)</Button>
+          <Button amSize="lg">按钮 (lg)</Button>
+          <Button amSize="xl">按钮 (xl)</Button>
         </Group>
 
-        <Group
-          header="形状镂空"
-        >
-          <Button hollow>Default</Button>
-          <Button hollow amStyle="primary">Primary</Button>
-          <Button hollow amStyle="secondary">Secondary</Button>
-          <Button hollow amStyle="success">Success</Button>
-          <Button hollow amStyle="warning">Warning</Button>
-          <Button hollow amStyle="alert">Alert</Button>
-          <Button hollow amStyle="dark">Dark</Button>
+        <Group header="圆角大小">
+          <Button square>按钮 (quare)</Button>
+          <Button rounded>按钮 (rounded)</Button>
         </Group>
 
-        <h2>Button Group</h2>
-
-        <Group
-          header="默认形状"
-        >
-          <ButtonGroup>
-            <Button>Left</Button>
-            <Button>Center</Button>
-            <Button>Right</Button>
-          </ButtonGroup>
-
-          <ButtonGroup amStyle="primary">
-            <Button>Left</Button>
-            <Button>Center</Button>
-            <Button>Right</Button>
-          </ButtonGroup>
-
-          <ButtonGroup amStyle="alert">
-            <Button>Left</Button>
-            <Button>Center</Button>
-            <Button>Right</Button>
-          </ButtonGroup>
-        </Group>
-
-        <Group
-          header="镂空按钮组"
-        >
-          <ButtonGroup amStyle="primary" hollow>
-            <Button>Left</Button>
-            <Button>Center</Button>
-            <Button>Right</Button>
-          </ButtonGroup>
-        </Group>
-
-        <Group
-          header="按钮组大小"
-        >
-          <ButtonGroup amSize="xs">
-            <Button>Left</Button>
-            <Button>Center</Button>
-            <Button>Right</Button>
-          </ButtonGroup>
-        </Group>
-
-        <Group
-          header="宽度自适应"
-        >
-          <ButtonGroup amStyle="primary" justify>
-            <Button>Left</Button>
-            <Button>Center</Button>
-            <Button>Right</Button>
-          </ButtonGroup>
-        </Group>
-
-        <Group
-          header="垂直堆叠"
-        >
-          <ButtonGroup amStyle="primary" stacked>
-            <Button>Left</Button>
-            <Button>Center</Button>
-            <Button>Right</Button>
-          </ButtonGroup>
-        </Group>
-
-        <Group
-          header="工具栏"
-        >
-          <div className="btn-toolbar">
-            <Button>Left</Button>
-            <Button>Center</Button>
-            <Button>Right</Button>
-          </div>
-        </Group>
-
-        <h2>组合使用</h2>
-        <Group
-          header="与 Icon 组合"
-        >
-          <Button>
-            <Icon name="left-nav" />
-            Default
+        <Group header="按钮状态">
+          <Button amStyle="primary" disabled>
+            按钮 (disabled)
           </Button>
-          <Button
-            amStyle="primary"
-          >
+          <Button amStyle="primary" active>
+            按钮 (active)
+          </Button>
+        </Group>
+
+        <Group header="镂空">
+          <Button hollow>按钮</Button>
+          <Button hollow amStyle="primary">
             Primary
-            <Icon name="right-nav" />
+          </Button>
+          <Button hollow amStyle="secondary">
+            Secondary
+          </Button>
+          <Button hollow amStyle="success">
+            Success
+          </Button>
+          <Button hollow amStyle="warning">
+            Warning
+          </Button>
+          <Button hollow amStyle="alert">
+            Alert
+          </Button>
+          <Button hollow amStyle="dark">
+            Dark
+          </Button>
+        </Group>
+
+        <Group header="与 Icon 组合">
+          <Button>
+            <Icon name="left" />
+            上一页
+          </Button>
+          <Button amStyle="primary">
+            下一页
+            <Icon name="right" />
           </Button>
 
-          <Button
-            amStyle="secondary"
-          >
-            Search
+          <Button amStyle="secondary">
+            搜索
             <Icon name="search" />
           </Button>
         </Group>
@@ -177,5 +92,3 @@ class ButtonExample extends React.Component {
     );
   }
 }
-
-export default ButtonExample;

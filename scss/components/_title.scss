@@ -1,0 +1,142 @@
+// Amaze UI Touch: Title
+// =============================================================================
+
+@import "../env";
+
+// Output
+// -----------------------------------------------------------------------------
+
+@mixin title-colors(
+  $color
+) {
+  color: $color;
+  .#{$title-class-icon} {
+    border-color: $color
+  }
+  .#{$title-class-text} {
+    color: $color;
+  }
+}
+
+@mixin title-size(
+  $size
+) {
+  .#{$title-class-text} {
+    font-size: $size;
+  }
+}
+
+@mixin title {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  overflow: visible;
+  height: $title-height;
+  //@include title-colors($title-background, $title-color, false);
+}
+
+.#{$title-prefix} {
+  @include title;
+}
+
+// Title Elements
+// -----------------------------------------------------------------------------
+
+.#{$title-class-left},
+.#{$title-class-right} {
+  display: flex;
+  white-space: nowrap;
+  overflow: visible;
+  @include flex-basis-fallback($title-side-width);
+}
+
+.#{$title-class-left} {
+  order: 1;
+  align-items: center;
+}
+
+.#{$title-class-right} {
+  order: 2;
+  align-items: right;
+}
+
+.#{$title-class-text} {
+  color: $title-color;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: $title-font-size;
+  font-weight: normal;
+  &.#{$title-class-text}-big {
+    font-size: $title-font-size-big;
+  }
+  &.#{$title-class-text}-small {
+    font-size: $title-font-size-small;
+  }
+}
+
+.#{$title-class-icon} {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  width: 1.6 * $title-font-size;
+  img {
+    display: flex;
+    height: $title-font-size;
+  }
+}
+
+.#{$title-class-icon}-custom {
+  width: auto;
+  padding-right: 0.6 * $title-font-size;
+}
+
+.#{$title-class-icon}:empty {
+  display: block;
+  width: $title-font-size;
+  border-left: 4px solid $title-color;
+}
+
+.#{$title-class-item} {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: rem-calc(10);
+}
+
+
+// Modifiers
+// -----------------------------------------------------------------------------
+
+@each $color-key, $color in $am-colors {
+  .#{$title-prefix}-#{$color-key} {
+    @include title-colors($color);
+  }
+}
+
+@each $size-key, $size-size in $am-sizes {
+  .#{$title-prefix}-#{$size-key} {
+    @include title-size($size-size);
+  }
+}
+
+// Within other Componants
+// -----------------------------------------------------------------------------
+
+.#{$card-prefix}.#{$card-prefix}-external {
+  .#{$card-prefix}-header {
+    .#{$title-prefix} {
+      margin: (- $card-padding + rem-calc(3)) 0;
+    }
+  }
+}
+
+.#{$card-prefix},
+.#{$card-prefix}.#{$card-prefix}-layout {
+  .#{$card-prefix}-header {
+    .#{$title-prefix} {
+      margin: (- $card-padding + rem-calc(3)) (- $card-padding);
+    }
+  }
+}

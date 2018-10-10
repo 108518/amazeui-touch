@@ -1,0 +1,18 @@
+// Amaze UI Touch: Info
+// =============================================================================
+
+@import "../env";
+
+// Output
+// -----------------------------------------------------------------------------
+.#{$info-prefix}-item {
+
+  line-height: 1;
+
+  .#{$item-prefix}-title {
+    color: $info-color;
+  }
+  .#{$icon-prefix} {
+    font-size: $info-font-size;
+  }
+}

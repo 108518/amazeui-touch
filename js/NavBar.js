@@ -1,17 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
+import classNameSpace from './utils/className';
 import Icon from './Icon';
 
-import '../scss/components/_navbar.scss';
+export default class NavBar extends React.Component {
 
-const NavBar = createReactClass({
-  displayName: 'NavBar',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
     amStyle: PropTypes.oneOf([
       'primary',
@@ -26,17 +20,15 @@ const NavBar = createReactClass({
     rightNav: PropTypes.array,
     titleOnLeft: PropTypes.bool,
     onAction: PropTypes.func,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'navbar',
-      onAction: () => {
-      },
-    };
-  },
+  static defaultProps = {
+    classPrefix: 'navbar',
+    onAction: () => {
+    },
+  }
 
-  renderTitle() {
+  renderTitle = () => {
     let {
       titleOnLeft,
       title,
@@ -50,9 +42,9 @@ const NavBar = createReactClass({
         {title}
       </h2>
     ) : this.props.children;
-  },
+  }
 
-  renderNav(position) {
+  renderNav = (position) => {
     let nav = this.props[position + 'Nav'];
     this._navPosition = position;
 
@@ -64,9 +56,9 @@ const NavBar = createReactClass({
         {nav.map(this.renderNavItem)}
       </div>
     ) : null;
-  },
+  }
 
-  renderNavItem(item, index) {
+  renderNavItem = (item, index) => {
     let {
       component: Component,
       title,
@@ -77,9 +69,11 @@ const NavBar = createReactClass({
       className,
       ...otherProps,
     } = item;
-    let children = [];
-    let itemClassName = cx(this.prefixClass('nav-item'), className);
-    let itemProps = {
+
+    const children = [];
+
+    const itemClassName = cx(this.prefixClass('nav-item'), className);
+    const itemProps = {
       key: 'navbarNavItem' + index,
       onClick: this.props.onAction.bind(this, item),
       ...otherProps,
@@ -105,7 +99,7 @@ const NavBar = createReactClass({
       // add an className to set styles
       [this.prefixClass('icon-sibling-of-title')]: !!title,
     };
-    let navIcon = customIcon ? (
+    const navIcon = customIcon ? (
       <img
         src={customIcon}
         className={cx(iconClassName)}
@@ -122,11 +116,12 @@ const NavBar = createReactClass({
 
     // adjust title and icon order for Android UC
     // @see ../scss/helper/_mixins.scss `navbar-item-android-uc-fallback` mixin
-    if (navIcon) {
-      const action = this._navPosition === 'left' ? 'unshift' : 'push';
-      Array.prototype[action].call(children, navIcon);
-    }
-    // navIcon && children.push(navIcon);
+    // if (navIcon) {
+    //   const action = this._navPosition === 'left' ? 'unshift' : 'push';
+    //   Array.prototype[action].call(children, navIcon);
+    // }
+    // just for Enterplorer
+    navIcon && children.push(navIcon);
 
     let renderChildren = () => {
       // #40
@@ -147,11 +142,14 @@ const NavBar = createReactClass({
         {renderChildren()}
       </Component>
     );
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet();
-    let {
+    this.classNS = classNameSpace(this.props);
+    this.prefixClass = this.classNS.prefixClass;
+
+    const classSet = this.classNS.classNames;
+    const {
       className,
       ...props
     } = this.props;
@@ -174,7 +172,6 @@ const NavBar = createReactClass({
         {this.renderNav('right')}
       </header>
     );
-  },
-});
+  }
+}
 
-export default NavBar;

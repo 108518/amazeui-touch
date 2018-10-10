@@ -2,24 +2,18 @@
  * @see https://github.com/react-bootstrap/react-bootstrap/blob/master/src/Carousel.js
  */
 
-import PropTypes from 'prop-types';
-
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import classNameSpace, { setClassNS } from './utils/className';
 import TransitionEvents from './utils/TransitionEvents';
 import Icon from './Icon';
 import Touchable from './Touchable';
 
-import '../scss/components/_slider.scss';
+class Slider extends React.Component {
 
-const Slider = createReactClass({
-  displayName: 'Slider',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
 
     controls: PropTypes.bool,   // prev/next icon
@@ -40,10 +34,9 @@ const Slider = createReactClass({
     direction: PropTypes.oneOf(['prev', 'next']),
     prevIcon: PropTypes.node,
     nextIcon: PropTypes.node,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'slider',
       controls: true,
       pager: true,
@@ -52,19 +45,19 @@ const Slider = createReactClass({
       autoPlay: true,
       loop: true,
       pauseOnHover: true,
-      prevIcon: <Icon name="left-nav" />,
-      nextIcon: <Icon name="right-nav" />,
-    };
-  },
+      prevIcon: <Icon name="left" />,
+      nextIcon: <Icon name="right" />,
+  }
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props)
+    this.state = {
       activeIndex: this.props.defaultActiveIndex == null ?
         0 : this.props.defaultActiveIndex,
       previousActiveIndex: null,
       direction: null
-    };
-  },
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     let activeIndex = this.getActiveIndex();
@@ -78,25 +71,25 @@ const Slider = createReactClass({
           this.getDirection(activeIndex, nextProps.activeIndex)
       });
     }
-  },
+  }
 
   componentDidMount() {
     this.props.autoPlay && this.waitForNext();
-  },
+  }
 
   componentWillUnmount() {
     clearTimeout(this.timeout);
-  },
+  }
 
-  getDirection(prevIndex, index) {
+  getDirection = (prevIndex, index) => {
     if (prevIndex === index) {
       return null;
     }
 
     return prevIndex > index ? 'prev' : 'next';
-  },
+  }
 
-  next(e) {
+  next = (e) => {
     e && e.preventDefault();
 
     let index = this.getActiveIndex() + 1;
@@ -110,9 +103,9 @@ const Slider = createReactClass({
     }
 
     this.handleSelect(index, 'next');
-  },
+  }
 
-  prev(e) {
+  prev = (e) => {
     e && e.preventDefault();
 
     let index = this.getActiveIndex() - 1;
@@ -125,53 +118,53 @@ const Slider = createReactClass({
     }
 
     this.handleSelect(index, 'prev');
-  },
+  }
 
-  pause() {
+  pause = () => {
     this.isPaused = true;
     clearTimeout(this.timeout);
-  },
+  }
 
-  play() {
+  play = () => {
     this.isPaused = false;
     this.waitForNext();
-  },
+  }
 
-  waitForNext() {
+  waitForNext = () => {
     if (!this.isPaused && this.props.slide && this.props.interval &&
-      this.props.activeIndex == null) {
+      this.props.activeIndex == null && this.props.autoPlay) {
       this.timeout = setTimeout(this.next, this.props.interval);
     }
-  },
+  }
 
-  handleMouseOver() {
-    if (this.props.pauseOnHover) {
+  handleMouseOver = () => {
+    if (this.props.pauseOnHover && this.props.autoPlay) {
       this.pause();
     }
-  },
+  }
 
-  handleMouseOut() {
-    if (this.isPaused) {
+  handleMouseOut = () => {
+    if (this.isPaused && this.props.autoPlay) {
       this.play();
     }
-  },
+  }
 
-  handleSwipeLeft(e) {
+  handleSwipeLeft = (e) => {
     // console.log('swipe left');
     this.next();
-  },
+  }
 
-  handleSwipeRight(e) {
+  handleSwipeRight = () => {
     // console.log('swipe right....');
     this.prev();
-  },
+  }
 
-  getActiveIndex() {
+  getActiveIndex = () => {
     return this.props.activeIndex != null ?
       this.props.activeIndex : this.state.activeIndex;
-  },
+  }
 
-  handleItemAnimateOutEnd() {
+  handleItemAnimateOutEnd = () => {
     this.setState({
       previousActiveIndex: null,
       direction: null
@@ -182,9 +175,9 @@ const Slider = createReactClass({
         this.props.onSlideEnd();
       }
     });
-  },
+  }
 
-  handleSelect(index, direction, e) {
+  handleSelect = (index, direction, e) => {
     e && e.preventDefault();
     clearTimeout(this.timeout);
 
@@ -210,9 +203,9 @@ const Slider = createReactClass({
         direction: direction
       });
     }
-  },
+  }
 
-  renderControls() {
+  renderControls = () => {
     return this.props.controls ? (
       <div className={this.prefixClass('control')}>
         <Touchable
@@ -231,9 +224,9 @@ const Slider = createReactClass({
         </Touchable>
       </div>
     ) : null;
-  },
+  }
 
-  renderPager() {
+  renderPager = () => {
     if (this.props.pager) {
       let isThumbnailNav = false;
 
@@ -270,9 +263,9 @@ const Slider = createReactClass({
     }
 
     return null;
-  },
+  }
 
-  renderItem(child, index) {
+  renderItem = (child, index) => {
     let activeIndex = this.getActiveIndex();
     let isActive = (index === activeIndex);
     let isPreviousActive = this.state.previousActiveIndex != null &&
@@ -290,10 +283,14 @@ const Slider = createReactClass({
     };
 
     return React.cloneElement(child, props);
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet();
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+    this.setClassNS = setClassNS;
+
     let {
       className,
       children,
@@ -330,13 +327,11 @@ const Slider = createReactClass({
         {this.renderPager()}
       </Touchable>
     );
-  },
-});
+  }
+}
 
-const SliderItem = createReactClass({
-  displayName: 'SliderItem',
-
-  propTypes: {
+class SliderItem extends React.Component {
+  static propTypes = {
     direction: PropTypes.oneOf(['prev', 'next']),
     onAnimateOutEnd: PropTypes.func,
     active: PropTypes.bool,
@@ -345,19 +340,15 @@ const SliderItem = createReactClass({
     caption: PropTypes.node,
     index: PropTypes.number,
     thumbnail: PropTypes.string,
-  },
+  }
 
-  getInitialState() {
-    return {
-      direction: null
-    };
-  },
+  static defaultProps = {
+    animation: true
+  }
 
-  getDefaultProps() {
-    return {
-      animation: true
-    };
-  },
+  state = {
+    direction: null
+  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.active !== nextProps.active) {
@@ -365,7 +356,7 @@ const SliderItem = createReactClass({
         direction: null
       });
     }
-  },
+  }
 
   componentDidUpdate(prevProps) {
     if (!this.props.active && prevProps.active) {
@@ -373,36 +364,33 @@ const SliderItem = createReactClass({
     }
 
     if (this.props.active !== prevProps.active) {
-      this.timer = setTimeout(this.startAnimation, 20);
+      setTimeout(this.startAnimation, 20);
     }
-  },
+  }
 
-  componentWillUnmount() {
-    clearTimeout(this.timer);
-  },
-
-  handleAnimateOutEnd() {
+  handleAnimateOutEnd = () => {
     if (this.props.onAnimateOutEnd) {
       this.props.onAnimateOutEnd(this.props.index);
     }
-  },
+  }
 
-  startAnimation() {
+  startAnimation = () => {
     this.setState({
       direction: this.props.direction === 'prev' ?
         'right' : 'left'
     });
-  },
+  }
 
   render() {
-    let {
+    const {
       className,
       active,
       animateIn,
       animateOut,
       direction,
     } = this.props;
-    let classSet = {
+
+    const classSet = {
       active: (active && !animateIn) || animateOut,
       next: active && animateIn && direction === 'next',
       prev: active && animateIn && direction === 'prev'
@@ -419,8 +407,8 @@ const SliderItem = createReactClass({
         {this.props.children}
       </li>
     );
-  },
-});
+  }
+}
 
 Slider.Item = SliderItem;
 

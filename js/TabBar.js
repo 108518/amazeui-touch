@@ -1,35 +1,30 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
 import Icon from './Icon';
 import Badge from './Badge';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_tabbar.scss';
 
 // TODO: 默认的选中处理
-let TabBar = createReactClass({
-  displayName: 'TabBar',
-  mixins: [ClassNameMixin],
+class TabBar extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
     component: PropTypes.node,
     amStyle: PropTypes.string,
     onAction: PropTypes.func,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'tabbar',
       component: 'nav',
       onAction: () => {}
-    };
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet();
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+
     let {
       component: Component,
       className,
@@ -67,18 +62,16 @@ let TabBar = createReactClass({
         })}
       </Component>
     );
-  },
-});
+  }
+}
 
 // TODO:
 //   Icon 应该支持用户自定义：
 //   React-native 采用 require('path/to/icon') 的形式，
 //   这里可能需要再添加一个属性
-const TabBarItem = createReactClass({
-  displayName: 'TabBarItem',
-  mixins: [ClassNameMixin],
+class TabBarItem extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
     component: PropTypes.any,
     icon: PropTypes.string, // icon name
@@ -93,17 +86,15 @@ const TabBarItem = createReactClass({
     selected: PropTypes.bool, // alias of `active`
     selectedIcon: PropTypes.node, // not supported now
     onAction: PropTypes.func,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'tabbar',
       component: 'span',
       onAction: () => {},
-    };
-  },
+  }
 
-  renderBadge() {
+  renderBadge = () => {
     let {
       badge,
       badgeStyle,
@@ -113,13 +104,12 @@ const TabBarItem = createReactClass({
       <Badge
         amStyle={badgeStyle || 'alert'}
         rounded
-      >
-        {badge}
-      </Badge>
+        text={badge}
+      />
     ) : null;
-  },
+  }
 
-  renderIcon() {
+  renderIcon = () => {
     let {
       icon,
     } = this.props;
@@ -128,9 +118,9 @@ const TabBarItem = createReactClass({
       <Icon name={icon} key="tabbarIcon">
             {this.renderBadge()}
       </Icon>) : null
-  },
+  }
 
-  renderTitle() {
+  renderTitle = () => {
     let labelClassName = this.prefixClass('label');
     let {
       title,
@@ -144,10 +134,13 @@ const TabBarItem = createReactClass({
          {title}
        </span>
     ) : null;
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet(true);
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.getClassSet(true);
+    this.prefixClass = classNS.prefixClass;
+
     let {
       component: Component,
       className,
@@ -175,8 +168,8 @@ const TabBarItem = createReactClass({
         ]}
       </Component>
     );
-  },
-});
+  }
+}
 
 TabBar.Item = TabBarItem;
 

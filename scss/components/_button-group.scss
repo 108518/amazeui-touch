@@ -36,24 +36,58 @@
   }
 }
 
-// Sub object: btn-toolbar
+// Modifiers: button-group-gapped/stacked/justify
 // -----------------------------------------------------------------------------
-.#{$button-prefix}-toolbar {
-  display: flex;
-  margin-left: -(rem-calc(5)); // Offset the first child's margin
-
-  .#{$button-group-prefix} {
-    flex: 0 0 auto;
-  }
-
-  > .#{$button-prefix},
-  > .#{$button-group-prefix} {
-    margin-left: -(rem-calc(5));
+.#{$button-group-prefix}-gapped:not(.#{$button-group-prefix}-stacked) {
+  > .#{$button-prefix}:not(:last-child) {
+    margin-right: rem-calc(10);
   }
 }
 
-// Modifiers: button-group-stacked/justify
-// -----------------------------------------------------------------------------
+.#{$button-group-prefix}-gapped.#{$button-group-prefix}-stacked {
+  > .#{$button-prefix}:not(:last-child) {
+    margin-bottom: rem-calc(10);
+  }
+}
+
+.#{$button-group-prefix} {
+  &:not(.#{$button-group-prefix}-stacked) {
+    &:not(.#{$button-group-prefix}-gapped) {
+      > .#{$button-prefix} {
+
+        &:not(:last-child) {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &:not(:first-child) {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
+    }
+  }
+}
+
+.#{$button-group-prefix} {
+  &.#{$button-group-prefix}-stacked {
+    &:not(.#{$button-group-prefix}-gapped) {
+      > .#{$button-prefix} {
+
+        &:not(:last-child) {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &:not(:first-child) {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+      }
+    }
+  }
+}
+
 .#{$button-group-prefix}-stacked {
   display: inline-block;
 

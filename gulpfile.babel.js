@@ -1,7 +1,5 @@
 /**
  * Amaze UI Touch Building Tasks
- *
- * @author Minwe <minwe@yunshipei.com>
  */
 
 import gulp from 'gulp';
@@ -28,7 +26,7 @@ const banner = `/** ${pkg.title} v${pkg.version} | by Amaze UI Team
 const paths = {
   scss: 'scss/amazeui.touch.scss',
   scssModules: 'scss/**/*.scss',
-  fonts: 'fonts/*',
+  fonts: 'scss/fonts/*',
   jsEntry: 'js/index.js',
   dist: 'dist',
   docsDist: 'www',
@@ -62,12 +60,14 @@ gulp.task('style:scss', () => {
   return gulp.src(paths.scss)
     // inject fonts path
     .pipe($.replace(/\/\/ INJECT_SASS_VAR/g, ''))
+    .pipe($.sourcemaps.init())
     .pipe($.sass({
       outputStyle: 'expanded',
       importer: require('node-sass-import-once'),
     }).on('error', $.sass.logError))
     .pipe($.autoprefixer(autoprefixerOptions))
     .pipe(addBanner())
+    .pipe($.sourcemaps.write())
     .pipe(gulp.dest(paths.dist))
     .pipe($.csso())
     .pipe(addBanner())
@@ -80,9 +80,15 @@ gulp.task('style:fonts', () => {
     .pipe(gulp.dest(paths.dist + '/fonts'));
 });
 
-gulp.task('style', ['style:scss', 'style:fonts']);
+gulp.task('style', ['style:scss', 'style:fonts', 'style:watch']);
 
-// transform ES6 & JSX
+gulp.task('build:style', ['style:scss', 'style:fonts']);
+
+gulp.task('style:watch', () => {
+  gulp.watch(paths.scssModules, ['style:scss'])
+})
+
+// transform ES6 & JSX into sigle file
 gulp.task('build:babel', () => {
   return gulp.src('js/**/*')
     .pipe(replaceVersion())
@@ -106,13 +112,42 @@ gulp.task('build:pack', () => {
     .pipe(gulp.dest(paths.dist));
 });
 
+gulp.task('zip', () => {
+  return gulp.src(`${paths.dist}/**`)
+  .pipe($.zip(`${pkg.version}.zip`))
+  .pipe(gulp.dest(paths.docsDist))
+})
+
+gulp.task('copy', () => {
+  return gulp.src(`${paths.dist}/**`)
+  .pipe(gulp.dest(`${paths.docsDist}/${pkg.version}`))
+})
+
+gulp.task('build:showsize', () => {
+  return gulp.src(`${paths.dist}/**`)
+  .pipe($.size({
+    title: 'files size: ',
+    showFiles: true
+  }))
+})
+
 gulp.task('build', (callback) => {
-  runSequence(
+  return runSequence(
     'build:clean',
-    ['style', 'build:babel', 'build:pack',],
+    ['build:style', 'build:babel', 'build:pack'],
+    'build:showsize',
     callback
   );
-});
+})
+
+gulp.task('deploy', () => {
+  runSequence(
+    'build',
+    'zip',
+    'copy'
+  )
+})
+
 
 gulp.task('watch', () => {
   gulp.watch('js/**/*.js', ['build:babel']);
@@ -130,7 +165,9 @@ gulp.task('server', () => {
   const bs = browserSync.create();
 
   bs.init({
+    open: false,
     logPrefix: 'AMT',
+    port: 9527,
     server: {
       baseDir: [paths.docsDist],
       middleware: [
@@ -148,4 +185,4 @@ gulp.task('docs', (callback) => {
   runSequence('docs:clean', 'server', callback);
 });
 
-gulp.task('default', ['docs']);
+gulp.task('default', ['style', 'docs']);

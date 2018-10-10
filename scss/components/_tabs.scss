@@ -9,15 +9,128 @@
   margin: $global-spacing 0;
   background: $tabs-background;
   @extend %card-nested-component;
+
+  .#{$tabs-prefix} {
+    margin: 0;
+  }
 }
 
 .#{$tabs-prefix}-nav {
-  margin-bottom: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16);
+  margin-bottom: 3px; // In order to show box-shadow
 
-  .#{$button-prefix} {
-    @extend %text-truncate;
+  & > .#{$tabs-prefix}-nav-item {
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 0;
+    color: $tab-color;
+    font-size: $tabs-font-size;
+    line-height: 1.2;
+    text-align: center;
+    padding-left: $tab-padding-left;
+    padding-right: $tab-padding-left;
+    padding-top: $tab-padding-top;
+    padding-bottom: $tab-padding-top;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+    font-weight: 600;
+    // transition: color 0.3s;
+
+    &.active {
+      color: $global-primary;
+      border-bottom: 2px solid $global-primary;
+    }
+
+    &.disabled {
+      color: #ccc;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    width: 0px;
+    height: 0px;
   }
 }
+
+
+.#{$tabs-prefix}-subnav {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16);
+
+  .#{$tabs-prefix}-subnav-item-wrap {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin-right: $tab-offset;
+    margin-top: $tab-subnav-padding-top;
+    margin-bottom: $tab-subnav-padding-top;
+    border-radius: $tab-radius;
+    white-space: nowrap;
+
+    &:first-child {
+      flex-basis: auto !important; // due to subnac style limition, having to set this
+      margin-left: $tab-offset;
+      margin-right: 0;
+      overflow: hidden;
+      z-index: 1;
+
+      .#{$tabs-prefix}-subnav-item {
+        left: -$tab-offset;
+      }
+    }
+
+    &:last-child {
+      padding-right: $tab-margin;
+      margin-right: $tab-margin;
+      margin-left: -$tab-offset;
+      overflow: hidden;
+
+      .#{$tabs-prefix}-subnav-item {
+        left: $tab-offset;
+      }
+    }
+  }
+  .#{$tabs-prefix}-subnav-item {
+    position: relative;
+    flex-grow: 1;
+    flex-shrink: 0;
+    transform: $tab-skew;
+    font-size: rem-calc(14);
+    text-align: center;
+    line-height: 1.2;
+    vertical-align: middle;
+    padding-top: $tab-subnav-padding-top;
+    padding-bottom: $tab-subnav-padding-top;
+    padding-left: $tab-subnav-padding-left;
+    padding-right: $tab-subnav-padding-left;
+    border-radius: $tab-radius;
+    color: $tab-color;
+    background: #f2f2f2;
+    transition: background 0.5s;
+
+    &.active {
+      color: #fff;
+      background: $global-primary;
+    }
+  }
+  .#{$tabs-prefix}-subnav-item-fix-skew {
+    display: inline-block;
+    line-height: 1;
+    transform: $tab-fix-skew;
+    vertical-align: text-bottom;
+  }
+}
+
 
 .#{$tabs-prefix}-body {
   position: relative;
@@ -32,6 +145,7 @@
   top: 0;
   z-index: 99;
   width: 100%;
+  font-size: rem-calc(15);
   padding: $global-spacing;
   visibility: hidden;
   transition: transform 0.3s;
@@ -46,6 +160,10 @@
     & ~ #{$panel} {
       transform: translateX(100%);
     }
+  }
+
+  &#{$panel}-no-animation {
+    transition: none;
   }
 
   // panel without padding

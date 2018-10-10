@@ -1,70 +1,133 @@
-import React from 'react';
-import {
-  Container,
-  Card,
-} from 'amazeui-touch';
+import React from "react";
+import { Container, Card, Grid, Col, Switch } from "amazeui-touch";
 
 const header = (
   <Card.Child cover="http://lorempixel.com/1000/625/people/">
-    <h3 className="card-title">
-      Cover + 标题: 我思念的城市
+    <h3 className="card-title" style={{ color: "white" }}>
+      我思念的城市
     </h3>
   </Card.Child>
 );
+
 const footer = (
   <Card.Child role="footer">
-    <a href="javascript: void(0)">Like</a>
-    <a href="javascript: void(0)">Comment</a>
-    <a href="javascript: void(0)">ReadMore</a>
+    <Grid>
+      <Col>
+        <a href="javascript: void(0)">Like</a>
+      </Col>
+      <Col>
+        <a href="javascript: void(0)">Comment</a>
+      </Col>
+      <Col>
+        <a href="javascript: void(0)">ReadMore</a>
+      </Col>
+    </Grid>
   </Card.Child>
 );
 
-class CardExample extends React.Component {
+export default class extends React.Component {
+  state = {
+    isLayoyt: false,
+    isNoline: false
+  };
+
   render() {
     return (
       <Container {...this.props}>
-        <h3>简单的卡片</h3>
+        <h3>
+          试试通栏效果
+          <Switch
+            onValueChange={() => {
+              this.setState({ isLayoyt: !this.state.isLayoyt });
+            }}
+          />
+        </h3>
 
-        <Card>
-          怎能就让这不停燃烧的心，
-          就这样耗尽消失在平庸里。
+        <h3>
+          试试去掉横线
+          <Switch
+            onValueChange={() => {
+              this.setState({ isNoline: !this.state.isNoline });
+            }}
+          />
+        </h3>
+
+        <h3>默认</h3>
+
+        <Card noMargin={this.state.isLayoyt}>
+          怎能就让这不停燃烧的心， 就这样耗尽消失在平庸里。
         </Card>
 
-        <h3>标题</h3>
-
-        <Card title="Card 标题">
-          这是卡片内容。
-        </Card>
-
-        <h3>Card 头部、底部</h3>
+        <h3>带标题</h3>
 
         <Card
-          header="Card header"
-          footer="Card footer"
+          noMargin={this.state.isLayoyt}
+          noLine={this.state.isNoline}
+          header="箴言"
         >
-          Card 内容
+          怎能就让这不停燃烧的心， 就这样耗尽消失在平庸里。
+        </Card>
+
+        <h3>外置标题</h3>
+
+        <Card
+          external
+          noMargin={this.state.isLayoyt}
+          noLine={this.state.isNoline}
+          header="箴言"
+        >
+          怎能就让这不停燃烧的心， 就这样耗尽消失在平庸里。
+        </Card>
+
+        <h3>带头部、底部</h3>
+
+        <Card
+          noMargin={this.state.isLayoyt}
+          noLine={this.state.isNoline}
+          header="头部"
+          footer="底部"
+        >
+          风路过的时候 没能吹走 <br />
+          这个城市太厚的灰尘 <br />
+          多少次的雨水 从来没有 <br />
+          冲掉你那沉重的忧伤 <br />
+          你的忧伤 像我的绝望 <br />
+          那样漫长
+        </Card>
+
+        <h3>外置头部、底部</h3>
+
+        <Card
+          external
+          noMargin={this.state.isLayoyt}
+          noLine={this.state.isNoline}
+          header="头部"
+          footer="底部"
+        >
+          风路过的时候 没能吹走 <br />
+          这个城市太厚的灰尘 <br />
+          多少次的雨水 从来没有 <br />
+          冲掉你那沉重的忧伤 <br />
+          你的忧伤 像我的绝望 <br />
+          那样漫长
         </Card>
 
         <h3>自定义头部、底部</h3>
 
-        <Card header={header}>
-          风路过的时候  没能吹走 <br />
-          这个城市太厚的灰尘 <br />
-          多少次的雨水  从来没有 <br />
-          冲掉你那沉重的忧伤 <br />
-          你的忧伤  像我的绝望 <br />
-          那样漫长
-        </Card>
-
         <Card
-          title="Card 标题"
+          noMargin={this.state.isLayoyt}
+          noLine={this.state.isNoline}
+          header={header}
           footer={footer}
         >
-          <p>Card 内容</p>
+          风路过的时候 没能吹走 <br />
+          这个城市太厚的灰尘 <br />
+          多少次的雨水 从来没有 <br />
+          冲掉你那沉重的忧伤 <br />
+          你的忧伤 像我的绝望 <br />
+          那样漫长
         </Card>
       </Container>
     );
   }
 }
-
-export default CardExample;

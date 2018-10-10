@@ -1,0 +1,115 @@
+// Amaze UI Touch: Radio
+// =============================================================================
+
+.#{$radio-group-prefix}-btn {
+  > div {
+    display: flex;
+    width: calc((100% - 1.875rem) / 3);
+    margin-right: rem-calc(15);
+    padding: 0;
+    &:nth-child(3) {
+      margin-right: 0;
+    }
+    > .#{$radio-prefix}-container {
+      flex: 1;
+      margin-right: 0;
+    }
+  }
+  .#{$radio-prefix}-container {
+    height: rem-calc(30);
+    border-bottom: none;
+    margin-bottom: rem-calc(15);
+    width: calc((100% - 1.875rem) / 3);
+    margin-right: rem-calc(15);
+    border-radius: rem-calc(3);
+    &:nth-child(3) {
+      margin-right: 0;
+    }
+    padding: 0;
+    > span {
+      user-select: none;
+      font-size: rem-calc(13);
+      border-radius: rem-calc(3);
+      border: 1px solid $global-primary;
+      text-align: center;
+      flex: 1;
+      height: 100%;
+      line-height: rem-calc(29);
+      color: #313131;
+    }
+    > input:checked + span {
+      color: $white;
+      background: $global-primary;
+    }
+    > input:disabled + span {
+      border-color: #CCC;
+      color: #999;
+      background: $white;
+    }
+    > input:checked:disabled + span {
+      border-color: #DDD;
+      color: $white;
+      background: #DDD;
+    }
+    > input + span + span {
+      display: none;
+    }
+  }
+  margin-bottom: -0.9375rem;
+}
+
+.#{$radio-prefix}-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: rem-calc(45);
+  background: $white;
+  border-bottom: 1px solid #DDD;
+  margin: 0;
+  padding: 0 20px 0 15px;
+  flex-direction: row-reverse;
+
+  > span {
+  	font-size: rem-calc(15);
+  	color: #313131;
+  }
+
+  > input {
+  	display: none;
+
+  	+ span + span {
+      width: 15px;
+      height: 15px;
+  		border-radius: 50%;
+      color: $white;
+      border: 1px solid #CCC;
+      &::before {
+        content: "";
+      }
+  	}
+
+  	&:checked + span + span {
+			font-size: rem-calc(15);
+
+      border: 5px solid #218BF5;
+	    // background: $global-primary;
+	    // border: none;
+		}
+
+	  &:checked:disabled + span + span {
+			background-color: #CCC;
+		}
+
+    &:disabled {
+      + span {
+        color: #999;
+      }
+
+      + span + span {
+        background-color: #EEE;
+        color: #EEE;
+        border-color: #CCC;
+      }
+    }
+  }
+}

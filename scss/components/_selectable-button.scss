@@ -1,0 +1,44 @@
+// Amaze UI Touch: SelectableButton
+// =============================================================================
+
+@import "../env";
+
+// Mixins
+// -----------------------------------------------------------------------------
+$traingle-border-width: rem-calc(22);
+
+// Output
+// -----------------------------------------------------------------------------
+.#{$button-prefix}-selectable {
+  position: relative;
+}
+
+.#{$button-prefix}-selectable-helper-traingle {
+  position: absolute;
+  width: $traingle-border-width;
+  height: $traingle-border-width;
+  border-top-right-radius: $button-radius;
+  overflow: hidden;
+  z-index: 55;
+  top: -1px;
+  right: -0.5px;
+  &::before {
+    content: ' ';
+    display: block;
+    width: 0;
+    height: 0;
+    border: $traingle-border-width solid;
+    transform: rotate(-45deg);
+    transform-origin: left top;
+  }
+}
+
+.#{$button-prefix}-selectable-helper-check {
+  position: absolute;
+  z-index: 56;
+  color: white;
+  top: 0;
+  right: 0;
+  font-size: rem-calc(12);
+}
+

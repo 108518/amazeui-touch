@@ -7,7 +7,7 @@
 // -----------------------------------------------------------------------------
 
 // Set classes namespace, e.g. `am-`
-$namespace: null !default;
+$namespace: 'amt-' !default;
 
 // This sets 1rem to be 16px
 $rem-base: 16px;
@@ -25,7 +25,7 @@ $base-line-height: 1.5 !default;
 
 // Define default font weights
 $font-weight-normal: normal !default;
-$font-weight-bold: bold !default;
+$font-weight-bold: 500 !default;
 
 $font-size-xs: rem-calc(12) !default;
 $font-size-sm: rem-calc(14) !default;
@@ -38,11 +38,11 @@ $black: #000 !default;
 $white: #fff !default;
 
 // Application Colors
-$global-primary: #0e90d2 !default;
-$global-secondary: lighten($global-primary, 15%) !default;
-$global-success: #5eb95e !default;
-$global-warning: #F37B1D !default;
-$global-alert: #dd514c !default;
+$global-primary: #218BF5 !default;
+$global-secondary: #3bb4f2 !default;
+$global-success: #59C831 !default;
+$global-warning: #FD8E1C !default;
+$global-alert: #FB3636 !default;
 
 // @see http://sassme.arc90.com/
 $gray-darker: lighten($black, 13.5%) !default; // #222
@@ -84,10 +84,12 @@ $am-states: (
 );
 
 // Diffirent border-radius styles
-$global-radius: 4px !default;
+$global-radius: 6px !default;
+$global-square: 0 !default;
 $global-rounded: 1000px !default;
 
 $am-radius: (
+  square: $global-square,
   radius: $global-radius,
   rounded: $global-rounded
 );
@@ -100,7 +102,7 @@ $global-spacing: rem-calc(15) !default;
 // Font-families
 // @see https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
 $font-family-sans-serif: /* 1 */ -apple-system, BlinkMacSystemFont,
-  /* 2 */ "PingFang SC", "Hiragino Sans GB", "Segoe UI", "Microsoft YaHei", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "wenquanyi micro hei",
+  /* 2 */ "PingFang SC", "Roboto", "Droid Sans", "wenquanyi micro hei",
   /* 3 */ "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif: Georgia, "Times New Roman", Times, SimSun, serif !default; // FangSong, STFangSong
 $font-family-monospace: Monaco, Menlo, Consolas, "Courier New", monospace !default;
@@ -144,7 +146,7 @@ $accordion-border: 1px solid #eee !default;
 // Badge Variables
 // -----------------------------------------------------------------------------
 $badge-prefix: #{$namespace}badge !default;
-$badge-fontsize: .8rem !default;
+$badge-fontsize: 12px !default; // make sure this is integer
 $badge-padding: ($global-padding / 3) ($global-padding / 2) !default;
 $badge-radius: 0 !default;
 $badge-background: $light-alt !default;
@@ -155,13 +157,17 @@ $badge-color: islight($badge-background) !default;
 // -----------------------------------------------------------------------------
 $button-prefix: #{$namespace}btn !default;
 $button-group-prefix: #{$namespace}btn-group !default;
+$button-bubble-prefix: #{$namespace}btn-bubble !default;
+$button-container-prefix: #{$namespace}btn-container !default;
+$button-action: #{$namespace}btn-action !default;
+
 $button-padding: 0.75em 1em !default; // 10px 15px
 $button-margin: 0 $global-padding $global-padding 0 !default;
 $button-style: solid !default;
 $button-background: $light-alt !default;
 $button-background-active: scale-color($button-background, $lightness: -15%) !default;
 $button-color: auto !default;
-$button-radius: 0 !default;
+$button-radius: 3px !default;
 $button-font-size: $font-size-default !default;
 $button-opacity-disabled: 0.5 !default;
 $button-tag-selector: false !default;
@@ -174,10 +180,36 @@ $button-tag-selector: false !default;
 // Card Variables
 // -----------------------------------------------------------------------------
 $card-prefix: #{$namespace}card !default;
-$card-margin: rem-calc(10) $global-spacing !default;
-$card-padding: rem-calc(20) $global-spacing !default;
+$card-margin: rem-calc(10) !default;
+$card-padding: rem-calc(15) !default;
 $card-background: $white !default;
+$card-radius: 4px !default;
 $card-color: islight($card-background) !default;
+
+// Choose Variables
+// -----------------------------------------------------------------------------
+$choose-prefix: #{$namespace}choose !default;
+
+// Title Variables
+// -----------------------------------------------------------------------------
+$title-prefix: #{$namespace}title !default;
+$title-margin: rem-calc(10) !default;
+$title-padding: rem-calc(15) !default;
+$title-class-left: #{$title-prefix}-left !default;
+$title-class-icon: #{$title-class-left}-icon !default;
+$title-class-text: #{$title-class-left}-text !default;
+$title-class-right: #{$title-prefix}-right !default;
+$title-class-item: #{$title-class-right}-item !default;
+$title-height-px: 44 !default;
+$title-height: rem-calc($title-height-px) !default;
+$title-color: $gray !default;
+$title-font-size: rem-calc(16) !default;
+$title-font-size-big: rem-calc(18) !default;
+$title-font-size-small: rem-calc(14) !default;
+$title-line-height: rem-calc($title-height-px - 1);
+$title-center-width: 50% !default;
+$title-side-width: (100% - $title-center-width) / 2 !default;
+$title-padding: 0 rem-calc(8) !default;
 
 
 // Container Variables
@@ -190,8 +222,9 @@ $container-prefix: #{$namespace}container !default;
 $form-prefix: #{$namespace}form;
 $field-prefix: #{$namespace}field;
 
-$form-fontsize: 1rem !default;
-$form-padding: 0.75rem 0.5rem !default;
+$form-fontsize: rem-calc(14) !default;
+$form-label-fontsize: rem-calc(14) !default;
+$form-padding: rem-calc(15) rem-calc(15) !default;
 
 // Text fields
 // datetime has been removed from WHATWG HTML
@@ -211,22 +244,37 @@ $text-field-selectors: 'input[type="text"],
                         input[type="search"],
                         input[type="color"],
                         textarea';
-$text-field-color: $gray-darker !default;
+$text-field-color: #202020 !default;
 $text-field-color-hover: $text-field-color !default;
-$text-field-color-focus: $text-field-color !default;
+$text-field-color-focus: #202020 !default;
+$text-field-color-placeholder: #bbb !default;
+$text-field-padding: rem-calc(14) rem-calc(10) !default;
+$text-field-margin: rem-calc(20) !default;
 $text-field-background: #fff !default;
 $text-field-background-hover: $text-field-background !default;
 $text-field-background-focus: $text-field-background !default;
 $text-field-background-disabled: smartscale($text-field-background) !default;
-$text-field-border: #ccc !default;
+$text-field-border: #e0e0e0 !default;
 $text-field-border-hover: #bbb !default;
-$text-field-border-focus: #999 !default;
+$text-field-border-focus: #bbb !default;
+$text-field-border-radius: 4px !default;
 $text-field-cursor-disabled: not-allowed !default;
+$text-field-disabled: #bbb !default;
+
+$field-margin-left: rem-calc(15) !default;
 
 // Labels
-$form-label-fontsize: 1rem !default;
-$form-label-margin: 0.5rem !default;
-$form-label-color: #333 !default;
+$form-label-fontsize: rem-calc(14) !default;
+$form-icon-fontsize: rem-calc(16) !default;
+$form-label-margin: rem-calc(10) !default;
+$form-label-color: #313131 !default;
+$form-label-line-height: 1.6 !default;
+$form-label-single-line-height: 1.2 !default;
+
+// tip
+$field-tip-color: #999;
+$field-tip-single-fontsize: rem-calc(13) !default;
+$field-tip-fontsize: rem-calc(14) !default;
 
 // Select
 $select-color: $gray-darker !default;
@@ -240,6 +288,46 @@ $field-group-prefix: #{$namespace}field-group;
 $field-group-color: #333 !default;
 $field-group-background: #eee !default;
 $field-group-border: $text-field-border !default;
+$field-group-padding: rem-calc(25) !default;
+
+
+// InputGroup Variables
+// -----------------------------------------------------------------------------
+$input-group-prefix: #{$namespace}input-group !default;
+$input-group-header-color: $body-font-color !default;
+$input-group-header-padding: 20px 15px 15px !default;
+$input-group-header-border: #ccc !default;
+$input-group-header-color-bg: $body-background !default;
+$input-group-container-padding: 0 rem-calc(15) !default;
+$input-group-bg: #fff !default;
+$input-group-font-size: rem-calc(15) !default;
+$input-group-colors: (
+  filled: '#666',
+  focus: '#313131',
+  placeholder: '#ccc'
+) !default;
+$input-group-item: #ddd !default;
+
+
+// Info Variables
+// -----------------------------------------------------------------------------
+$info-prefix: #{$namespace}info !default;
+$info-color: #999 !default;
+$info-font-size: rem-calc(15) !default;
+
+
+// InputBox Variables
+// -----------------------------------------------------------------------------
+$inputbox-prefix: #{$namespace}inputbox !default;
+$inputbox-selectors: $text-field-selectors;
+$inputbox-font-size: rem-calc(15) !default;
+$inputbox-color: #313131 !default;
+$inputbox-color-fill: #666 !default;
+$inputbox-background: #fff !default;
+$inputbox-placeholder: #ccc !default;
+$inputbox-padding: rem-calc(15) !default;
+$inputbox-border-width: 1px !default;
+$inputbox-border-color: #ddd !default;
 
 
 // Grid Variables
@@ -268,62 +356,62 @@ $group-header-font-size: $font-size-sm !default;
 // -----------------------------------------------------------------------------
 // font list: (font-family, font-weight, font-style, src)
 $icon-prefix: #{$namespace}icon !default;
-$ratchicons-path: '../../fonts/' !default;
+$amuiicons-path: './fonts/' !default;
 $icon-fonts: (
-  Ratchicons: (
+  Amuiicons: (
     weight: normal,
     style: normal,
     src: unquote(
-        'url("#{$ratchicons-path}ratchicons.woff2") format("woff2"),
-        url("#{$ratchicons-path}ratchicons.woff") format("woff"),
-        url("#{$ratchicons-path}ratchicons.ttf") format("truetype")'
+        'url("#{$amuiicons-path}amuiicons.woff") format("woff"),
+        url("#{$amuiicons-path}amuiicons.ttf") format("truetype");'
     )
   ),
 ) !default;
 // $icon-font-family: Ratchicons, sans-serif !default;
 $icon-font-size: 24px !default;
-$icons: (
-  back: \e80a,
-  bars: \e80e,
-  caret: \e80f,
-  check: \e810,
-  close: \e811,
-  code: \e812,
-  compose: \e813,
-  download: \e815,
-  edit: \e829,
-  forward: \e82a,
-  gear: \e821,
-  home: \e82b,
-  info: \e82c,
-  list: \e823,
-  more-vertical: \e82e,
-  more: \e82f,
-  pages: \e824,
-  pause: \e830,
-  person: \e832,
-  play: \e816,
-  plus: \e817,
-  refresh: \e825,
-  search: \e819,
-  share: \e81a,
-  sound: \e827,
-  sound2: \e828,
-  sound3: \e80b,
-  sound4: \e80c,
-  star-filled: \e81b,
-  star: \e81c,
-  stop: \e81d,
-  trash: \e81e,
-  up-nav: \e81f,
-  up: \e80d,
-  right-nav: \e818,
-  right: \e826,
-  down-nav: \e814,
-  down: \e820,
-  left-nav: \e82d,
-  left: \e822
-) !default;
+// $icons: (
+//   back: \e80a,
+//   bars: \e80e,
+//   caret: \e80f,
+//   check: \e810,
+//   close: \e811,
+//   code: \e812,
+//   compose: \e813,
+//   download: \e815,
+//   edit: \e829,
+//   forward: \e82a,
+//   gear: \e821,
+//   home: \e82b,
+//   info: \e82c,
+//   list: \e823,
+//   more-vertical: \e82e,
+//   more: \e82f,
+//   pages: \e824,
+//   pause: \e830,
+//   person: \e832,
+//   play: \e816,
+//   plus: \e817,
+//   refresh: \e825,
+//   search: \e819,
+//   share: \e81a,
+//   sound: \e827,
+//   sound2: \e828,
+//   sound3: \e80b,
+//   sound4: \e80c,
+//   star-filled: \e81b,
+//   star: \e81c,
+//   stop: \e81d,
+//   trash: \e81e,
+//   up-nav: \e81f,
+//   up: \e80d,
+//   right-nav: \e818,
+//   right: \e826,
+//   down-nav: \e814,
+//   down: \e820,
+//   left-nav: \e82d,
+//   left: \e822
+// ) !default;
+$fa-icon-prefix: #{$namespace}fa-icon !default;
 
 
 // List Variables
@@ -374,9 +462,9 @@ $navbar-center-width: 50% !default;
 $navbar-side-width: (100% - $navbar-center-width) / 2 !default;
 $navbar-background: $gray-lighter !default;
 $navbar-color: $gray-dark !default;
-$navbar-padding: 0 rem-calc(10) !default;
+$navbar-padding: 0 rem-calc(8) !default;
 $navbar-line-height: rem-calc($navbar-height-px - 1);
-
+$navbar-nav-title: rem-calc(17) !default;
 
 // Notification Variables
 // -----------------------------------------------------------------------------
@@ -419,10 +507,13 @@ $slider-caption-color: $white !default;
 // Switch Variables
 // -----------------------------------------------------------------------------
 $switch-prefix: #{$namespace}switch !default;
-$switch-background: #aaa !default;
+$switch-background: #fff !default;
 $switch-background-active: $global-primary !default;
-$switch-inner-background: $white !default;
 $switch-radius: 9999px !default;
+$switch-label-border: rgba(0,0,0,0.10) !default;
+$switch-label-border-active: $global-primary !default;
+$switch-inner-border: #d0d0d0 !default;
+$switch-inner-background: #fff !default;
 
 
 // TabBar Variables
@@ -440,6 +531,62 @@ $tabbar-color: $gray-light!default;
 $tabs-prefix: #{$namespace}tabs !default;
 $tab-prefix: #{$namespace}tab !default;
 $tabs-background: $white !default;
+$tabs-font-size: rem-calc(15) !default;
+$tabs-active-font-size: rem-calc(16) !default;
+$tab-color: #202020 !default;
+$tab-padding-left: rem-calc(20) !default;
+$tab-padding-top: rem-calc(12) !default;
+
+$tab-subnav-padding-top: rem-calc(8) !default;
+$tab-subnav-padding-left: rem-calc(22) !default;
+$tab-radius: rem-calc(3) !default;
+$tab-skew: skew(-10deg) !default;
+$tab-fix-skew: skew(10deg) !default;
+$tab-offset: rem-calc(10) !default;
+$tab-margin: rem-calc(15) !default;
+
+// Divide
+// -----------------------------------------------------------------------------
+$divide-prefix: #{$namespace}divide !default;
+$divide-width: 1px !default;
+$divide-style: (
+  solid: solid,
+  dashed: dashed,
+  dotted: dotted
+) !default;
+$divide-color: (
+  dark: #ccc,
+  light: #ddd
+) !default;
+$divide-margin: rem-calc(20) !default;
+$divide-margin-large: rem-calc(30) !default;
+
+// Select
+// -----------------------------------------------------------------------------
+$select-prefix: #{$namespace}select !default;
+
+// Tree
+// -----------------------------------------------------------------------------
+$tree-prefix: #{$namespace}tree !default;
+$tree-font-size: rem-calc(15) !default;
+$tree-padding: rem-calc(8) !default;
+$tree-margin: rem-calc(5) !default;
+$tree-padding-right: rem-calc(20) !default;
+$tree-switcher: rem-calc(20) !default;
+$tree-checkbox: rem-calc(16) !default;
+$tree-child-margin: rem-calc(30) !default;
+$tree-selected-size: rem-calc(12) !default;
+$tree-selected-padding: 0 rem-calc(15) rem-calc(15) !default;
+$tree-selected-item-padding: rem-calc(6) rem-calc(10) !default;
+$tree-selected-background: #f7f7f7 !default;
+
+
+// Pagination
+// -----------------------------------------------------------------------------
+$pagination-prefix: #{$namespace}pagination !default;
+
+
+
 
 
 // Typography
@@ -458,11 +605,11 @@ $h2-font-size: rem-calc(22) !default;
 $h3-font-size: rem-calc(20) !default;
 $h4-font-size: rem-calc(18) !default;
 $h5-font-size: rem-calc(16) !default;
-$h6-font-size: rem-calc(14) !default;
+$h6-font-size: rem-calc(16) !default;
 
 // Paragraph
 // We use these to style paragraphs
-$paragraph-font-size: 1rem !default;
+$paragraph-font-size: 0.875rem !default;
 $paragraph-line-height: 1.6 !default;
 
 // Lists
@@ -485,6 +632,24 @@ $hr-border-width: 1px !default;
 $hr-border-style: solid !default;
 $hr-border-color: #ddd !default;
 $hr-margin: rem-calc(20) !default;
+
+// CheckBox Group
+$checkbox-group-prefix: #{$namespace}checkbox-group;
+
+// CheckBox
+$checkbox-prefix: #{$namespace}checkbox;
+
+// Radio Group
+$radio-group-prefix: #{$namespace}radio-group;
+
+// Radio
+$radio-prefix: #{$namespace}radio;
+
+// Table
+$table-prefix: #{$namespace}table !default;
+
+// Table
+$process-logs-prefix: #{$namespace}process-logs;
 
 
 // View

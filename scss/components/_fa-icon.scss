@@ -1,0 +1,30 @@
+// Amaze UI Touch: FaIcon
+//
+// @via https://github.com/FortAwesome/Font-Awesome/
+// @licence MIT
+// =============================================================================
+
+@import "../env";
+
+
+// modifiers: colors
+// -----------------------------------------------------------------------------
+@each $color-key, $color in $am-colors {
+  .#{$fa-icon-prefix}-#{$color-key} {
+    color: $color;
+  }
+}
+
+// Output
+// -----------------------------------------------------------------------------
+.#{$fa-icon-prefix} {
+  display: inline-block;
+  line-height: 1;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  .#{$button-prefix} & {
+    font-size: inherit;
+  }
+}

@@ -1,0 +1,48 @@
+// Amaze UI Touch: Divide
+// =============================================================================
+
+@import "../env";
+
+// Mixins
+// -----------------------------------------------------------------------------
+@mixin divide-style($style) {
+  border-style: $style;
+}
+
+@mixin divide-color($color) {
+  border-color: $color;
+}
+
+// Output
+// -----------------------------------------------------------------------------
+
+.#{$divide-prefix} {
+  border: map_get($divide-style, "solid") map_get($divide-color, 'dark');
+  border-width: $divide-width 0 0;
+  clear: both;
+  margin: $divide-margin 0;
+  height: 0;
+}
+
+
+// Modifiers: style
+// -----------------------------------------------------------------------------
+@each $style-key, $style in $divide-style {
+  .#{$divide-prefix}-#{$style-key} {
+    @include divide-style($style);
+  }
+}
+
+// Modifiers: color
+// -----------------------------------------------------------------------------
+@each $color-key, $color in $divide-color {
+  .#{$divide-prefix}-#{$color-key} {
+    @include divide-color($color);
+  }
+}
+
+// Modifiers: margin
+.#{$divide-prefix}-large {
+  margin-top: $divide-margin-large;
+  margin-bottom: $divide-margin-large;
+}

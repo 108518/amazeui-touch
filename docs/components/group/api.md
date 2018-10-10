@@ -2,37 +2,18 @@
 
 分组组件，用于分隔不同的内容块。
 
-## 组件
+## 属性
 
-### Group
+### &lt;Group&gt;
 
-`<Group>` 组件。
+| 名称                |  类型           | 默认值           | 含义           |
+| -------------      | ------------- | --------------- | --------------- |
+| `component`        | `node`        | `'div'`         | 分组容器元素。     |
+| `header`           | `node`        |                 | 分组标题。        |
+| `footer`           | `node`        |                 | 分组脚注。        |
+| `noPadded`         | `bool`        | `false`         | 是否移除分组内容的 `padding`。|
+| `bodyClass`        | `string`      |                 | Group body 样式类名。|
 
-#### Props
-
-##### `component`
-
-> PropType: `node`
-
-分组容器元素，默认为 `div`。
-
-##### `header`
-
-> PropType: `node`
-
-分组标题。
-
-##### `footer`
-
-> PropType: `node`
-
-分组脚注。
-
-##### `noPadded`
-
-> PropType: `bool`
-
-是否移除分组内容的 `padding`。
 
 ## 示例
 
@@ -42,7 +23,7 @@ import {
   Group,
 } from 'amazeui-touch';
 
-const GroupExample = React.createClass({
+export default class extends React.Component {
   render() {
     return (
       <div>
@@ -69,7 +50,7 @@ const GroupExample = React.createClass({
       </Container>
     );
   }
-});
+}
 
-export default GroupExample;
+ 
 ```

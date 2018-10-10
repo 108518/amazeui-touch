@@ -1,16 +1,10 @@
-import React from 'react';
-import {
-  Container,
-  Group,
-  Notification,
-  Button,
-  Field,
-} from 'amazeui-touch';
+import React from "react";
+import { Container, Group, Notification, Button, Field } from "amazeui-touch";
 
-class NotificationExample extends React.Component {
+export default class extends React.Component {
   state = {
     visible: false,
-    amStyle: '',
+    amStyle: ""
   };
 
   openNotification = () => {
@@ -29,9 +23,7 @@ class NotificationExample extends React.Component {
   render() {
     return (
       <Container {...this.props}>
-        <Group
-          header="交互显示"
-        >
+        <Group header="交互显示">
           <Field
             type="select"
             label="选择通知栏颜色"
@@ -72,19 +64,27 @@ class NotificationExample extends React.Component {
           这是一个动态显示的通知 :)
         </Notification>
 
-        <Group
-          header="静态通知栏样式展示"
-        >
-          <Notification visible static>这是一个通知 :)</Notification>
-          <Notification visible static amStyle="primary">这是一个通知 :)</Notification>
-          <Notification visible static amStyle="secondary">这是一个通知 :)</Notification>
-          <Notification visible static amStyle="success">这是一个通知 :)</Notification>
-          <Notification visible static amStyle="warning">这是一个通知 :)</Notification>
-          <Notification visible static amStyle="alert">这是一个通知 :)</Notification>
+        <Group header="静态通知栏样式展示">
+          <Notification visible static>
+            这是一个通知 :)
+          </Notification>
+          <Notification visible static amStyle="primary">
+            这是一个通知 :)
+          </Notification>
+          <Notification visible static amStyle="secondary">
+            这是一个通知 :)
+          </Notification>
+          <Notification visible static amStyle="success">
+            这是一个通知 :)
+          </Notification>
+          <Notification visible static amStyle="warning">
+            这是一个通知 :)
+          </Notification>
+          <Notification visible static amStyle="alert">
+            这是一个通知 :)
+          </Notification>
         </Group>
       </Container>
     );
   }
 }
-
-export default NotificationExample;

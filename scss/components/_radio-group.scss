@@ -1,0 +1,82 @@
+// Amaze UI Touch: Radio Group
+// =============================================================================
+
+@import "../env";
+
+.#{$radio-group-prefix} {
+	display: flex;
+	// justify-content: space-between;
+  flex-wrap: wrap;
+  .#{$list-prefix} {
+  	width: 100%;
+  }
+  > ul {
+  	margin-top: 0;
+  }
+	.#{$item-prefix}-title {
+		padding-right: rem-calc(15);
+		flex: initial;
+	}
+	.#{$item-prefix}-after {
+		flex: 1;
+		margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: right;
+	}
+  .#{$list-prefix} {
+    margin: 0;
+  }
+}
+
+.#{$radio-group-prefix}-modal {
+	> div {
+		position: relative;
+		border-radius: rem-calc(5);
+		height: rem-calc(265);
+		overflow: hidden;
+		width: calc(100% - 5rem);
+		// height: 100%;
+		background: #F7F7F7;
+		z-index: $z-index-base + 150;
+
+		> h2 {
+	    margin: 0;
+	    text-align: center;
+	    height: 44px;
+	    line-height: 44px;
+	    font-size: 18px;
+			background: $white;
+		}
+
+		> div {
+			overflow: auto;
+			height: rem-calc(177);
+		}
+
+		> p {
+			margin: 0;
+			cursor: pointer;
+			position: absolute;
+			height: rem-calc(45);
+			font-size: rem-calc(16);
+			line-height: rem-calc(45);
+			border-top: 1px solid #CCC;
+			border-bottom: 1px solid #CCC;
+			background: $white;
+			color: $global-primary;
+			bottom: 0;
+			text-align: center;
+			width: 100%;
+		}
+	}
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.3);
+}

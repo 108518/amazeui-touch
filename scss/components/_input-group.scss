@@ -1,0 +1,33 @@
+// Amaze UI Touch: InputGroup
+// =============================================================================
+
+@import "../env";
+
+// Output
+// -----------------------------------------------------------------------------
+.#{$input-group-prefix} {
+  background: $input-group-bg;
+}
+
+.#{$input-group-prefix}-header {
+  color: $input-group-header-color;
+  padding: $input-group-header-padding;
+  border-bottom: 1px solid $input-group-header-border;
+  background-color: $input-group-header-color-bg;
+}
+
+.#{$input-group-prefix}-container {
+  padding: $input-group-container-padding;
+
+  .#{$field-prefix}-container:first-child {
+    margin-top: $text-field-margin;
+  }
+}
+
+.#{$input-group-prefix}-list {
+  margin: 0;
+
+  .#{$item-prefix}:first-child {
+    border-top: none;
+  }
+}

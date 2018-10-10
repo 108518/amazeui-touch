@@ -1,0 +1,37 @@
+// Amaze UI Touch: Select
+// =============================================================================
+
+@import "../env";
+
+// Output
+// -----------------------------------------------------------------------------
+.#{$select-prefix} {
+  overflow: hidden;
+  .#{$list-prefix} {
+    margin: - rem-calc(10);
+  }
+  .#{$item-prefix} {
+    border-width: 0;
+  }
+  .#{$item-prefix}-after {
+    font-size: $font-size-sm;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.#{$select-prefix}-list {
+  .#{$list-prefix} {
+    margin-top: 0;
+  }
+  .#{$item-prefix}-icon {
+    display: none;
+  }
+}
+
+.#{$select-prefix}-item-disabled,
+.#{$select-prefix}-item-switch {
+  pointer-events: none;
+}
+

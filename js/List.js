@@ -1,29 +1,24 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
+import classNameSpace from './utils/className';
 import Icon from './Icon';
 
-import '../scss/components/_list.scss';
+class List extends React.Component {
 
-const List = createReactClass({
-  displayName: 'List',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     inset: PropTypes.bool,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'list',
-    };
-  },
+  static defaultProps = {
+    classPrefix: 'list',
+  }
 
   render() {
-    let classSet = this.getClassSet();
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
     const {
       className,
       inset,
@@ -42,14 +37,13 @@ const List = createReactClass({
       >
       </ul>
     );
-  },
-});
+  }
+}
 
-const ListItem = createReactClass({
-  displayName: 'ListItem',
-  mixins: [ClassNameMixin],
 
-  propTypes: {
+class ListItem extends React.Component {
+
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     role: PropTypes.oneOf(['header', 'item']),
     title: PropTypes.node,
@@ -62,16 +56,14 @@ const ListItem = createReactClass({
     after: PropTypes.node,
     desc: PropTypes.node,
     nested: PropTypes.oneOf(['input', 'radio', 'checkbox']), // nested field
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'item',
-      role: 'item'
-    };
-  },
+  static defaultProps = {
+    classPrefix: 'item',
+    role: 'item'
+  }
 
-  renderTitleRow() {
+  renderTitleRow = () => {
     let {
       title,
       subTitle,
@@ -94,7 +86,7 @@ const ListItem = createReactClass({
       href || linkComponent ? (
         <Icon
           className={this.prefixClass('icon')}
-          name="right-nav"
+          name="right"
           key="itemChevron"
         />
       ) : null,
@@ -108,9 +100,9 @@ const ListItem = createReactClass({
         {titleChildren}
       </div>
     ) : titleChildren;
-  },
+  }
 
-  renderMain() {
+  renderMain = () => {
     let {
       media,
       subTitle,
@@ -132,9 +124,9 @@ const ListItem = createReactClass({
         {children}
       </div>
     ) : titleRow;
-  },
+  }
 
-  wrapLink(children) {
+  wrapLink = (children) =>{
     let {
       linkComponent,
       linkProps,
@@ -150,9 +142,9 @@ const ListItem = createReactClass({
       >
         {children}
       </a>);
-  },
+  }
 
-  renderAddon(type) {
+  renderAddon = (type) => {
     return this.props[type] ? (
       <div
         key={'item-' + type}
@@ -161,9 +153,13 @@ const ListItem = createReactClass({
         {this.props[type]}
       </div>
     ) : null;
-  },
+  }
 
   render() {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
     let {
       className,
       role,
@@ -187,7 +183,6 @@ const ListItem = createReactClass({
       this.renderAddon('media'),
       this.renderMain(),
     ];
-    let classSet = this.getClassSet();
 
     classSet[this.prefixClass(nested)] = nested;
     classSet[this.prefixClass('header')] = role === 'header';
@@ -203,8 +198,8 @@ const ListItem = createReactClass({
           (href || linkComponent) ? this.wrapLink(itemChildren) : itemChildren}
       </li>
     );
-  },
-});
+  }
+}
 
 List.Item = ListItem;
 

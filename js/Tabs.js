@@ -1,37 +1,40 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import PropTypes from 'prop-types';import cx from 'classnames';
+import classNameSpace from './utils/className';
+
 import Button from './Button';
 import ButtonGroup from './ButtonGroup';
+import Icon from './Icon';
+import {getAbsoluteUrl} from './utils/tool'
 
-import '../scss/components/_tabs.scss';
 
-const Tabs = createReactClass({
-  displayName: 'Tabs',
-  mixins: [ClassNameMixin],
+class Tabs extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
     activeKey: PropTypes.any,
     defaultActiveKey: PropTypes.any,
     onAction: PropTypes.func,
     inset: PropTypes.bool,
-  },
+    navStyle: PropTypes.object,
+    navClassName: PropTypes.string,
+    secondTab: PropTypes.bool,
+    counter: PropTypes.number,
+    animation: PropTypes.bool,
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'tabs',
-    };
-  },
+      animation: true
+  }
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props)
+    this.state = {
       activeKey: this.getDefaultActiveKey(),
-      previousActiveKey: null
-    };
-  },
+      previousActiveKey: null,
+     }
+  }
 
   componentWillReceiveProps(nextProps) {
     let nextActiveKey = nextProps.activeKey;
@@ -43,9 +46,9 @@ const Tabs = createReactClass({
         previousActiveKey: this.props.activeKey
       });
     }
-  },
+  }
 
-  getDefaultActiveKey(children) {
+  getDefaultActiveKey = (children) => {
     let defaultActiveKey = this.props.defaultActiveKey;
 
     if (defaultActiveKey != null) {
@@ -59,14 +62,14 @@ const Tabs = createReactClass({
     });
 
     return defaultActiveKey != null ? defaultActiveKey : 0;
-  },
+  }
 
-  getActiveKey() {
+  getActiveKey = () => {
     return this.props.activeKey != null ?
       this.props.activeKey : this.state.activeKey;
-  },
+  }
 
-  handleClick(key, disabled, e) {
+  handleClick = (key, disabled, href, e) => {
     e.preventDefault();
     let activeKey = this.state.activeKey;
 
@@ -78,6 +81,11 @@ const Tabs = createReactClass({
       this.props.onAction(key);
     }
 
+    if (href) {
+      window.location = getAbsoluteUrl(href);
+      return;
+    }
+
     // uncontrolled
     if (this.props.activeKey == null && activeKey !== key) {
       this.setState({
@@ -85,52 +93,98 @@ const Tabs = createReactClass({
         previousActiveKey: activeKey
       });
     }
-  },
+  }
 
-  renderNav() {
-    let activeKey = this.getActiveKey();
+  renderNav = () => {
+    const activeKey = this.getActiveKey();
+    const navWrapStyle = this.props.navStyle;
+    const navWrapClassName = this.props.navClassName;
+    const secondTab = this.props.secondTab;
+    const counter = this.props.counter;
+    const basis = counter ? 1 / counter * 100 : null;
+    const navPrefix = secondTab ? 'subnav' : 'nav';
 
-    let navs = React.Children.map(this.props.children, (child, index) => {
+    // Magic Number: 10 is margin of item defined in css.
+    const marginPercent = counter && secondTab ? 10 / window.innerWidth * 100 : 0;
+
+    // something is wrong with react
+    const flexBasis = basis ? {
+      flexBasis: `${basis - marginPercent}%`,
+      WebkitFlexBasis: `${basis - marginPercent}%`,
+      // msFlexBasis: `${basis}%`,
+    } : {};
+
+    const navClassNames = cx(this.prefixClass(`${navPrefix}`), navWrapClassName);
+
+    const navs = React.Children.map(this.props.children, (child, index) => {
       let {
+        href,
         eventKey,
         disabled,
-        navSize,
+        classPrefix,
         navStyle,
+        navClassName,
       } = child.props;
       let key = index;
 
       eventKey = eventKey !== undefined ? eventKey : index;
       let active = eventKey === activeKey;
+      const prefixClass = this.prefixClass(`${navPrefix}-item`);
+      const itemWrapClass = this.prefixClass(`${navPrefix}-item-wrap`);
+      const itemFixSkewClass = this.prefixClass(`${navPrefix}-item-fix-skew`);
 
-      return (
-        <Button
+      const itemCls = cx(prefixClass, {
+        active,
+        disabled,
+      }, navClassName);
+
+      const itemStyle = Object.assign(navStyle || {}, flexBasis);
+
+      return !secondTab ? (
+        <span
           ref={'tabNav' + key}
           key={key}
-          onClick={this.handleClick.bind(this, key, disabled)}
-          active={active}
-          disabled={disabled}
-          className={active ? 'active' : null}
-          amSize={navSize || 'sm'}
-          amStyle={navStyle || 'primary'}
-          hollow
+          onClick={this.handleClick.bind(this, key, disabled, href)}
+          className={itemCls}
+          style={flexBasis}
         >
-          {child.props.title}
-        </Button>
-      );
-    });
+          { child.props.title }
+        </span>
+      ) : (
+        <span
+          className={itemWrapClass}
+          style={flexBasis}
+        >
+          <span
+            ref={'tabNav' + key}
+            key={key}
+            onClick={this.handleClick.bind(this, key, disabled, href)}
+            className={itemCls}
+            style={navStyle}
+          >
+            <span className={itemFixSkewClass}>
+              { child.props.title }
+            </span>
+          </span>
+        </span>
+      )
+    })
 
     return (
-      <ButtonGroup
-        className={this.prefixClass('nav')}
-        justify
+      <div
+        className={navClassNames}
+        style={navWrapStyle}
       >
         {navs}
-      </ButtonGroup>
+        { secondTab ? <div /> : null }
+      </div>
     )
-  },
+  }
 
-  renderTabPanels() {
+  renderTabPanels = () => {
     let activeKey = this.getActiveKey();
+    const animation = this.props.animation;
+
     let panels = React.Children.map(this.props.children, (child, index) => {
       let {
         eventKey,
@@ -142,17 +196,26 @@ const Tabs = createReactClass({
         eventKey = index;
       }
 
-      return (
+      const isActive = eventKey === activeKey;
+
+      const Item = (
         <Tabs.Item
-          active={eventKey === activeKey}
+          active={isActive}
           eventKey={eventKey}
           key={'tabPanel' + index}
+          animation={animation}
           {...props}
         >
           {children}
         </Tabs.Item>
-      );
-    });
+      )
+
+      if (this.props.render === 'current') {
+        return isActive ? Item : null;
+      } else {
+        return Item;
+      }
+    })
 
     return (
       <div
@@ -161,11 +224,14 @@ const Tabs = createReactClass({
         {panels}
       </div>
     );
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet();
-    let {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
+    const {
       className,
       ...props
     } = this.props;
@@ -175,6 +241,10 @@ const Tabs = createReactClass({
     delete props.defaultActiveKey;
     delete props.inset;
     delete props.onAction;
+    delete props.secondTab;
+    delete props.counter;
+    delete props.animation;
+    delete props.render;
 
     return (
       <div
@@ -185,36 +255,36 @@ const Tabs = createReactClass({
         {this.renderTabPanels()}
       </div>
     );
-  },
-});
+  }
+}
 
-const TabsItem = createReactClass({
-  displayName: 'TabsItem',
-  mixins: [ClassNameMixin],
+class TabsItem extends React.Component{
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string,
     title: PropTypes.node,
     eventKey: PropTypes.any,
     disabled: PropTypes.bool,
     active: PropTypes.bool,
     noPadded: PropTypes.bool,
-    navSize: PropTypes.string,
-    navStyle: PropTypes.string,
-  },
+    navStyle: PropTypes.object,
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'tab',
-    };
-  },
+  }
 
   render() {
-    let classSet = this.getClassSet(true);
-    let {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.getClassSet(true);
+    this.prefixClass = classNS.prefixClass;
+
+    const {
       className,
       children,
       noPadded,
+      active,
+      animation,
       ...props
     } = this.props;
     const elementName = 'panel';
@@ -223,11 +293,13 @@ const TabsItem = createReactClass({
     delete props.eventKey;
     delete props.active;
     delete props.noPadded;
-    delete props.navSize;
     delete props.navStyle;
+    delete props.counter;
+    delete props.animation;
 
     classSet[this.prefixClass(elementName)] = true;
     classSet[this.prefixClass(`${elementName}-no-padded`)] = noPadded;
+    classSet[this.prefixClass(`${elementName}-no-animation`)] = !animation;
 
     return (
       <div
@@ -237,11 +309,9 @@ const TabsItem = createReactClass({
         {children}
       </div>
     );
-  },
-});
+  }
+}
 
 Tabs.Item = TabsItem;
 
 export default Tabs;
-
-// TODO: Nav 的可定制性，如允许传入 Router 的 Link 组件

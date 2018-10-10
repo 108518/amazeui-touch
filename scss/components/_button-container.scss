@@ -1,0 +1,28 @@
+// Amaze UI Touch: Button Container
+// =============================================================================
+
+@import "../env";
+
+// Output
+// -----------------------------------------------------------------------------
+.#{$button-container-prefix} {
+  display: flex;
+  padding: rem-calc(10);
+  background: $white;
+  .#{$button-group-prefix} {
+    flex: 1;
+    margin: 0;
+  }
+}
+
+.#{$button-container-prefix}-more {
+  padding-right: 0;
+}
+
+.#{$button-prefix}-more {
+  flex: 0 0 rem-calc(24);
+  margin: 0 rem-calc(10);
+  padding: rem-calc(8) 0;
+  background-color: transparent;
+  border-color: transparent;
+}

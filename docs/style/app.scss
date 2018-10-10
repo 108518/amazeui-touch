@@ -1,8 +1,11 @@
 // Style for Amaze UI Touch Website
 
 // Variables
+@import '../../dist/amazeui.touch.css';
 @import "../../scss/helper/functions";
 @import "../../scss/variables";
+// @import "../../scss/components/container.scss";
+
 $assets: "http://s.amazeui.org/";
 $banner-bg: #10a0ea;
 $bp-md-up: quote('(min-width: 768px)');
@@ -15,3 +18,4 @@ $bp-lg-up: quote('(min-width: 1024px)');
 @import "doc-index";
 @import "doc-sidebar";
 @import "doc-content";
+@import "code-template"

@@ -1,37 +1,35 @@
+import React, {
+  cloneElement,
+} from 'react';
 import PropTypes from 'prop-types';
-import React, { cloneElement } from 'react';
-import createReactClass from 'create-react-class';
 import cx from 'classnames';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_button-group.scss';
+export default class ButtonGroup extends React.Component {
 
-const ButtonGroup = createReactClass({
-  displayName: 'ButtonGroup',
-  mixins: [ClassNameMixin],
-
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
     amStyle: PropTypes.string,
     amSize: PropTypes.string,
     hollow: PropTypes.bool,
+    gapped: PropTypes.bool,
     justify: PropTypes.bool,
     stacked: PropTypes.bool,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      classPrefix: 'btn-group',
-    };
-  },
+  static defaultProps = {
+    classPrefix: 'btn-group',
+  }
 
   render() {
-    let classSet = this.getClassSet();
-    let {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    const {
       className,
       amStyle,
       amSize,
       hollow,
+      gapped,
       stacked,
       justify,
       ...props
@@ -39,8 +37,9 @@ const ButtonGroup = createReactClass({
 
     delete props.classPrefix;
 
-    classSet[this.prefixClass('stacked')] = stacked;
-    classSet[this.prefixClass('justify')] = justify;
+    classSet[classNS.prefixClass('gapped')] = gapped;
+    classSet[classNS.prefixClass('stacked')] = stacked;
+    classSet[classNS.prefixClass('justify')] = justify;
 
     return (
       <div
@@ -56,7 +55,5 @@ const ButtonGroup = createReactClass({
         })}
       </div>
     );
-  },
-});
-
-export default ButtonGroup;
+  }
+};

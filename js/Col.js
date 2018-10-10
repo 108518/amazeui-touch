@@ -1,32 +1,29 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {component as componentPropType} from './InternalPropTypes';
-import ClassNameMixin from './mixins/ClassNameMixin';
+import classNameSpace from './utils/className';
 
-import '../scss/components/_grid.scss';
 
-const Col = createReactClass({
-  displayName: 'Col',
-  mixins: [ClassNameMixin],
+export default class Col extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     classPrefix: PropTypes.string.isRequired,
-    component: componentPropType.isRequired,
+    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
     cols: PropTypes.number,
     offset: PropTypes.number,
     shrink: PropTypes.bool,
-  },
+  }
 
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       classPrefix: 'col',
       component: 'div'
-    };
-  },
+ }
 
   render() {
+    const classNS = classNameSpace(this.props);
+    const classSet = classNS.classSet;
+    this.prefixClass = classNS.prefixClass;
+
     let {
       component: Component,
       cols,
@@ -35,7 +32,6 @@ const Col = createReactClass({
       className,
       ...props,
     } = this.props;
-    let classSet = this.getClassSet();
 
     delete props.classPrefix;
 
@@ -57,7 +53,5 @@ const Col = createReactClass({
         {this.props.children}
       </Component>
     );
-  },
-});
-
-export default Col;
+  }
+}

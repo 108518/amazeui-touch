@@ -4,40 +4,20 @@
 
 容器组件用于实现仿原生的场景切换效果，**如不追求动效，或者一时无法理解其工作原理，可不使用**。
 
-## 组件
+## 属性
 
-### Container
+### &lt;Container&gt;
 
-`<Container>` 组件，基于 [react-container](https://github.com/JedWatson/react-container) 修改（[在线演示](http://jedwatson.github.io/react-container/) | [演示源代码](https://github.com/JedWatson/react-container/tree/master/example/src)）。
+基于 [react-container](https://github.com/JedWatson/react-container) 修改（[在线演示](http://jedwatson.github.io/react-container/) | [演示源代码](https://github.com/JedWatson/react-container/tree/master/example/src)）。
 
-#### Props
+| 名称            |  类型           | 默认值           | 含义    |
+| -------------  | ------------- | --------------- | ----------------------- |
+| `component`    | `node`        | `div`           | 容器元素，默认为 `div`。 |
+| `fill`         | `bool`        | true           | 否填充父容器可用高度（应用 `height: 100%`）样式。|
+| `direction`    | `string` | `column` | Flex box 方向，设置该属性后，容器会应用 `display: flex` 样式。`enum('column', 'row')`|
+| `scrollable`   | `bool`        | false               | 内容超出容器时是否显示滚动条。|
 
-##### `component`
-
-> PropType: `node`
-
-容器元素，默认为 `div`。
-
-##### `fill`
-
-> PropType: `bool`
-
-是否填充父容器可用高度（应用 `height: 100%`）样式。
-
-
-##### `direction`
-
-> PropType: `enum('column', 'row')`
-
-Flex box 方向，设置该属性后，容器会应用 `display: flex` 样式。
-
-##### `scrollable`
-
-> PropType: `bool`
-
-内容超出容器时是否显示滚动条。
-
-##### `transition`
+`transition`
 
 > PropType: `string`
 
@@ -94,6 +74,6 @@ if (transition) {
 }
 ```
 
-### View
+### &lt;View&gt;
 
 `<View>` 组件，绝对定位的容器，用于实现转场动画，具体使用参见 kitchen-sink。
